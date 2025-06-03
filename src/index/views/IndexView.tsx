@@ -5,6 +5,8 @@ import { UserContext } from '@/context/userContext';
 
 import HeaderHome from '../components/HeaderHome/HeaderHome';
 import ClientHome from '../components/ClientHome/ClientHome';
+import CoursesHome from '../components/CoursesHome/CoursesHome';
+import CareerHome from '../components/CareerHome/CareerHome';
 
 const IndexView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -19,6 +21,10 @@ const IndexView = () => {
       <HeaderHome />
 
       <ClientHome />
+
+      <CoursesHome />
+
+      <CareerHome />
       
     </div>
   )
