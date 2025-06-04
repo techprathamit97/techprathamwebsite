@@ -7,6 +7,7 @@ import HeaderHome from '../components/HeaderHome/HeaderHome';
 import ClientHome from '../components/ClientHome/ClientHome';
 import CoursesHome from '../components/CoursesHome/CoursesHome';
 import CareerHome from '../components/CareerHome/CareerHome';
+import CertificationHome from '../components/CertificationHome/CertificationHome';
 
 const IndexView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -25,6 +26,8 @@ const IndexView = () => {
       <CoursesHome />
 
       <CareerHome />
+
+      <CertificationHome />
       
     </div>
   )
