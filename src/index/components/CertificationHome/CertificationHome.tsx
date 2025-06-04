@@ -15,8 +15,8 @@ import Image from 'next/image';
 
 const CertificationHome = () => {
   return (
-    <div className='w-10/12 h-auto flex flex-col gap-10 overflow-hidden'>
-      <div className="text-3xl font-bold mb-4 text-gray-800">Certification Partners</div>
+    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 overflow-hidden'>
+      <div className="text-3xl font-bold mb-4 text-gray-800 text-center">Certification Partners</div>
       <Swiper
         effect={'coverflow'}
         grabCursor={true}
