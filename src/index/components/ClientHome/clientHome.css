@@ -13,10 +13,3 @@
   align-items: center;
   position: relative;
 }
-
-.swiperClient .swiper-slide img {
-  display: block;
-  width: 320px;
-  height: 100%;
-  object-fit: cover;
-}

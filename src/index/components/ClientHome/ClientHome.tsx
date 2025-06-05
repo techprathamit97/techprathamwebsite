@@ -11,8 +11,8 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { certificate } from '@/components/assets/certificate';
 import Image from 'next/image';
+import { client } from '@/components/assets/client';
 
 const ClientHome = () => {
     return (
@@ -42,17 +42,13 @@ const ClientHome = () => {
                         delay: 2500,
                         disableOnInteraction: false,
                     }}
-                    pagination={{
-                        clickable: true,
-                        dynamicBullets: true,
-                    }}
                     navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="mySwiper swiperClient"
+                    modules={[Autoplay, Navigation]}
+                    className="swiperClient swiperClient"
                 >
-                    {certificate.map((item, index) => (
-                        <SwiperSlide key={index} className='shadow'>
-                            <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-80 h-full object-cover' />
+                    {client.map((item, index) => (
+                        <SwiperSlide key={index} className='w-full h-auto p-4 flex items-center justify-center shadowBorder'>
+                            <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-44 object-contain' />
                         </SwiperSlide>
                     ))}
                 </Swiper>
