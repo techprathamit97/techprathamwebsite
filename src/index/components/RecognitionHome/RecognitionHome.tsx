@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Dot } from 'lucide-react'
+import { ChevronRightIcon, Dot } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
@@ -21,7 +21,7 @@ const RecognitionHome = () => {
         </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          <div className='flex flex-col border border-white p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -34,7 +34,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border border-white p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -47,7 +47,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border border-white p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -63,7 +63,10 @@ const RecognitionHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant='manual' className='capitalize font-light'>Explore more certification</Button>
+          <Button variant='manual' className='flex items-center justify-center text-base font-normal rounded-full mt-2'>
+            <span>Book Free Demo</span>
+            <ChevronRightIcon />
+          </Button>
         </div>
       </div>
     </div>

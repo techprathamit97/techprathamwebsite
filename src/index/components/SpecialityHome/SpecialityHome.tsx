@@ -10,7 +10,7 @@ const SpecialityHome = () => {
     <div className='w-full h-auto flex flex-col items-center justify-center py-24 gap-12 bg-gradient-to-r from-[#371414] to-[#D1090F] text-white overflow-hidden'>
 
       <div className='md:w-10/12 w-11/12 h-auto flex flex-col text-center'>
-        <div className="text-3xl font-semibold">Why Choose <span className='text-transparent headingMain'>Tech Pratham?</span></div>
+        <div className="md:text-5xl text-2xl md:font-semibold font-medium">Why Choose <span className='text-transparent headingSpeciality'>Tech Pratham?</span></div>
       </div>
 
       <div className='md:w-1/2 w-11/12 h-auto flex flex-col gap-6'>

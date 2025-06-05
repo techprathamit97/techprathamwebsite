@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';;
+import { Autoplay } from 'swiper/modules';;
 
 const TestmonialHome = () => {
 
@@ -23,7 +23,7 @@ const TestmonialHome = () => {
         <div className="md:text-3xl text-2xl md:font-semibold font-medium capitalize">Our success lies in our <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text font-bold'>learner's, success</span> stories</div>
         <div className='md:w-1/2 w-full'>Explore our student's experiences and discover how we've healped them achieve their goals through excellence and dedications.</div>
       </div>
-      <div className='w-10/12 flex flex-col items-center justify-center h-auto'>
+      <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center h-auto'>
         <Swiper
           slidesPerView={1}
           spaceBetween={20}
