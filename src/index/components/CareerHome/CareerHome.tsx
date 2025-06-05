@@ -8,14 +8,19 @@ const CareerHome = () => {
 
       <div className='w-full text-center flex flex-col items-center justify-center gap-10'>
         <div className="text-3xl font-bold text-gray-800">In Association With</div>
-        <Image src='/home/career/association.svg' alt='Companies Associated' width={800} height={400} className='w-11/12 h-auto' />
+        <Image src='/home/career/association.svg' alt='Companies Associated' width={800} height={400} className='md:flex hidden w-11/12 h-auto' />
+        <div className='flex flex-col w-full'>
+          <Image src='/home/career/association-1.svg' alt='Companies Associated' width={800} height={400} className='md:hidden flex w-full h-auto' />
+          <Image src='/home/career/association-2.svg' alt='Companies Associated' width={800} height={400} className='md:hidden flex w-full h-auto' />
+          <Image src='/home/career/association-3.svg' alt='Companies Associated' width={800} height={400} className='md:hidden flex w-full h-auto' />
+        </div>
       </div>
 
-      <div className='w-10/12 h-auto flex flex-col text-center gap-10 py-10'>
+      <div className='md:w-10/12 w-11/12 h-auto flex flex-col text-center gap-10 py-10'>
 
         <div className='w-full h-auto flex flex-col text-center gap-2'>
           <div className="text-3xl font-bold text-gray-800">Climb your career ladder with world-class professional</div>
-          <div className="text-lg text-gray-600 max-w-2xl mx-auto">Learn from industry experts and get certified by prestigious institutions</div>
+          <div className="md:text-lg text-base text-gray-600 max-w-2xl mx-auto">Learn from industry experts and get certified by prestigious institutions</div>
         </div>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

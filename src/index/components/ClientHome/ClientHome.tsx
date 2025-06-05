@@ -22,7 +22,7 @@ const ClientHome = () => {
             </div>
             <div className='flex flex-col items-center justify-center w-full h-auto'>
                 <Swiper
-                    slidesPerView={1}
+                    slidesPerView={2}
                     spaceBetween={20}
                     breakpoints={{
                         640: {

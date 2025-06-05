@@ -19,15 +19,21 @@ import { certification } from '@/components/assets/certification';
 const HeaderHome = () => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center bg-gradient-to-r from-[#371414] to-[#D1090F] text-white overflow-hidden'>
-            <div className='w-10/12 h-auto flex md:flex-row flex-col items-start gap-20 pt-16 pb-24'>
-                <div className='w-8/12 flex flex-col gap-10'>
-                    <div className='text-4xl leading-[46px] font-bold'>India's <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>Leading Job oriented Project</span> based Upskilling platform.</div>
-                    <div className='flex flex-col items-start'>
+            <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col items-start gap-20 pt-16 pb-24'>
+                <div className='md:w-8/12 w-full flex flex-col gap-10'>
+                    <div className='md:text-4xl text-3xl md:leading-[46px] leading-[36px] font-bold'>India's <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>Leading Job oriented Project</span> based Upskilling platform.</div>
+                    <div className='flex flex-col items-start text-left'>
                         <h2 className='text-2xl font-semibold mb-2 bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>
                             Our Mission
                         </h2>
-                        <div className='flex flex-row gap-1 text-lg font-normal'><Image src='/home/sign.jpeg' alt='' width={10} height={10} className='w-6 h-6' /> 1 Skill = 1 Job = <strong>1 Family</strong> = 6 Person = Happy Life</div>
-                        <div className='flex flex-row gap-1 text-lg font-normal'><Image src='/home/sign.jpeg' alt='' width={10} height={10} className='w-6 h-6' /> Gain hands-on experience with real projects guided by <strong>industry experts</strong></div>
+                        <div className='flex flex-row gap-1 md:text-lg text-base font-normal'>
+                            <Image src='/home/sign.jpeg' alt='' width={10} height={10} className='w-6 h-6' />
+                            <div>1 Skill = 1 Job = <strong>1 Family</strong> = 6 Person = Happy Life</div>
+                        </div>
+                        <div className='flex flex-row gap-1 md:text-lg text-base font-normal'>
+                            <Image src='/home/sign.jpeg' alt='' width={10} height={10} className='w-6 h-6' />
+                            <div>Gain hands-on experience with real projects guided by <strong>industry experts</strong></div>
+                        </div>
                     </div>
                     <section className='text-white overflow-x-hidden h-auto w-full'>
                         <div className='flex nowrap whitespace-nowrap'>
@@ -48,7 +54,7 @@ const HeaderHome = () => {
                         </div>
                     </section>
                 </div>
-                <div className='flex flex-col items-center justify-center min-w-96 h-auto'>
+                <div className='flex flex-col items-center justify-center md:min-w-96 w-full h-auto'>
                     <Swiper
                         autoplay={{
                             delay: 2500,

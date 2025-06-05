@@ -4,10 +4,10 @@ import Image from 'next/image';
 
 const EducatorHome = () => {
   return (
-    <div className='w-10/12 h-auto flex flex-col gap-10 items-center justify-center bg-white text-black py-20'>
+    <div className='md:w-10/12 w-11/12 h-auto flex flex-col gap-10 items-center justify-center bg-white text-black py-20'>
       <div className='w-full h-auto flex flex-col text-center'>
-        <div className="text-3xl font-bold text-gray-800">Meet Your Educators & Mentors</div>
-        <div className="text-lg text-gray-600 capitalize">Learn from the cast knowledge of top faculty in the field of data science</div>
+        <div className="md:text-3xl text-2xl md:font-bold font-medium text-gray-800">Meet Your Educators & Mentors</div>
+        <div className="md:text-lg text-base text-gray-600 capitalize">Learn from the cast knowledge of top faculty in the field of data science</div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 w-full items-center justify-center">
         {teams.map((item: any, index: any) => (

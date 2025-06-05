@@ -4,6 +4,13 @@
   padding-bottom: 50px;
 }
 
+@media (max-width: 640px) {
+  .swiperCertificate {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
 .swiperCertificate .swiper-slide {
   width: 320px;
   height: 320px;

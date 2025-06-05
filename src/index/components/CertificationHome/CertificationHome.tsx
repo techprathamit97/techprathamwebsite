@@ -16,8 +16,8 @@ import { client } from '@/components/assets/client';
 
 const CertificationHome = () => {
   return (
-    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 mb-20 bg-[#f3f8ff] rounded-2xl shadowBorder overflow-hidden'>
-      <div className="text-3xl font-bold mb-4 text-gray-800 text-center">Certification Partners</div>
+    <div className='md:w-10/12 w-11/12 h-auto flex flex-col items-center justify-center md:gap-10 gap-6 py-10 mb-20 bg-[#f3f8ff] rounded-2xl shadowBorder overflow-hidden'>
+      <div className="w-11/12 md:text-3xl text-2xl md:font-bold font-medium md:mb-4 mb-0 text-gray-800 text-center">Certification Partners</div>
       <Swiper
         effect={'coverflow'}
         grabCursor={true}
