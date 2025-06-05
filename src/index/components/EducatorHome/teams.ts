@@ -1,6 +1,6 @@
 export const teams = [
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
+    image: "/home/educator/person.jpg",
     name: "Aditya Raj",
     position: "Founder & Vision Architect",
     link: "aditya-raj",
@@ -9,8 +9,8 @@ export const teams = [
     ]
   },
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
-    name: "Bipanshu Kumar",
+    image: "/home/educator/person.jpg",
+    name: "Aadhya Anand",
     position: "Platform Engineer",
     link: "bipanshu-kumar",
     about: [
@@ -18,7 +18,7 @@ export const teams = [
     ]
   },
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
+    image: "/home/educator/person.jpg",
     name: "Manoneet Kumar",
     position: "Curriculum Strategist",
     link: "manoneet-kumar",
@@ -27,7 +27,7 @@ export const teams = [
     ]
   },
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
+    image: "/home/educator/person.jpg",
     name: "Sneha Sharma",
     position: "Data Science Trainer",
     link: "sneha-sharma",
@@ -36,7 +36,7 @@ export const teams = [
     ]
   },
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
+    image: "/home/educator/person.jpg",
     name: "Rohit Verma",
     position: "Full Stack Development Trainer",
     link: "rohit-verma",
@@ -45,7 +45,7 @@ export const teams = [
     ]
   },
   {
-    image: "https://swiperjs.com/demos/images/nature-1.jpg",
+    image: "/home/educator/person.jpg",
     name: "Isha Patel",
     position: "AI & ML Trainer",
     link: "isha-patel",
