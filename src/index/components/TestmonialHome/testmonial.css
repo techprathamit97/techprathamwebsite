@@ -1,9 +1,9 @@
-.swiperClient {
+.testimonialStyle {
   width:  100%;
   height: auto;
 }
 
-.swiperClient .swiper-slide {
+.testimonialStyle .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -14,7 +14,7 @@
   position: relative;
 }
 
-.swiperClient .swiper-slide img {
+.testimonialStyle .swiper-slide img {
   display: block;
   width: 320px;
   height: 100%;

@@ -44,7 +44,7 @@ const TestmonialHome = () => {
           }}
           loop={true}
           modules={[Autoplay]}
-          className="mySwiper swiperClient"
+          className="mySwiper testimonialStyle"
         >
           {certificate.map((item, index) => (
             <SwiperSlide key={index} className='shadow'>

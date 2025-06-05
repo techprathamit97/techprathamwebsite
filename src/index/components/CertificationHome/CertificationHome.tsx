@@ -12,10 +12,11 @@ import 'swiper/css/pagination';
 // import required modules
 import { EffectCoverflow, Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
+import { client } from '@/components/assets/client';
 
 const CertificationHome = () => {
   return (
-    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 mb-20 bg-[#f3f8ff] rounded-2xl shadow-md overflow-hidden'>
+    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 mb-20 bg-[#f3f8ff] rounded-2xl shadowBorder overflow-hidden'>
       <div className="text-3xl font-bold mb-4 text-gray-800 text-center">Certification Partners</div>
       <Swiper
         effect={'coverflow'}
@@ -40,33 +41,11 @@ const CertificationHome = () => {
         modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
         className="mySwiper swiperCertificate"
       >
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-1.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-2.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-3.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-4.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-5.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-6.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-7.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-8.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src="https://swiperjs.com/demos/images/nature-9.jpg" alt='' width={300} height={300} />
-        </SwiperSlide>
+        {client.map((item, index) => (
+          <SwiperSlide key={index} className='w-80 h-80 flex items-center justify-center bg-[#fff] p-6'>
+            <Image src={item.image} alt={item.altText} width={300} height={300} className='w-full h-auto object-cover' />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   )

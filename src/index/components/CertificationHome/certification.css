@@ -5,13 +5,6 @@
 }
 
 .swiperCertificate .swiper-slide {
-  background-position: center;
-  background-size: cover;
-  width: 300px;
-  height: 300px;
-}
-
-.swiperCertificate .swiper-slide img {
-  display: block;
-  width: 100%;
+  width: 320px;
+  height: 320px;
 }

@@ -344,6 +344,10 @@ const CoursesHome = () => {
             </div>
           ))}
         </div>
+
+        <div className='mt-10'>
+          <Button variant='default'>View More Courses</Button>
+        </div>
       </div>
     </div>
   )
