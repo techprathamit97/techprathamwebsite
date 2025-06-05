@@ -31,12 +31,6 @@
   white-space: nowrap;
 }
 
-.message p {
-  font-size: 1rem;
-  font-weight: 200;
-  padding-left: 0.5em;
-}
-
 @keyframes slide-left {
   from {
     -webkit-transform: translateX(0);
