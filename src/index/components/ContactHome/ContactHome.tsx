@@ -1,6 +1,9 @@
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import './contactHome.css';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const ContactHome = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -32,67 +35,66 @@ const ContactHome = () => {
   };
 
   return (
-    <div className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10'>
-
-      <div className='w-10/12 h-auto flex md:flex-row flex-col items-start justify-center gap-8 py-5'>
+    <div className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10 bg-black text-white'>
+      <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col items-start justify-center gap-16 py-5'>
 
         <div className='md:w-1/2 w-full h-full flex flex-col gap-3 items-start justify-center py-6'>
-          <div className='text-3xl font-bold'>Invest in your future with skills that matter.</div>
-          <div>Investing in the right skills at the right place paves the way for long-term career success and growth. SevenMentor Institute equips you with industry-relevant expertise, ensuring you stay ahead in an evolving job market.</div>
+          <div className='md:text-4xl text-2xl md:font-bold font-semibold flex flex-col capitalize'>
+            <span>Invest in your future with </span>
+            <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text font-bold'>skills that matter.</span>
+          </div>
+          <div className='max-w-[600px] md:text-lg text-base text-gray-400 mb-5'>Investing in the right skills at the right place paves the way for long-term career success and growth. SevenMentor Institute equips you with industry-relevant expertise, ensuring you stay ahead in an evolving job market.</div>
           <div className='flex flex-col gap-4'>
-            <div className='p-4 border border-red-500 rounded'>
-              <div>Career Support</div>
-              <div>Beyond technical training, we provide comprehensive career assistance, including resume building, interview coaching, and job placement support.</div>
+            <div className='flex flex-row items-center space-x-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20'>
+              <Image src='/home/contact/career-choice.png' alt='' width={100} height={100} className='w-20' />
+              <div className='flex flex-col'>
+                <div className='font-medium text-lg'>Career Support:</div>
+                <div className='font-light'>Beyond technical training, we provide comprehensive career assistance, including resume building, interview coaching, and job placement support.</div>
+              </div>
             </div>
-            <div className='p-4 border border-red-500 rounded'>
-              <div>Recognized Certification:</div>
-              <div>Earn globally recognized certifications that validate your expertise and enhance your employability.</div>
+            <div className='flex flex-row items-center space-x-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20'>
+              <Image src='/home/contact/certificate.png' alt='' width={100} height={100} className='w-20' />
+              <div className='flex flex-col'>
+                <div className='font-medium text-lg'>Recognized Certification:</div>
+                <div className='font-light'>Earn globally recognized certifications that validate your expertise and enhance your employability.</div>
+              </div>
             </div>
-            <div className='p-4 border border-red-500 rounded'>
-              <div>Company Tie-Ups:</div>
-              <div>We collaborate with leading corporations, startups, and multinational companies to provide our students with exclusive job opportunities, internships, and industry exposure.</div>
+            <div className='flex flex-row items-center space-x-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20'>
+              <Image src='/home/contact/company.png' alt='' width={100} height={100} className='w-20' />
+              <div className='flex flex-col'>
+                <div className='font-medium text-lg'>Company Tie-Ups:</div>
+                <div className='font-light'>We collaborate with leading corporations, startups, and multinational companies to provide our students with exclusive job opportunities, internships, and industry exposure.</div>
+              </div>
             </div>
           </div>
-          <div>Take the first step to fast-track your future!</div>
+          <div className='md:flex hidden items-center justify-center space-x-4'>
+            <div className="h-[4px] rounded-xl w-24 bg-gradient-to-r from-red-500 to-transparent"></div>
+            <p className="text-sm font-medium text-red-500 whitespace-nowrap">Take the first step to fast-track your future!</p>
+            <div className="h-[4px] rounded-xl w-24 bg-gradient-to-r from-transparent to-red-500"></div>
+          </div>
         </div>
+
         <div className='md:w-1/2 w-full h-auto flex flex-col gap-5 items-center justify-center'>
-          <div className='font-bold text-red-500 text-2xl'>Request Call Back</div>
-          <form className='w-full flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="fName" className='text-[#525252] text-sm'>Full Name</label>
-              <input {...register('fName')} type="text" id='fName' name='fName' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="email" className='text-[#525252] text-sm'>Email</label>
-              <input {...register('email')} type="email" id='email' name='email' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="phone" className='text-[#525252] text-sm'>Phone Number</label>
-              <input {...register('phone')} type="text" id='phone' name='phone' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="country" className='text-[#525252] text-sm'>Country</label>
-              <input {...register('country')} type="text" id='country' name='country' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="state" className='text-[#525252] text-sm'>State</label>
-              <input {...register('state')} type="text" id='state' name='state' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="city" className='text-[#525252] text-sm'>City</label>
-              <input {...register('city')} type="text" id='city' name='city' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="course" className='text-[#525252] text-sm'>Course</label>
-              <input {...register('course')} type="text" id='course' name='course' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='w-full flex flex-col items-start justify-center gap-1'>
-              <label htmlFor="branch" className='text-[#525252] text-sm'>Branch</label>
-              <input {...register('branch')} type="text" id='branch' name='branch' className='w-full border-2 border-[#cbcbcb] p-4 rounded-md outline-none' required />
-            </div>
-            <div className='flex flex-row gap-4'>
-              <button type='submit' className='flex items-center justify-center px-4 py-2 bg-[#1967d2] rounded-md text-white' disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</button>
-            </div>
+          <div className='md:text-4xl text-2xl bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text md:font-bold font-semibold'>Request Call Back</div>
+          <form className='w-full flex flex-col md:gap-6 gap-4 boxShadow md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
+
+            <input {...register('fullName')} type="text" id='fullName' name='fullName' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Full Name' required />
+
+            <input {...register('email')} type="email" id='email' name='email' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Email Address' required />
+
+            <input {...register('phone')} type="text" id='phone' name='phone' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Phone Number' required />
+
+            <input {...register('country')} type="text" id='country' name='country' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Country' required />
+
+            <input {...register('state')} type="text" id='state' name='state' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='State' required />
+
+            <input {...register('city')} type="text" id='city' name='city' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='City' required />
+
+            <input {...register('course')} type="text" id='course' name='course' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Course' required />
+
+            <input {...register('branch')} type="text" id='branch' name='branch' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Branch' required />
+
+            <Button variant='manual' type='submit' className='text-lg font-light' disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</Button>
           </form>
           {submitSuccess && <p className="text-green-600">Form submitted successfully! We'll reach you soon!</p>}
         </div>
