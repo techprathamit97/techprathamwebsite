@@ -63,7 +63,7 @@ const RecognitionHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant='default' className='capitalize font-light'>Explore more certification</Button>
+          <Button variant='manual' className='capitalize font-light'>Explore more certification</Button>
         </div>
       </div>
     </div>

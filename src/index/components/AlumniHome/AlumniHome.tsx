@@ -3,6 +3,8 @@ import './alumni.css'
 import { certificate } from '@/components/assets/certificate';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
+import { client } from '@/components/assets/client';
+import { client1, client2, client3, client4 } from '@/components/assets/alumni';
 
 const AlumniHome = () => {
   return (
@@ -16,16 +18,16 @@ const AlumniHome = () => {
         <section className='text-white overflow-x-hidden h-auto w-full'>
           <div className='flex nowrap whitespace-nowrap'>
             <section className="left-scroll">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client1.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
             <section className="left-scroll mx-4">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client1.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
@@ -35,16 +37,16 @@ const AlumniHome = () => {
         <section className='text-white overflow-x-hidden h-auto w-10/12'>
           <div className='flex nowrap whitespace-nowrap'>
             <section className="right-scroll">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client2.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
             <section className="right-scroll mx-4">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client2.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
@@ -54,16 +56,16 @@ const AlumniHome = () => {
         <section className='text-white overflow-x-hidden h-auto w-full'>
           <div className='flex nowrap whitespace-nowrap'>
             <section className="left-scroll">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client3.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
             <section className="left-scroll mx-4">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client3.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
@@ -73,16 +75,16 @@ const AlumniHome = () => {
         <section className='text-white overflow-x-hidden h-auto w-10/12'>
           <div className='flex nowrap whitespace-nowrap'>
             <section className="right-scroll">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client4.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
             <section className="right-scroll mx-4">
-              {certificate.map((item, index) => (
-                <Card key={index}>
-                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-auto h-20 object-cover' />
+              {client4.map((item, index) => (
+                <Card key={index} className='h-24 w-44 p-3'>
+                  <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-full h-full object-contain' />
                 </Card>
               ))}
             </section>
