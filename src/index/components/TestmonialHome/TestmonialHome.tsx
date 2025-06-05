@@ -42,6 +42,7 @@ const TestmonialHome = () => {
             delay: 2500,
             disableOnInteraction: false,
           }}
+          loop={true}
           modules={[Autoplay]}
           className="mySwiper swiperClient"
         >
