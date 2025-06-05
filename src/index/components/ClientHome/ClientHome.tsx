@@ -16,9 +16,9 @@ import Image from 'next/image';
 
 const ClientHome = () => {
     return (
-        <div className='w-10/12 h-auto flex flex-col items-center justify-center bg-white text-black'>
-            <div className='w-full h-auto flex md:flex-row flex-col py-10'>
-                Placement Client
+        <div className='w-10/12 h-auto flex flex-col items-center justify-center py-20 gap-10 bg-white text-black'>
+            <div className='w-full h-auto flex flex-col text-center'>
+                <div className="text-3xl font-bold uppercase text-red-600">Placement Client</div>
             </div>
             <div className='flex flex-col items-center justify-center w-full h-auto'>
                 <Swiper
@@ -51,7 +51,7 @@ const ClientHome = () => {
                     className="mySwiper swiperClient"
                 >
                     {certificate.map((item, index) => (
-                        <SwiperSlide key={index}>
+                        <SwiperSlide key={index} className='shadow'>
                             <Image src={item.image} alt={item.altText} width={1440} height={500} className='w-80 h-full object-cover' />
                         </SwiperSlide>
                     ))}

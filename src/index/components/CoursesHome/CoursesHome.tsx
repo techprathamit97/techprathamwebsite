@@ -286,21 +286,20 @@ const CoursesHome = () => {
   }
 
   return (
-    <div className='w-full max-w-7xl mx-auto h-auto flex flex-col items-center justify-center py-10 bg-white text-black px-4'>
-      {/* Courses Section */}
-      <div className='w-full h-auto flex flex-col text-center py-10'>
-        <div className="text-3xl font-bold mb-4 text-gray-800">Our Courses</div>
+    <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-[#f6f8ff] text-black'>
+
+      <div className='w-full h-auto flex flex-col text-center'>
+        <div className="text-3xl font-bold text-gray-800">Our Courses</div>
         <div className="text-lg text-gray-600 max-w-2xl mx-auto">Programs to Help you upskill which lands you to your Dream Job</div>
       </div>
 
-      {/* Category Navigation */}
-      <div className='flex flex-col items-center justify-center w-full h-auto mb-8'>
-        <div className='flex flex-wrap gap-3 w-full justify-center p-4 bg-gray-50 rounded-lg'>
+      <div className='w-10/12 flex flex-col items-center justify-center h-auto'>
+        <div className='flex flex-wrap gap-2 w-full justify-center p-4 bg-gray-400 rounded-lg'>
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full transition-all duration-300 font-medium ${
+              className={`px-4 py-1 rounded-full transition-all duration-300 font-medium ${
                 activeCategory === category
                   ? 'bg-blue-600 text-white shadow-md transform scale-105'
                   : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
@@ -311,8 +310,7 @@ const CoursesHome = () => {
           ))}
         </div>
 
-        {/* Course Cards */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center py-8">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
           {currentCourses.map((course: any, index: any) => (
             <div 
               key={`${activeCategory}-${index}`} 
