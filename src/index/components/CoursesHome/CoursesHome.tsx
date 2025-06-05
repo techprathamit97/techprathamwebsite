@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { ChevronRightIcon } from 'lucide-react';
 import React, { useState } from 'react'
 
 type Category =
@@ -299,11 +300,10 @@ const CoursesHome = () => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-1 rounded-full transition-all duration-300 font-medium ${
-                activeCategory === category
+              className={`px-4 py-1 rounded-full transition-all duration-300 font-medium ${activeCategory === category
                   ? 'bg-blue-600 text-white shadow-md transform scale-105'
                   : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
-              }`}
+                }`}
             >
               {category}
             </button>
@@ -312,8 +312,8 @@ const CoursesHome = () => {
 
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
           {currentCourses.map((course: any, index: any) => (
-            <div 
-              key={`${activeCategory}-${index}`} 
+            <div
+              key={`${activeCategory}-${index}`}
               className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform hover:scale-105"
             >
               <div className="flex justify-between items-start mb-3">
@@ -322,9 +322,9 @@ const CoursesHome = () => {
                   {course.level}
                 </span>
               </div>
-              
+
               <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.description}</div>
-              
+
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-1">
                   <span className="text-yellow-500">★</span>
@@ -334,9 +334,9 @@ const CoursesHome = () => {
                   {course.duration}
                 </div>
               </div>
-              
-              <Button 
-                variant="default" 
+
+              <Button
+                variant="default"
                 className="w-full bg-blue-600 hover:bg-blue-700 transition-colors duration-200"
               >
                 View More
@@ -346,8 +346,12 @@ const CoursesHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant='default'>View More Courses</Button>
+          <Button variant='default' className='flex items-center justify-center text-base font-normal rounded-full'>
+            <span>View More Courses</span>
+            <ChevronRightIcon />
+          </Button>
         </div>
+
       </div>
     </div>
   )

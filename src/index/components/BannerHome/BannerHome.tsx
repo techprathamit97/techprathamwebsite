@@ -2,7 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tv } from 'lucide-react';
+import { ChevronRightIcon, Tv } from 'lucide-react';
+import { CaretRightIcon, RocketIcon } from '@radix-ui/react-icons';
 
 const BannerHome = () => {
   return (
@@ -10,7 +11,10 @@ const BannerHome = () => {
       <div className='w-10/12 h-auto flex md:flex-row flex-col md:gap-0 gap-10 items-center justify-between'>
         <div className='md:w-1/2 w-full flex flex-col gap-4 capitalize'>
           <div className='mb-6'>
-            <Badge className='px-6 py-2 text-base font-light cursor-pointer rounded-full border-2 border-[#D1090F] bg-[#d1091076]'>Formula for Growth</Badge>
+            <Badge className='px-6 py-2 text-base font-light cursor-pointer rounded-full border-2 border-[#D1090F] bg-[#d109103a] text-[#D1090F]'>
+              <RocketIcon className='w-5 h-5' />
+              <span className='ml-2'>Formula for Growth</span>
+            </Badge>
           </div>
           <div className='md:text-5xl text-4xl font-bold flex flex-col md:gap-2 gap-1'>
             <span>Why should you</span>
@@ -18,13 +22,13 @@ const BannerHome = () => {
           </div>
           <div>Join techpratham - indias premier training institute for a future-ready career</div>
           <div>
-            <Button variant='manual' className='flex items-center justify-center text-base font-normal'>
-              Book Free Demo
-              <Tv />
+            <Button variant='manual' className='flex items-center justify-center text-base font-normal rounded-full mt-2'>
+              <span>Book Free Demo</span>
+              <ChevronRightIcon />
             </Button>
           </div>
         </div>
-        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-red-600 object-cover' />
+        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-red-600 object-cover boxShadow' />
       </div>
     </div>
   )
