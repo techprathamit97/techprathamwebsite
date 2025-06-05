@@ -63,11 +63,12 @@ const CareerHome = () => {
   ];
 
   return (
-    <div className='w-full max-w-7xl mx-auto h-auto flex flex-col items-center justify-center py-10 bg-white text-black px-4'>
+    <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-white text-black'>
+      
       {/* Partners Section */}
-      <div className='w-full mb-12'>
-        <div className="text-center text-black mb-6 text-lg">In Association With</div>
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-8 w-full justify-items-center">
+      <div className='w-10/12 text-center flex flex-col gap-10'>
+        <div className="text-3xl font-bold text-gray-800">In Association With</div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-12 w-full justify-items-center">
           <Image src='/next.svg' alt='' width={100} height={50} />
           <Image src='/next.svg' alt='' width={100} height={50} />
           <Image src='/next.svg' alt='' width={100} height={50} />
@@ -80,41 +81,44 @@ const CareerHome = () => {
       </div>
 
       {/* Courses Section */}
-      <div className='w-full h-auto flex flex-col text-center py-10'>
-        <div className="text-center text-black mb-6 text-lg capitalize">Climb your career ladder with world-class professional</div>
-        <div className="w-full max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {statsData.map((stat) => (
-              <div
-                key={stat.id}
-                className={`${stat.bgColor} rounded-lg p-6 text-white shadow-lg hover:shadow-xl transition-shadow duration-300`}
-              >
-                <div className="flex flex-col space-y-4">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    {stat.icon}
-                  </div>
+      <div className='w-10/12 h-auto flex flex-col text-center gap-10 py-10'>
 
-                  {/* Number/Title */}
-                  <div>
-                    <div className="text-3xl font-bold mb-1">
-                      {stat.number}
-                    </div>
-                    <div className="text-xl font-semibold">
-                      {stat.title}
-                    </div>
-                  </div>
+        <div className='w-full h-auto flex flex-col text-center gap-2'>
+          <div className="text-3xl font-bold text-gray-800">Climb your career ladder with world-class professional</div>
+          <div className="text-lg text-gray-600 max-w-2xl mx-auto">Learn from industry experts and get certified by prestigious institutions</div>
+        </div>
 
-                  {/* Description */}
-                  <div>
-                    <p className="text-sm leading-relaxed opacity-90">
-                      {stat.description}
-                    </p>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {statsData.map((stat) => (
+            <div
+              key={stat.id}
+              className={`${stat.bgColor} rounded-lg p-6 text-white shadow-lg hover:shadow-xl transition-shadow duration-300`}
+            >
+              <div className="flex flex-col space-y-4">
+                {/* Icon */}
+                <div className="flex-shrink-0">
+                  {stat.icon}
+                </div>
+
+                {/* Number/Title */}
+                <div>
+                  <div className="text-3xl font-bold mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-xl font-semibold">
+                    {stat.title}
                   </div>
                 </div>
+
+                {/* Description */}
+                <div>
+                  <p className="text-sm leading-relaxed opacity-90">
+                    {stat.description}
+                  </p>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
 

@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 const CertificationHome = () => {
   return (
-    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 overflow-hidden'>
+    <div className='w-10/12 h-auto flex flex-col gap-10 py-10 mb-20 bg-[#f3f8ff] rounded-2xl shadow-md overflow-hidden'>
       <div className="text-3xl font-bold mb-4 text-gray-800 text-center">Certification Partners</div>
       <Swiper
         effect={'coverflow'}
