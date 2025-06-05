@@ -12,7 +12,7 @@ const BlogsHome = () => {
         {blogData.map((blog, index) => (
           <div
             key={index}
-            className="w-full h-64 rounded-xl border border-white flex flex-col items-start justify-end p-4 bgImage"
+            className={`w-full h-64 rounded-xl border border-white flex flex-col items-start justify-end p-4 ${blog.class}`}
           >
             <div className='font-medium'>{blog.title}</div>
             <div className="text-sm font-light">{blog.description}</div>
@@ -32,13 +32,16 @@ const blogData = [
   {
     title: "Understanding AI: A Beginner’s Guide",
     description: "Explore the fundamentals of Artificial Intelligence and how it's shaping our future.",
+    class: "bgAI"
   },
   {
     title: "Mastering Data Science",
     description: "Learn the core concepts and tools used in data science today.",
+    class: "bgDS"
   },
   {
     title: "Top 10 Machine Learning Algorithms",
     description: "Get to know the most widely used ML algorithms with real-world applications.",
+    class: "bgML"
   },
 ];

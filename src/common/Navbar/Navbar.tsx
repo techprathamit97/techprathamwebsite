@@ -30,7 +30,7 @@ const Navbar = () => {
         </div>
 
         {/* mobile design */}
-        <div className='w-11/12 flex flex-row items-center justify-between'>
+        <div className='w-11/12 md:hidden flex flex-row items-center justify-between'>
           <Link href={'/'} aria-label='Techpratham'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
           </Link>
