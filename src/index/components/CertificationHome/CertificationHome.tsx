@@ -42,7 +42,7 @@ const CertificationHome = () => {
         className="mySwiper swiperCertificate"
       >
         {client.map((item, index) => (
-          <SwiperSlide key={index} className='w-80 h-80 flex items-center justify-center bg-[#fff] p-6'>
+          <SwiperSlide key={index} className='md:w-80 w-56 md:h-80 h-56 flex items-center justify-center bg-[#fff] p-6'>
             <Image src={item.image} alt={item.altText} width={300} height={300} className='w-full h-auto object-cover' />
           </SwiperSlide>
         ))}

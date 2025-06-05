@@ -26,7 +26,7 @@ const RecognitionHome = () => {
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
               </div>
-              <div className='text-2xl font-semibold'>ISO Certification</div>
+              <div className='md:text-2xl text-xl font-semibold'>ISO Certification</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>
@@ -39,7 +39,7 @@ const RecognitionHome = () => {
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
               </div>
-              <div className='text-2xl font-semibold'>ISO Certification</div>
+              <div className='md:text-2xl text-xl font-semibold'>ISO Certification</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>
@@ -52,7 +52,7 @@ const RecognitionHome = () => {
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
               </div>
-              <div className='text-2xl font-semibold'>ISO Certification</div>
+              <div className='md:text-2xl text-xl font-semibold'>ISO Certification</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>

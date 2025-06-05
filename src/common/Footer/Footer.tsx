@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='w-full flex flex-row flex-wrap items-start justify-between'>
+        <div className='w-full flex flex-row flex-wrap gap-10 items-start justify-between'>
           <div className='flex flex-col gap-1'>
             <div className='text-base uppercase font-normal'>Certification Courses</div>
             <div className='flex flex-col capitalize text-sm font-light gap-1'>

@@ -290,7 +290,7 @@ const CoursesHome = () => {
     <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-[#f6f8ff] text-black'>
 
       <div className='md:w-full w-11/12 h-auto flex flex-col text-center'>
-        <div className="text-3xl font-bold text-gray-800">Our Courses</div>
+        <div className="md:text-3xl text-2xl md:font-bold font-semibold text-gray-800">Our Courses</div>
         <div className="md:text-lg text-base text-gray-600 md:max-w-2xl w-full mx-auto">Programs to Help you upskill which lands you to your Dream Job</div>
       </div>
 
