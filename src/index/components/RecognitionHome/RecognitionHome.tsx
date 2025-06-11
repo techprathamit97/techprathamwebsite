@@ -17,11 +17,11 @@ const RecognitionHome = () => {
 
         <div className='flex flex-row gap-4 mb-8 text-lg'>
           <Button variant='manual' className='text-lg font-normal'>| Certifications</Button>
-          <Button variant='outline' className='text-lg font-normal'>| Affliations</Button>
+          <Button variant='default' className='text-lg font-normal'>| Affliations</Button>
         </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -34,7 +34,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -47,7 +47,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
+          <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />

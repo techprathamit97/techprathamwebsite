@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronRightIcon, Tv } from 'lucide-react';
-import { CaretRightIcon, RocketIcon } from '@radix-ui/react-icons';
+import { RocketIcon } from '@radix-ui/react-icons';
 
 const BannerHome = () => {
   return (
