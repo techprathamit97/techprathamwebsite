@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import { client } from '@/components/assets/client';
 
@@ -18,7 +18,7 @@ const ClientHome = () => {
     return (
         <div className='w-10/12 h-auto flex flex-col items-center justify-center py-20 gap-10 bg-white text-black'>
             <div className='w-full h-auto flex flex-col text-center'>
-                <div className="md:text-3xl text-2xl md:font-bold font-medium uppercase text-red-600">Placement Client</div>
+                <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Placement Client</div>
             </div>
             <div className='flex flex-col items-center justify-center w-full h-auto'>
                 <Swiper

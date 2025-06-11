@@ -287,22 +287,22 @@ const CoursesHome = () => {
   }
 
   return (
-    <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-[#f6f8ff] text-black'>
+    <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-[#f7f7f7] text-black'>
 
       <div className='md:w-full w-11/12 h-auto flex flex-col text-center'>
-        <div className="md:text-3xl text-2xl md:font-bold font-semibold text-gray-800">Our Courses</div>
+        <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Our Courses</div>
         <div className="md:text-lg text-base text-gray-600 md:max-w-2xl w-full mx-auto">Programs to Help you upskill which lands you to your Dream Job</div>
       </div>
 
       <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center h-auto'>
-        <div className='flex flex-wrap gap-2 w-full justify-center p-4 bg-gray-400 rounded-lg'>
+        <div className='flex flex-wrap w-full justify-between rounded-lg'>
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-1 rounded-full transition-all duration-300 font-medium ${activeCategory === category
-                  ? 'bg-blue-600 text-white shadow-md transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+              className={`px-4 py-1 rounded-full transition-all duration-100 font-normal ${activeCategory === category
+                  ? 'bg-gradient-to-r from-[#CD4647] to-[#7F3B40] text-white shadow-md transform scale-105'
+                  : 'bg-white text-gray-700 hover:bg-[#ffe9e9] hover:text-[#7F3B40] border border-gray-200'
                 }`}
             >
               {category}
@@ -337,7 +337,7 @@ const CoursesHome = () => {
 
               <Button
                 variant="default"
-                className="w-full bg-blue-600 hover:bg-blue-700 transition-colors duration-200"
+                className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-blue-700 transition-colors duration-200"
               >
                 View More
               </Button>
@@ -346,7 +346,7 @@ const CoursesHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant='default' className='flex items-center justify-center text-base font-normal rounded-full'>
+          <Button className='flex items-center justify-center text-base font-normal rounded-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] text-white'>
             <span>View More Courses</span>
             <ChevronRightIcon />
           </Button>

@@ -1,16 +1,16 @@
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { ChevronRightIcon, Dot } from 'lucide-react'
-import Image from 'next/image'
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ChevronRightIcon, Dot } from 'lucide-react';
 
 const RecognitionHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-black text-white'>
+    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-[#f7f7f7] text-black'>
 
-      <div className='w-full h-auto flex flex-col text-center font-semibold uppercase text-2xl'>
-        <div className="text-red-600 font-bold">Industry Recognition</div>
-        <div>Elevate your career with prestigious credentials</div>
+      <div className='w-full h-auto flex flex-col text-center gap-2'>
+        <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Industry Recognition</div>
+        <div className="md:text-lg text-base text-gray-600 max-w-2xl mx-auto">Elevate your career with prestigious credentials</div>
       </div>
 
       <div className='w-10/12 h-auto flex flex-col items-center justify-center'>
@@ -21,7 +21,7 @@ const RecognitionHome = () => {
         </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -34,7 +34,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -47,7 +47,7 @@ const RecognitionHome = () => {
               <div className='text-sm'>Validate your skills with an internationally recognized ISO certification.</div>
             </div>
           </div>
-          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md boxShadow'>
+          <div className='flex flex-col border bg-[#d109101e] border-[#D1090F] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-12' width={40} height={40} />
@@ -63,7 +63,7 @@ const RecognitionHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant='manual' className='flex items-center justify-center text-base font-normal rounded-full mt-2'>
+          <Button className='flex items-center justify-center text-base font-normal rounded-full transition-all duration-300 bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-gradient-to-l text-white'>
             <span>Book Free Demo</span>
             <ChevronRightIcon />
           </Button>

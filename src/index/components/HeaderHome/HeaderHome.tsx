@@ -21,7 +21,7 @@ const HeaderHome = () => {
         <div className='w-full h-auto flex flex-col items-center justify-center bg-gradient-to-r from-[#371414] to-[#D1090F] text-white overflow-hidden'>
             <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col items-start gap-20 pt-16 pb-24'>
                 <div className='md:w-8/12 w-full flex flex-col gap-10'>
-                    <div className='md:text-4xl text-3xl md:leading-[46px] leading-[36px] font-bold'>India's <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>Leading Job oriented Project</span> based Upskilling platform.</div>
+                    <div className='md:text-4xl text-3xl md:leading-[46px] leading-[36px] font-bold'>India's <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>Leading Job Oriented Project</span> based Upskilling platform.</div>
                     <div className='flex flex-col items-start text-left'>
                         <h2 className='text-2xl font-semibold mb-2 bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>
                             Our Mission
