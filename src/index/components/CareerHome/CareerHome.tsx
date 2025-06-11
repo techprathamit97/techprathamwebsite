@@ -7,7 +7,7 @@ const CareerHome = () => {
     <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-20 bg-white text-black'>
 
       <div className='w-full text-center flex flex-col items-center justify-center gap-10'>
-        <div className="md:text-3xl text-2xl md:font-bold font-medium text-gray-800">In Association With</div>
+        <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">In Association With</div>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 w-11/12 justify-items-center items-center'>
           <Image src='/home/career/mcagi.png' alt='Companies Associated' width={800} height={400} className='w-32 h-24 object-contain' />
           <Image src='/home/career/msde.png' alt='Companies Associated' width={800} height={400} className='w-40 h-24 object-contain' />
@@ -27,7 +27,7 @@ const CareerHome = () => {
       <div className='md:w-10/12 w-11/12 h-auto flex flex-col text-center gap-10 py-10'>
 
         <div className='w-full h-auto flex flex-col text-center gap-2'>
-          <div className="md:text-3xl text-2xl md:font-bold font-medium text-gray-800">Climb your career ladder with world-class professional</div>
+          <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Climb your career ladder with world-class professional</div>
           <div className="md:text-lg text-base text-gray-600 max-w-2xl mx-auto">Learn from industry experts and get certified by prestigious institutions</div>
         </div>
 
