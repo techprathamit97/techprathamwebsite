@@ -7,7 +7,7 @@ import { RocketIcon } from '@radix-ui/react-icons';
 
 const BannerHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-black text-white'>
+    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-[#f7f7f7] text-black'>
       <div className='w-10/12 h-auto flex md:flex-row flex-col md:gap-0 gap-10 items-center justify-between'>
         <div className='md:w-1/2 w-full flex flex-col gap-4 capitalize'>
           <div className='mb-6'>
@@ -28,7 +28,7 @@ const BannerHome = () => {
             </Button>
           </div>
         </div>
-        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-red-600 object-cover boxShadow' />
+        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-white object-cover boxShadow' />
       </div>
     </div>
   )

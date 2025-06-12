@@ -1,18 +1,16 @@
 import React from 'react';
 import './alumni.css'
-import { certificate } from '@/components/assets/certificate';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
-import { client } from '@/components/assets/client';
 import { client1, client2, client3, client4 } from '@/components/assets/alumni';
 
 const AlumniHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center pb-20 gap-10 bg-black text-white'>
+    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-white text-black'>
       <div className='w-10/12 h-auto flex flex-col items-center justify-center gap-5'>
 
-        <div className='w-full flex items-center justify-center'>
-          <Card className="text-lg px-5 py-1 font-semibold mb-8 text-center rounded">Our Alumni Works At</Card>
+        <div className='md:w-10/12 w-11/12 h-auto flex flex-col gap-2 mb-4 items-center text-center'>
+          <div className="md:text-3xl text-2xl md:font-semibold font-medium capitalize">Our <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text font-bold'>Alumni</span> Works At</div>
         </div>
 
         <section className='text-white overflow-x-hidden h-auto w-full'>

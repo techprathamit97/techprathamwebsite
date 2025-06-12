@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 const BlogsHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center pt-20 pb-10 gap-10 bg-black text-white'>
+    <div className='w-full h-auto flex flex-col items-center justify-center pt-20 pb-10 gap-10 bg-white text-black'>
       <div className='md:w-10/12 w-11/12 h-auto flex flex-col items-center text-center'>
         <div className="md:text-3xl text-2xl md:font-semibold font-medium capitalize">Read Our <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>Latest Blogs</span></div>
       </div>

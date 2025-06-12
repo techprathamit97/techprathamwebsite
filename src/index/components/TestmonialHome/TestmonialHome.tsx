@@ -18,7 +18,7 @@ const TestmonialHome = () => {
   };
 
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-gradient-to-r from-[#371414] to-[#D1090F] text-white overflow-hidden'>
+    <div className='w-full h-auto flex flex-col items-center justify-center pb-20 gap-10 bg-white text-black overflow-hidden'>
       <div className='md:w-10/12 w-11/12 h-auto flex flex-col gap-2 items-center text-center'>
         <div className="md:text-3xl text-2xl md:font-semibold font-medium capitalize">Our success lies in our <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text font-bold'>learner's, success</span> stories</div>
         <div className='md:w-1/2 w-full'>Explore our student's experiences and discover how we've healped them achieve their goals through excellence and dedications.</div>
