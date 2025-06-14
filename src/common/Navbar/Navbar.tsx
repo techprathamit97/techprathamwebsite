@@ -7,23 +7,28 @@ import { Search } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <div className='w-full flex flex-col items-center justify-center shadowBorder'>
+    <div className='absolute top-0 z-50 w-full flex flex-col items-center justify-center shadowBorder'>
       <div className='bg-[#080E3A] text-white w-full h-auto flex items-center justify-center'>
-        <div className='md:w-10/12 w-11/12 py-1 md:flex hidden flex-row gap-6 justify-start items-center'>
+        <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center'>
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
           </Link>
-          <div className='flex flex-row gap-1 items-center justify-center ml-4 cursor-pointer'>
+          <div className='lg:flex hidden flex-row gap-1 items-center justify-center ml-4 cursor-pointer'>
             <Component1Icon className='rotate-45' />
             <span>Courses</span>
           </div>
-          <div className='flex flex-row w-96'>
-            <Input className='max-w-96 h-10 bg-white text-black rounded-r-none rounded-l-md' />
-            <div className='p-2 bg-red-700 flex items-center justify-center rounded-r-md'>
-              <Search />
+          <div className='flex flex-row gap-6 items-center justify-center'>
+            <div className='flex flex-row lg:w-96 md:w-72'>
+              <Input className='lg:max-w-96 max-w-72 h-10 bg-white text-black rounded-r-none rounded-l-md' />
+              <div className='p-2 bg-red-700 flex items-center justify-center rounded-r-md'>
+                <Search />
+              </div>
+            </div>
+            <div className='lg:hidden flex'>
+              <HamburgerMenuIcon className='w-5 h-5' />
             </div>
           </div>
-          <div className='flex flex-row gap-1 items-center justify-center cursor-pointer'>
+          <div className='lg:flex hidden flex-row gap-1 items-center justify-center cursor-pointer'>
             <Component1Icon className='rotate-45' />
             <span>Corporate Training</span>
           </div>
@@ -39,8 +44,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className='w-full h-auto py-2 md:flex hidden items-center justify-center'>
-        <div className='md:w-10/12 w-11/12 py-1 text-sm flex flex-row gap-6 items-center justify-center'>
+      <div className='w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white'>
+        <div className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <div className='cursor-pointer'>About Us</div>
           <div className='cursor-pointer'>Training Certificate</div>
           <div className='cursor-pointer'>Job Openings</div>

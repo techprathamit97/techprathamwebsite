@@ -3,7 +3,6 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 
-import HeaderHome from '../components/HeaderHome/HeaderHome';
 import ClientHome from '../components/ClientHome/ClientHome';
 import CoursesHome from '../components/CoursesHome/CoursesHome';
 import CareerHome from '../components/CareerHome/CareerHome';
@@ -17,6 +16,7 @@ import AlumniHome from '../components/AlumniHome/AlumniHome';
 import TestmonialHome from '../components/TestmonialHome/TestmonialHome';
 import BlogsHome from '../components/BlogsHome/BlogsHome';
 import ContactHome from '../components/ContactHome/ContactHome';
+import HeroHome from '../components/HeroHome/HeroHome';
 
 const IndexView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -28,7 +28,7 @@ const IndexView = () => {
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
-      <HeaderHome />
+      <HeroHome />
 
       <ClientHome />
 
