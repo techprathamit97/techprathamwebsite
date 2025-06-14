@@ -7,16 +7,16 @@ import { RocketIcon } from '@radix-ui/react-icons';
 
 const BannerHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-[#f7f7f7] text-black'>
+    <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-black text-white'>
       <div className='w-10/12 h-auto flex md:flex-row flex-col md:gap-0 gap-10 items-center justify-between'>
         <div className='md:w-1/2 w-full flex flex-col gap-4 capitalize'>
           <div className='mb-6'>
-            <Badge className='px-6 py-2 text-base font-light cursor-pointer rounded-full border-2 border-[#D1090F] bg-[#d109103a] text-[#D1090F]'>
+            <Badge className='px-6 py-2 text-base font-light cursor-pointer rounded-full border-2 border-[#D1090F] bg-[#d109103a] hover:bg-[#d109105d] text-[#D1090F]'>
               <RocketIcon className='w-5 h-5' />
               <span className='ml-2'>Formula for Growth</span>
             </Badge>
           </div>
-          <div className='md:text-5xl text-4xl font-bold flex flex-col md:gap-2 gap-1'>
+          <div className='lg:text-5xl md:text-4xl text-3xl font-bold flex flex-col md:gap-2 gap-1'>
             <span>Why should you</span>
             <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>upskill now?</span>
           </div>
@@ -28,7 +28,7 @@ const BannerHome = () => {
             </Button>
           </div>
         </div>
-        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-white object-cover boxShadow' />
+        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-red-600 object-cover boxShadow' />
       </div>
     </div>
   )

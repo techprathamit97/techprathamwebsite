@@ -35,10 +35,10 @@ const ContactHome = () => {
   };
 
   return (
-    <div className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10 text-black bg-white'>
-      <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col items-start justify-center gap-16 py-5'>
+    <div className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10 text-white bg-black'>
+      <div className='md:w-10/12 w-11/12 h-auto flex lg:flex-row flex-col lg:items-start items-center justify-center gap-16 py-5'>
 
-        <div className='md:w-1/2 w-full h-full flex flex-col gap-3 items-start justify-center py-6'>
+        <div className='lg:w-1/2 w-full h-full flex flex-col gap-3 items-start justify-center py-6'>
           <div className='md:text-4xl text-2xl md:font-bold font-semibold flex flex-col capitalize'>
             <span>Invest in your future with </span>
             <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text font-bold'>skills that matter.</span>
@@ -74,9 +74,9 @@ const ContactHome = () => {
           </div>
         </div>
 
-        <div className='md:w-1/2 w-full h-auto flex flex-col gap-5 items-center justify-center'>
+        <div className='lg:w-1/2 md:w-9/12 w-full h-auto flex flex-col gap-5 items-center justify-center'>
           <div className='md:text-4xl text-2xl bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text md:font-bold font-semibold'>Request Call Back</div>
-          <form className='w-full flex flex-col md:gap-6 gap-4 border border-gray-400 md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
+          <form className='w-full flex flex-col md:gap-6 gap-4 boxShadow md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
 
             <input {...register('fullName')} type="text" id='fullName' name='fullName' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Full Name' required />
 

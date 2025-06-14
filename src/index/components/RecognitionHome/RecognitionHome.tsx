@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { ChevronRightIcon, Dot } from 'lucide-react';
+import { ChevronRightIcon } from 'lucide-react';
 
 const RecognitionHome = () => {
+  const [first, setFirst] = useState(false);
+  
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-[#f7f7f7] text-black'>
 
@@ -16,8 +18,8 @@ const RecognitionHome = () => {
       <div className='w-10/12 h-auto flex flex-col items-center justify-center'>
 
         <div className='flex flex-row gap-4 mb-8 text-lg'>
-          <Button variant='manual' className='text-lg font-normal'>| Certifications</Button>
-          <Button variant='default' className='text-lg font-normal'>| Affliations</Button>
+          <Button variant='manual' className='text-lg font-normal' onClick={() => setFirst(true)}>| Certifications</Button>
+          <Button variant='default' className='text-lg font-normal' onClick={() => setFirst(true)}>| Affliations</Button>
         </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>

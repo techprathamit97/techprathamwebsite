@@ -13,7 +13,7 @@ const SpecialityHome = () => {
         <div className="md:text-5xl text-2xl md:font-semibold font-medium">Why Choose <span className='text-transparent headingSpeciality'>Tech Pratham?</span></div>
       </div>
 
-      <div className='md:w-1/2 w-11/12 h-auto flex flex-col gap-6'>
+      <div className='lg:w-6/12 md:w-9/12 w-11/12 h-auto flex flex-col gap-6'>
         <div className='flex flex-row gap-4'>
           <div className='w-16 h-auto flex flex-col items-center justify-start'>
             <div className='w-16 h-16 rounded bg-blue-500 flex items-center justify-center'>
