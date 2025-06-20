@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroHome = () => {
     return (
-        <div className='w-full h-[600px] flex flex-col items-center justify-center text-white overflow-hidden relative'>
+        <div className='w-full h-[500px] flex flex-col items-center justify-center text-white overflow-hidden relative'>
             <video src='/home/hero/hero.mp4' className='w-full h-full absolute top-0 right-0 object-cover' autoPlay loop muted playsInline />
             <div className='absolute top-0 right-0 w-full h-full bg-[#0d0e1848] blur-xl'></div>
 

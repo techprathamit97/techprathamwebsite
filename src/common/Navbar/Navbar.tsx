@@ -1,20 +1,20 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { Component1Icon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import { BackpackIcon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <div className='absolute top-0 z-50 w-full flex flex-col items-center justify-center shadowBorder'>
+    <div className='z-50 w-full flex flex-col items-center justify-center shadowBorder'>
       <div className='bg-[#080E3A] text-white w-full h-auto flex items-center justify-center'>
-        <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center'>
+        <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center font-light'>
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
           </Link>
-          <div className='lg:flex hidden flex-row gap-1 items-center justify-center ml-4 cursor-pointer'>
-            <Component1Icon className='rotate-45' />
+          <div className='lg:flex hidden flex-row gap-2 items-center justify-center ml-4 cursor-pointer'>
+            <DashboardIcon className='w-4 h-4' />
             <span>Courses</span>
           </div>
           <div className='flex flex-row gap-6 items-center justify-center'>
@@ -28,10 +28,10 @@ const Navbar = () => {
               <HamburgerMenuIcon className='w-5 h-5' />
             </div>
           </div>
-          <div className='lg:flex hidden flex-row gap-1 items-center justify-center cursor-pointer'>
-            <Component1Icon className='rotate-45' />
+          <Link href='/corporate-training' className='lg:flex hidden flex-row gap-2 items-center justify-center cursor-pointer'>
+            <BackpackIcon className='w-4 h-4' />
             <span>Corporate Training</span>
-          </div>
+          </Link>
         </div>
 
         {/* mobile design */}

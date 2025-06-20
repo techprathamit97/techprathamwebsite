@@ -13,14 +13,9 @@ const AboutView = () => {
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
-      <div className='w-full h-80 flex flex-col items-center justify-center text-black overflow-hidden relative'>
-        <div className='h-full md:w-10/12 w-full z-10 py-20 flex flex-col justify-end'>
-          <div className='w-auto lg:text-4xl md:text-3xl text-xl font-bold md:bg-transparent bg-[#1f1f1fd4] md:px-0 px-4'>
-            <span>
-              About Us Page
-            </span>
-          </div>
-        </div>
+      <div className='w-full h-56 flex flex-col items-center justify-center bg-gradient-to-l from-[#CD4647] to-[#7F3B40] text-white'>
+        <div className='text-4xl font-semibold'>About Us Page</div>
+        <div>Our Mission is to build nation through education and beyond limitation.</div>
       </div>
 
     </div>
