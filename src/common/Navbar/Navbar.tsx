@@ -46,16 +46,16 @@ const Navbar = () => {
       </div>
       <div className='w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white'>
         <div className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
-          <div className='cursor-pointer'>About Us</div>
-          <div className='cursor-pointer'>Training Certificate</div>
-          <div className='cursor-pointer'>Job Openings</div>
-          <div className='cursor-pointer'>Admission</div>
-          <div className='cursor-pointer'>Reviews</div>
-          <div className='cursor-pointer'>Blogs</div>
-          <div className='cursor-pointer'>Payment</div>
-          <div className='cursor-pointer'>Contact Us</div>
-          <div className='cursor-pointer'>24/7 Technical Support</div>
-          <div className='cursor-pointer'>Student Zone</div>
+          <Link href='/about-us' className='cursor-pointer'>About Us</Link>
+          <Link href='/training-certificate' className='cursor-pointer'>Training Certificate</Link>
+          <Link href='/job-openings' className='cursor-pointer'>Job Openings</Link>
+          <Link href='/admission' className='cursor-pointer'>Admission</Link>
+          <Link href='/reviews' className='cursor-pointer'>Reviews</Link>
+          <Link href='/blogs' className='cursor-pointer'>Blogs</Link>
+          <Link href='/payment' className='cursor-pointer'>Payment</Link>
+          <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
+          <Link href='/technical-support' className='cursor-pointer'>24/7 Technical Support</Link>
+          <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
         </div>
       </div>
     </div>
