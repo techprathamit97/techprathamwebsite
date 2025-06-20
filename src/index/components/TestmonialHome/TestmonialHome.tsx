@@ -14,7 +14,7 @@ import { Autoplay } from 'swiper/modules';;
 const TestmonialHome = () => {
 
   const renderStars = (rating: any) => {
-    return "⭐".repeat(rating);
+    return "★ ".repeat(rating);
   };
 
   return (
@@ -61,8 +61,7 @@ const TestmonialHome = () => {
                 </div>
               </div>
               <div className="w-full flex items-start text-left gap-2 mb-2">
-                <span>{renderStars(testimonial.rating)}</span>
-                {testimonial.verified && <span className="text-green-500">✅</span>}
+                <span className='text-yellow-400 text-2xl'>{renderStars(testimonial.rating)}</span>
               </div>
               <div className="text-gray-700 leading-relaxed text-base text-left">{testimonial.testimonial}</div>
             </SwiperSlide>

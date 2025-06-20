@@ -7,10 +7,10 @@ import './speciality.css'
 
 const SpecialityHome = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center py-24 gap-12 bg-gradient-to-r from-[#371414] to-[#D1090F] text-white overflow-hidden'>
+    <div className='w-full h-auto flex flex-col items-center justify-center py-24 gap-12 bg-gradient-to-l from-[#CD4647] to-[#7F3B40] text-white overflow-hidden'>
 
       <div className='md:w-10/12 w-11/12 h-auto flex flex-col text-center'>
-        <div className="md:text-5xl text-2xl md:font-semibold font-medium">Why Choose <span className='text-transparent headingSpeciality'>Tech Pratham?</span></div>
+        <div className="md:text-5xl text-2xl md:font-semibold font-medium">Why Choose Tech Pratham?</div>
       </div>
 
       <div className='lg:w-6/12 md:w-9/12 w-11/12 h-auto flex flex-col gap-6'>
@@ -26,7 +26,7 @@ const SpecialityHome = () => {
           <div className='w-11/12 bg-gradient-to-tr from-[#31509A] to-[#28417E] md:p-6 p-4 rounded-md'>
             <div className='font-semibold text-2xl'>Training Mode</div>
             <div className='text-gray-200'>Choose from two versatile training modes designed to match your learning preferences:</div>
-            <div className='md:w-10/12 w-full bg-[#0000004e] md:rounded-lg rounded-none p-3 flex md:flex-row flex-col md:gap-0 gap-3 items-center justify-between mt-4 px-5'>
+            <div className='md:w-10/12 w-full bg-[#0000004e] md:rounded-lg rounded-none p-3 flex md:flex-row flex-col md:gap-4 gap-3 items-center justify-between mt-4'>
               <div className='flex flex-row gap-2 font-light'>
                 <Image src='/home/recognition/company.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
                 <span>100% Live Online Classes</span>
@@ -52,12 +52,12 @@ const SpecialityHome = () => {
             <div className='font-semibold text-2xl'>Hands-On Practical Training</div>
             <div className='text-gray-200'>Dive deep into real-world scenarios across industries like BFSI, Retail, Healthcare, and more. Out raining ensures practical relevence tailored to sectors such as:</div>
             <div className='flex flex-row flex-wrap gap-2 mt-4'>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>Manufacturing</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>Technology</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>Consulting</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>Healthcare</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>BFSI</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-0 text-base font-light cursor-pointer bg-[#0383ff]'>Retail</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>Manufacturing</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>Technology</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>Consulting</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>Healthcare</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>BFSI</Badge>
+              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#0000004e]'>Retail</Badge>
             </div>
           </div>
         </div>
@@ -74,9 +74,9 @@ const SpecialityHome = () => {
           <div className='w-11/12 bg-gradient-to-tr from-[#31509A] to-[#28417E] md:p-6 p-4 rounded-md'>
             <div className='font-semibold text-2xl'>Real Projects, Real Outcomes</div>
             <div className='text-gray-200'>Through our Trending courses get hands-on experience with real-world challenges. Work on 100+ industry-specific projects under the guidance of professionals:</div>
-            <div className='md:w-9/12 w-full bg-[#0000004e] md:rounded-2xl rounded-none p-3 flex flex-row items-center justify-between mt-4 md:px-8 px-4'>
-              <div className='w-auto'>Earn Certification for every project you complete:</div>
+            <div className='md:w-9/12 w-full bg-[#0000004e] md:rounded-lg rounded-none p-3 flex flex-row items-center justify-between gap-3 mt-4'>
               <Image src='/home/recognition/company.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
+              <div className='w-auto'>Earn Certification for every project you complete:</div>
             </div>
           </div>
         </div>
@@ -94,10 +94,10 @@ const SpecialityHome = () => {
             <div className='font-semibold text-2xl'>Achieve Your Career Aspirations</div>
             <div className='text-gray-200'>Leverage our placement support to secure your dream job. Our career services include:</div>
             <div className='flex flex-col gap-4 mt-4'>
-              <Badge className='md:px-6 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0383ff]'>Placement Assistance: Connect with top recuiters.</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0383ff]'>Mock interview Sessions: Sharpen your interview skills.</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0383ff]'>Resume Optimizations: Craft a professional resume that stands out.</Badge>
-              <Badge className='md:px-6 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0383ff]'>Exclusive Interview Opportunities: Access high-value job openings in leading companies.</Badge>
+              <Badge className='md:px-4 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0000004e]'>Placement Assistance: Connect with top recuiters.</Badge>
+              <Badge className='md:px-4 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0000004e]'>Mock interview Sessions: Sharpen your interview skills.</Badge>
+              <Badge className='md:px-4 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0000004e]'>Resume Optimizations: Craft a professional resume that stands out.</Badge>
+              <Badge className='md:px-4 px-3 md:py-2 py-1 md:text-base text-sm font-light cursor-pointer bg-[#0000004e]'>Exclusive Interview Opportunities: Access high-value job openings in leading companies.</Badge>
             </div>
           </div>
         </div>
