@@ -2,6 +2,12 @@
 
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
+import HeaderAbout from '../components/HeaderAbout/HeaderAbout';
+import MainAbout from '../components/MainAbout/MainAbout';
+import MissionAbout from '../components/MissionAbout/MissionAbout';
+import SpecialityAbout from '../components/SpecialityAbout/SpecialityAbout';
+import BannerAbout from '../components/BannerAbout/BannerAbout';
+import TeamsAbout from '../components/TeamsAbout/TeamsAbout';
 
 const AboutView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -13,10 +19,17 @@ const AboutView = () => {
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
-      <div className='w-full h-56 flex flex-col items-center justify-center bg-gradient-to-l from-[#CD4647] to-[#7F3B40] text-white'>
-        <div className='text-4xl font-semibold'>About Us Page</div>
-        <div>Our Mission is to build nation through education and beyond limitation.</div>
-      </div>
+      <HeaderAbout />
+
+      <MainAbout />
+
+      <MissionAbout />
+
+      <SpecialityAbout />
+
+      <BannerAbout />
+
+      <TeamsAbout />
 
     </div>
   )
