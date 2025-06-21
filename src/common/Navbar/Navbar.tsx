@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { BackpackIcon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
@@ -9,6 +9,17 @@ import { Button } from '@/components/ui/button';
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [selectedCourseIdx, setSelectedCourseIdx] = useState(0);
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isActive]);
 
   return (
     <div className='z-50 w-full flex flex-col items-center justify-center relative shadowBorder'>

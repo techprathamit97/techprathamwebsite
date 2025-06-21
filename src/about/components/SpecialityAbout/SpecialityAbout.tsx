@@ -5,7 +5,7 @@ const SpecialityAbout = () => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-16 py-16'>
             <div className='md:w-10/12 w-11/12 h-auto flex flex-col gap-4'>
-                <div>Why to Choose Us?</div>
+                <div className='md:text-2xl text-xl md:font-semibold font-medium'>Why to Choose Us?</div>
                 <div>
                     Our training programs are designed to meet the demands of the modern tech industry. We collaborate with industry experts to ensure our courses cover the latest tools, technologies, and methodologies. All instructors are seasoned professionals with years of experience in the IT field. They bring real-world insights and hands-on expertise to every session, providing practical knowledge alongside theoretical learning. We prioritize practical experience through live projects, case studies, and interactive labs, ensuring our students gain the confidence to solve real-world challenges. We maintain small class sizes and provide one-on-one mentorship to ensure every student receives individual attention and tailored guidance. Our partnerships with leading IT companies give our students access to internships, job placement assistance, and networking opportunities.
                 </div>
@@ -15,7 +15,7 @@ const SpecialityAbout = () => {
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pt-4'>
 
                     {speciality.map((service: any, index: any) => (
-                        <div key={index} className="w-full h-auto bg-white text-black flex flex-col gap-4 items-start p-8 cursor-pointer">
+                        <div key={index} className="w-full h-auto bg-white text-black flex flex-col gap-4 items-start p-8 cursor-pointer shadowBorder">
                             <Image src={`/services/icons/${service.icon}`} alt='' width={30} height={30} className='w-12 h-auto' />
                             <div className="text-base font-semibold">{service.title}</div>
                             <div className="text-sm font-light">{service.description}</div>

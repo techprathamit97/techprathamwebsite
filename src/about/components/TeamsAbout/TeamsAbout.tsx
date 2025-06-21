@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { teams } from '@/src/index/components/EducatorHome/teams';
 
 const TeamsAbout = () => {
     return (
@@ -26,3 +25,42 @@ const TeamsAbout = () => {
 }
 
 export default TeamsAbout
+
+const teams = [
+    {
+        image: "/home/educator/person.jpg",
+        name: "Aditya Raj",
+        position: "Founder & Vision Architect",
+        link: "aditya-raj",
+        about: [
+            "Aditya leads TechPratham with a vision to make quality tech education accessible to everyone."
+        ]
+    },
+    {
+        image: "/home/educator/person.jpg",
+        name: "Aadhya Anand",
+        position: "Platform Engineer",
+        link: "bipanshu-kumar",
+        about: [
+            "Bipanshu architects the platform's core, ensuring a seamless learning experience for all users."
+        ]
+    },
+    {
+        image: "/home/educator/person.jpg",
+        name: "Manoneet Kumar",
+        position: "Curriculum Strategist",
+        link: "manoneet-kumar",
+        about: [
+            "Manoneet drives the course roadmap by aligning user needs with emerging tech trends."
+        ]
+    },
+    {
+        image: "/home/educator/person.jpg",
+        name: "Sneha Sharma",
+        position: "Data Science Trainer",
+        link: "sneha-sharma",
+        about: [
+            "Sneha simplifies complex data concepts into real-world applications for aspiring analysts."
+        ]
+    },
+];
