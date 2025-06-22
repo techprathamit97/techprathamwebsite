@@ -10,19 +10,8 @@ const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [selectedCourseIdx, setSelectedCourseIdx] = useState(0);
 
-  useEffect(() => {
-    if (isActive) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isActive]);
-
   return (
-    <div className='z-50 w-full flex flex-col items-center justify-center relative shadowBorder'>
+    <div className={`${isActive ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
       <div className='bg-[#080E3A] text-white w-full h-auto flex items-center justify-center'>
         <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center font-light'>
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
@@ -59,7 +48,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className='w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white shadow z-20'>
+      <div className='w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white border-b border-b-gray-100 z-20'>
         <div className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer'>About Us</Link>
           <Link href='/training-certificate' className='cursor-pointer'>Training Certificate</Link>
@@ -73,7 +62,7 @@ const Navbar = () => {
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
         </div>
       </div>
-      <div className={`${isActive ? 'flex' : 'hidden'} fixed top-28 left-0 w-full h-auto bg-white text-[#1a1a1a] transition-all flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
+      <div className={`${isActive ? 'flex' : 'hidden'} w-full h-auto bg-white text-[#1a1a1a] transition-all flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
         <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-2 md:grid-cols-3 gap-4 py-4'>
           <div className='col-span-1 flex flex-col gap-2'>
             {courses.map((course, idx) => (
