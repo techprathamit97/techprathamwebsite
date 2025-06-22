@@ -3,7 +3,6 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 import HeaderAbout from '../components/HeaderAbout/HeaderAbout';
-import MainAbout from '../components/MainAbout/MainAbout';
 import MissionAbout from '../components/MissionAbout/MissionAbout';
 import SpecialityAbout from '../components/SpecialityAbout/SpecialityAbout';
 import BannerAbout from '../components/BannerAbout/BannerAbout';
@@ -20,8 +19,6 @@ const AboutView = () => {
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
       <HeaderAbout />
-
-      <MainAbout />
 
       <MissionAbout />
 
