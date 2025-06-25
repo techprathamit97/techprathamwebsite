@@ -3,6 +3,8 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 import Image from 'next/image';
+import HeaderCourse from '../components/HeaderCourse/HeaderCourse';
+import MainCourse from '../components/MainCourse/MainCourse';
 
 const CoursesView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -14,20 +16,9 @@ const CoursesView = () => {
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
-      <div className='w-full h-auto flex flex-col items-center justify-center gap-6 lg:pt-40 md:pt-24 sm:pt-24 pt-10'>
-        <div className='px-4 py-1 rounded border-2 border-black text-black uppercase font-semibold'>
-          Courses
-        </div>
-        <div className='w-11/12 text-center lg:text-5xl md:text-4xl sm:text-3xl text-xl font-bold'>
-          Explore Our Courses
-        </div>
-        <div className='text-center text-base md:text-lg'>
-          Browse our curated list of courses designed to boost your skills and career.<br />
-          For more information, contact us at <a href="mailto:courses@techpratham.com" className="text-blue-600 underline">courses@techpratham.com</a>.
-        </div>
+      <HeaderCourse />
 
-        <Image src='/support/support.svg' alt='' width={400} height={500} className='md:w-9/12 w-11/12 h-96 object-cover mt-8 rounded-t-3xl' />
-      </div>
+      <MainCourse />
 
     </div>
   )
