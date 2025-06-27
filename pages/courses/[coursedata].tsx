@@ -1,8 +1,9 @@
-import { allCourses } from '@/components/assets/courses';
-import Footer from '@/src/common/Footer/Footer';
-import Navbar from '@/src/common/Navbar/Navbar';
+import React from 'react';
 import { useRouter } from 'next/router';
-import React from 'react'
+import Navbar from '@/src/common/Navbar/Navbar';
+import Footer from '@/src/common/Footer/Footer';
+import { allCourses } from '@/components/assets/courses';
+import { ChevronRightIcon } from '@radix-ui/react-icons';
 
 const CourseDataPage = () => {
     const router = useRouter();
@@ -22,8 +23,15 @@ const CourseDataPage = () => {
                 <div
                     className="md:w-10/12 w-11/12 h-auto flex flex-col p-6 bg-white"
                 >
+                    <div className='flex flex-row gap-2 items-center justify-start mb-6'>
+                        <span>Courses</span>
+                        <ChevronRightIcon />
+                        <span>{course.category}</span>
+                        <ChevronRightIcon />
+                        <span>{course.title}</span>
+                    </div>
                     <div className="flex justify-between items-start mb-3">
-                        <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.title}</div>
+                        <div className="text-3xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.title}</div>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-red-400`}>
                             {course.level}
                         </span>

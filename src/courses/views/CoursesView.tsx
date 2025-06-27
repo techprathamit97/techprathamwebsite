@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
-import Image from 'next/image';
 import HeaderCourse from '../components/HeaderCourse/HeaderCourse';
 import MainCourse from '../components/MainCourse/MainCourse';
 
