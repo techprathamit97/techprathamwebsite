@@ -3,7 +3,7 @@ import React from 'react'
 const IntroSection = ({ course }: any) => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
-            <div className='md:w-10/12 w-11/12 h-auto grid md:grid-cols-3 grid-cols-1 gap-8 pt-6 pb-12'>
+            <div className='md:w-10/12 w-11/12 h-auto grid md:grid-cols-3 grid-cols-1 gap-8 pt-8 pb-16'>
                 <div className='md:col-span-2 col-span-1 w-full h-auto flex flex-col gap-2'>
                     <div className='text-2xl font-semibold text-left flex flex-row gap-4 items-center justify-start'>
                         What is {course.title}?

@@ -4,7 +4,7 @@ import React from 'react'
 const FeatureSection = () => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
-            <div className='md:w-10/12 w-11/12 h-auto flex flex-col pt-12 pb-6 gap-10'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col pt-16 pb-8 gap-10'>
                 <div className='text-2xl font-semibold text-left flex flex-row gap-4 items-center justify-start'>
                     <div>Course Features</div>
                     <div className='px-4 py-1 rounded-full border border-[#CD4647] text-[#CD4647] text-base font-light'>100% Money Back Guarantee</div>

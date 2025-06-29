@@ -27,22 +27,21 @@ const OtherCourse = ({ course }: any) => {
         return colors[category] || 'text-gray-600 bg-gray-50'
     }
 
-    // Filter courses by the same category as the passed course and get first 3
     const getRelatedCourses = () => {
         if (!course || !course.category) {
-            return allCourses.slice(0, 3); // Fallback to first 3 courses if no category
+            return allCourses.slice(0, 3);
         }
         
         return allCourses
-            .filter(c => c.category === course.category && c.title !== course.title) // Exclude the current course
+            .filter(c => c.category === course.category && c.title !== course.title)
             .slice(0, 3);
     }
 
     const relatedCourses = getRelatedCourses();
 
     return (
-        <div className='w-full h-auto flex flex-col gap-10 items-center justify-center py-12 text-black'>
-            <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center h-auto'>
+        <div className='w-full h-auto flex flex-col gap-10 items-center justify-center text-black'>
+            <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center py-16 h-auto'>
                 {/* Optional: Add a heading to show which category is being displayed */}
                 {course && course.category && (
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -54,7 +53,7 @@ const OtherCourse = ({ course }: any) => {
                     {relatedCourses.map((courseItem, index) => (
                         <div
                             key={index}
-                            className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform hover:scale-105"
+                            className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform"
                         >
                             <div className="flex justify-between items-start mb-3">
                                 <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{courseItem.title}</div>

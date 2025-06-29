@@ -13,7 +13,7 @@ const CurriculumSection = ({ course }: any) => {
 
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
-            <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-6 gap-6'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col pt-8 pb-16 gap-6'>
                 <div className='text-left flex flex-col gap-3 items-start justify-center'>
                     <div className='text-2xl font-semibold '>{course.title} Course Curriculum</div>
                     <div className='text-base font-light'>{course.description}</div>
