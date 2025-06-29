@@ -46,7 +46,7 @@ const CourseDataPage = () => {
 
                 <FaqSection course={course} />
 
-                <TestimonialSection />
+                <TestimonialSection course={course} />
 
                 <OtherCourse course={course} />
 
