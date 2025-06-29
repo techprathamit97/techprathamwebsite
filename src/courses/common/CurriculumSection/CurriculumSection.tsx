@@ -1,8 +1,8 @@
-import { CaretUpIcon } from '@radix-ui/react-icons';
+import { CaretUpIcon, VideoIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
 
 const CurriculumSection = ({ course }: any) => {
-    const [selected, setSelected] = useState<number | null>(null);
+    const [selected, setSelected] = useState<number | null>(0);
 
     const toggle = (i: number) => {
         if (selected === i) {
@@ -14,29 +14,25 @@ const CurriculumSection = ({ course }: any) => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
             <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-6 gap-6'>
-                <div className='text-left flex flex-col gap-1 items-start justify-center'>
+                <div className='text-left flex flex-col gap-3 items-start justify-center'>
                     <div className='text-2xl font-semibold '>{course.title} Course Curriculum</div>
                     <div className='text-base font-light'>{course.description}</div>
                 </div>
-                <div className="relative flex flex-row flex-wrap items-start justify-between self-center">
+                <div className="relative flex flex-col gap-3 items-start justify-between">
                     {faqs_data?.map((item: any, index: any) => (
                         <div
-                            className="w-full md:text-base text-sm py-5 px-5 my-3 cursor-pointer bg-[#fff] text-black border border-[#2b2b2b] rounded-md faqsCard"
+                            className={`w-full md:text-base text-sm py-2 px-4 cursor-pointer text-black border-l-2 border-l-[#d2d2d2]${selected === index ? 'font-normal bg-[#f7f7f7]' : 'bg-white'}`}
                             key={index}
                             onClick={() => toggle(index)}
                         >
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-start gap-2">
+                                <VideoIcon className="text-[#2b2b2b] w-5 h-5" />
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
-                                {selected === index ? (
-                                    <CaretUpIcon className='md:flex hidden w-6 h-6 transition-all duration-300 rotate-0' />
-                                ) : (
-                                    <CaretUpIcon className='md:flex hidden w-6 h-6 transition-all duration-300 rotate-180' />
-                                )}
                             </div>
                             <div
                                 className={
                                     selected === index
-                                        ? "overflow-hidden transition-all md:py-4 py-3 max-h-96 ease-out duration-700 font-light"
+                                        ? "overflow-hidden transition-all pt-3 pb-1 max-h-96 ease-out duration-700 font-light"
                                         : "overflow-hidden transition-all max-h-0 duration-300"
                                 }
                             >

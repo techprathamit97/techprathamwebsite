@@ -2,7 +2,7 @@ import { CaretUpIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
 
 const FaqSection = ({ course }: any) => {
-    const [selected, setSelected] = useState<number | null>(null);
+    const [selected, setSelected] = useState<number | null>(0);
 
     const toggle = (i: number) => {
         if (selected === i) {
@@ -13,17 +13,13 @@ const FaqSection = ({ course }: any) => {
 
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
-            <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-6 gap-6'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-16 gap-6'>
                 <div className='text-2xl font-semibold text-left flex flex-row gap-4 items-center justify-start'>
-                    <div>Frequently Asked Questions</div>
+                    <div>Frequently Asked Questions (FAQs)</div>
                 </div>
-                <div className="relative flex flex-row flex-wrap items-start justify-between self-center">
+                <div className="relative flex flex-col gap-4 items-start justify-between">
                     {faqs_data?.map((item: any, index: any) => (
-                        <div
-                            className="w-full md:text-base text-sm py-5 px-5 my-3 cursor-pointer bg-[#fff] text-black border border-[#2b2b2b] rounded-md"
-                            key={index}
-                            onClick={() => toggle(index)}
-                        >
+                        <div className={`w-full md:text-base text-sm px-4 pt-3 pb-1 cursor-pointer text-black border-t-2 border-t-[#f7f7f7] ${selected === index && 'bg-[#f7f7f7]'} `} key={index} onClick={() => toggle(index)}>
                             <div className="flex items-center justify-between">
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
                                 {selected === index ? (

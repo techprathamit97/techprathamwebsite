@@ -17,8 +17,7 @@ const PlanSection = () => {
                 <div className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Training Plan</div>
                 <div className="relative grid md:grid-cols-2 grid-cols-1 gap-4">
                     {faqs_data?.map((item: any, index: any) => (
-                        <div className="w-full md:text-base text-sm py-4 px-4 cursor-pointer rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20" key={index} onClick={() => toggle(index)}>
-
+                        <div className="w-full md:text-base text-sm py-3 px-4 cursor-pointer border rounded shadow-sm bg-white text-black" key={index} onClick={() => toggle(index)}>
                             <div className="flex items-center justify-between">
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
                                 {selected === index ? (
@@ -30,7 +29,7 @@ const PlanSection = () => {
                             <div
                                 className={
                                     selected === index
-                                        ? "overflow-hidden transition-all md:py-4 py-3 max-h-96 ease-out duration-700 font-light"
+                                        ? "overflow-hidden transition-all pt-3 pb-2 max-h-96 ease-out duration-700 font-light"
                                         : "overflow-hidden transition-all max-h-0 duration-300"
                                 }
                             >
