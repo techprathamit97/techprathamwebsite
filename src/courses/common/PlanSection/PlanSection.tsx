@@ -1,5 +1,5 @@
-import { CaretUpIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
+import { CaretUpIcon } from '@radix-ui/react-icons';
 
 const PlanSection = () => {
     const [selected, setSelected] = useState<number | null>(null);
@@ -12,18 +12,13 @@ const PlanSection = () => {
     };
 
     return (
-        <div className='w-full h-auto flex flex-col items-center justify-center gap-6'>
-            <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-6 gap-6'>
-                <div className='text-2xl font-semibold text-left flex flex-row gap-4 items-center justify-start'>
-                    <div>Training Plan</div>
-                </div>
-                <div className="relative flex flex-row flex-wrap items-start justify-between self-center">
+        <div className='w-full h-auto flex flex-col items-center justify-center gap-6 bg-[#f7f7f7] text-black'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-16 gap-6'>
+                <div className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Training Plan</div>
+                <div className="relative grid md:grid-cols-2 grid-cols-1 gap-4">
                     {faqs_data?.map((item: any, index: any) => (
-                        <div
-                            className="md:w-[49%] w-full md:text-base text-sm py-5 px-5 my-3 cursor-pointer bg-[#fff] text-black border border-[#2b2b2b] rounded-md faqsCard"
-                            key={index}
-                            onClick={() => toggle(index)}
-                        >
+                        <div className="w-full md:text-base text-sm py-4 px-4 cursor-pointer rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20" key={index} onClick={() => toggle(index)}>
+
                             <div className="flex items-center justify-between">
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
                                 {selected === index ? (
@@ -53,19 +48,39 @@ export default PlanSection
 
 const faqs_data = [
     {
-        que: "What is included in the training plan?",
-        ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
+        que: "About trainer",
+        ans: "Working professional who is carrying more then 10 years of industry experience."
     },
     {
-        que: "How long does the training last?",
-        ans: "The training typically lasts for 12 weeks, with flexible scheduling options available."
+        que: "Decks",
+        ans: "The candidate will get access to the presentation taken-up during the session."
     },
     {
-        que: "Are there any prerequisites?",
-        ans: "No prior experience is required. The course is designed for beginners as well as those looking to refresh their skills."
+        que: "Notes",
+        ans: "Consolidated notes in word document."
     },
     {
-        que: "Will I receive a certificate?",
-        ans: "Yes, a certificate of completion will be provided at the end of the training."
+        que: "Assignments",
+        ans: "Assignments for every module will be covered."
+    },
+    {
+        que: "MCQs",
+        ans: "MCQs for every module covered in the session would be provided."
+    },
+    {
+        que: "Video Recording",
+        ans: "Daily Session would be recorded and shared to the candidate."
+    },
+    {
+        que: "Dumps for Certification",
+        ans: "We will provide dumps for the certification exam, which will help you to prepare for the exam."
+    },
+    {
+        que: "Updated Content",
+        ans: "We provide Generative AI Driven content By experts."
+    },
+    {
+        que: "Projects",
+        ans: "3 Live Projects will be provided for practice."
     }
 ];
