@@ -16,7 +16,7 @@ const PlanSection = () => {
             <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-16 gap-6'>
                 <div className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Training Plan</div>
                 <div className="relative grid md:grid-cols-2 grid-cols-1 gap-4">
-                    {faqs_data?.map((item: any, index: any) => (
+                    {training_data?.map((item: any, index: any) => (
                         <div className="w-full md:text-base text-sm py-3 px-4 cursor-pointer border rounded shadow-sm bg-white text-black" key={index} onClick={() => toggle(index)}>
                             <div className="flex items-center justify-between">
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
@@ -45,7 +45,7 @@ const PlanSection = () => {
 
 export default PlanSection
 
-const faqs_data = [
+const training_data = [
     {
         que: "About trainer",
         ans: "Working professional who is carrying more then 10 years of industry experience."

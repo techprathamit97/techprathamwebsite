@@ -36,7 +36,7 @@ const HeaderSection = ({ course }: any) => {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full h-full">
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/yy9GZ5_BWGE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="rounded-lg shadow-lg"></iframe>
+                    <iframe width="100%" height="315" src={course.videoLink} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="rounded-lg shadow-lg"></iframe>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { CaretUpIcon, VideoIcon } from '@radix-ui/react-icons';
+import { VideoIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
 
 const CurriculumSection = ({ course }: any) => {
@@ -19,7 +19,7 @@ const CurriculumSection = ({ course }: any) => {
                     <div className='text-base font-light'>{course.description}</div>
                 </div>
                 <div className="relative flex flex-col gap-3 items-start justify-between">
-                    {faqs_data?.map((item: any, index: any) => (
+                    {course?.curriculum_data?.map((item: any, index: any) => (
                         <div
                             className={`w-full md:text-base text-sm py-2 px-4 cursor-pointer text-black border-l-2 border-l-[#d2d2d2]${selected === index ? 'font-normal bg-[#f7f7f7]' : 'bg-white'}`}
                             key={index}
@@ -47,22 +47,3 @@ const CurriculumSection = ({ course }: any) => {
 }
 
 export default CurriculumSection
-
-const faqs_data = [
-    {
-        que: "What is included in the training plan?",
-        ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
-    },
-    {
-        que: "How long does the training last?",
-        ans: "The training typically lasts for 12 weeks, with flexible scheduling options available."
-    },
-    {
-        que: "Are there any prerequisites?",
-        ans: "No prior experience is required. The course is designed for beginners as well as those looking to refresh their skills."
-    },
-    {
-        que: "Will I receive a certificate?",
-        ans: "Yes, a certificate of completion will be provided at the end of the training."
-    }
-];

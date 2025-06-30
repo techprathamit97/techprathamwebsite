@@ -18,7 +18,7 @@ const FaqSection = ({ course }: any) => {
                     <div>Frequently Asked Questions (FAQs)</div>
                 </div>
                 <div className="relative flex flex-col gap-4 items-start justify-between">
-                    {faqs_data?.map((item: any, index: any) => (
+                    {course?.faqs_data?.map((item: any, index: any) => (
                         <div className={`w-full md:text-base text-sm px-4 pt-3 pb-1 cursor-pointer text-black border-t-2 border-t-[#f7f7f7] ${selected === index && 'bg-[#f7f7f7]'} `} key={index} onClick={() => toggle(index)}>
                             <div className="flex items-center justify-between">
                                 <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
@@ -46,22 +46,3 @@ const FaqSection = ({ course }: any) => {
 }
 
 export default FaqSection
-
-const faqs_data = [
-    {
-        que: "What is included in the training plan?",
-        ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
-    },
-    {
-        que: "How long does the training last?",
-        ans: "The training typically lasts for 12 weeks, with flexible scheduling options available."
-    },
-    {
-        que: "Are there any prerequisites?",
-        ans: "No prior experience is required. The course is designed for beginners as well as those looking to refresh their skills."
-    },
-    {
-        que: "Will I receive a certificate?",
-        ans: "Yes, a certificate of completion will be provided at the end of the training."
-    }
-];
