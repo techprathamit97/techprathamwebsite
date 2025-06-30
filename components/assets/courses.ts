@@ -8,7 +8,82 @@ export const allCourses = [
         duration: "12 weeks",
         level: "Advanced",
         category: "AI & Machine Learning",
-        link: "advance-generative-ai-course"
+        link: "advance-generative-ai-course",
+        videoLink: "https://www.youtube.com/embed/yy9GZ5_BWGE",
+        curriculum_data: [
+            {
+                que: "What is included in the training plan?",
+                ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
+            },
+            {
+                que: "How long does the training last?",
+                ans: "The training typically lasts for 12 weeks, with flexible scheduling options available."
+            },
+            {
+                que: "Are there any prerequisites?",
+                ans: "No prior experience is required. The course is designed for beginners as well as those looking to refresh their skills."
+            },
+            {
+                que: "Will I receive a certificate?",
+                ans: "Yes, a certificate of completion will be provided at the end of the training."
+            }
+        ],
+        skills_data: [
+            'Hands-on Project Work',
+            'Industry-Relevant Tools',
+            'Problem Solving & Critical Thinking',
+            'Collaboration & Teamwork',
+            'Effective Communication Skills',
+            'Career Guidance & Mentorship',
+        ],
+        faqs_data: [
+            {
+                que: "What is included in the training plan?",
+                ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
+            },
+            {
+                que: "How long does the training last?",
+                ans: "The training typically lasts for 12 weeks, with flexible scheduling options available."
+            },
+            {
+                que: "Are there any prerequisites?",
+                ans: "No prior experience is required. The course is designed for beginners as well as those looking to refresh their skills."
+            },
+            {
+                que: "Will I receive a certificate?",
+                ans: "Yes, a certificate of completion will be provided at the end of the training."
+            }
+        ],
+    },
+    {
+        title: "AI for Business Leaders",
+        shortDesc: "Leverage AI and machine learning to drive business innovation and strategy.",
+        description: "This course empowers business leaders to understand and implement AI-driven strategies. Learn the fundamentals of AI & machine learning, identify business use cases, and evaluate AI solutions for your organization. Topics include AI project management, ethical considerations, vendor selection, and ROI measurement. Real-world case studies and hands-on workshops help you design AI adoption roadmaps and lead digital transformation initiatives.",
+        rating: "4.7/5",
+        duration: "8 weeks",
+        level: "Intermediate",
+        category: "AI & Machine Learning",
+        link: "ai-for-business-leaders-course"
+    },
+    {
+        title: "Deep Learning Specialization",
+        shortDesc: "Master neural networks, CNNs, RNNs, and advanced deep learning architectures.",
+        description: "Dive deep into neural networks, convolutional neural networks (CNNs), recurrent neural networks (RNNs), and advanced architectures like transformers and GANs. This hands-on course covers theory and practical implementation using TensorFlow and PyTorch. Build projects in image recognition, natural language processing, and generative modeling. Learn about hyperparameter tuning, regularization, and deploying deep learning models to production.",
+        rating: "4.8/5",
+        duration: "16 weeks",
+        level: "Advanced",
+        category: "AI & Machine Learning",
+        link: "deep-learning-specialization-course"
+    },
+    {
+        title: "AI Ethics & Responsible AI",
+        shortDesc: "Understand ethical challenges and build responsible AI systems.",
+        description: "Explore the ethical, legal, and societal implications of AI and machine learning. Learn about bias, fairness, transparency, and accountability in AI systems. The course covers regulatory frameworks, explainable AI, and best practices for building trustworthy AI solutions. Case studies and practical exercises help you identify risks and implement responsible AI governance in real-world projects.",
+        rating: "4.6/5",
+        duration: "6 weeks",
+        level: "Intermediate",
+        category: "AI & Machine Learning",
+        link: "ai-ethics-responsible-ai-course"
     },
     {
         title: "Full Stack Development",

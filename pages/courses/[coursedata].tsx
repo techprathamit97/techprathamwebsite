@@ -25,7 +25,6 @@ const CourseDataPage = () => {
         return <div className="text-center pt-10 text-red-600 font-semibold">Course not found</div>;
     }
 
-    // Dynamic meta content based on course
     const title = `${course.title} | TechPratham - India's Leading IT Training Institute`;
     const description = course.description || "Explore a wide range of IT courses at TechPratham. Advance your career with industry-relevant training and expert-led classes.";
     const keywords = `${course.title}, TechPratham Courses, IT Training, Programming Courses, Data Science, Cloud Computing, Best IT Institute India, Online IT Courses`;
