@@ -49,21 +49,21 @@ const ContactHome = () => {
               <Image src='/home/contact/career-choice.png' alt='' width={100} height={100} className='w-20' />
               <div className='flex flex-col'>
                 <div className='font-medium text-lg'>Career Support:</div>
-                <div className='font-light'>Beyond technical training, we provide comprehensive career assistance, including resume building, interview coaching, and job placement support.</div>
+                <div className='md:text-base text-sm font-light'>Beyond technical training, we provide comprehensive career assistance, including resume building, interview coaching, and job placement support.</div>
               </div>
             </div>
             <div className='flex flex-row items-center space-x-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20'>
               <Image src='/home/contact/certificate.png' alt='' width={100} height={100} className='w-20' />
               <div className='flex flex-col'>
                 <div className='font-medium text-lg'>Recognized Certification:</div>
-                <div className='font-light'>Earn globally recognized certifications that validate your expertise and enhance your employability.</div>
+                <div className='md:text-base text-sm font-light'>Earn globally recognized certifications that validate your expertise and enhance your employability.</div>
               </div>
             </div>
             <div className='flex flex-row items-center space-x-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent p-4 backdrop-blur-sm transition-colors hover:red-orange-500/20'>
               <Image src='/home/contact/company.png' alt='' width={100} height={100} className='w-20' />
               <div className='flex flex-col'>
                 <div className='font-medium text-lg'>Company Tie-Ups:</div>
-                <div className='font-light'>We collaborate with leading corporations, startups, and multinational companies to provide our students with exclusive job opportunities, internships, and industry exposure.</div>
+                <div className='md:text-base text-sm font-light'>We collaborate with leading corporations, startups, and multinational companies to provide our students with exclusive job opportunities, internships, and industry exposure.</div>
               </div>
             </div>
           </div>

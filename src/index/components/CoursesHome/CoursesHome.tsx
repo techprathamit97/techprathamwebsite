@@ -295,7 +295,7 @@ const CoursesHome = () => {
       </div>
 
       <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center h-auto'>
-        <div className='flex flex-wrap w-full justify-between rounded-lg'>
+        <div className='flex flex-wrap w-full md:justify-between justify-center md:gap-0 gap-4 rounded-lg'>
           {categories.map((category) => (
             <button
               key={category}
