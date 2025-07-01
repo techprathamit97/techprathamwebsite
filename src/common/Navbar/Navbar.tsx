@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { BackpackIcon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import { BackpackIcon, Cross2Icon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [selectedCourseIdx, setSelectedCourseIdx] = useState(0);
 
   return (
@@ -44,10 +45,15 @@ const Navbar = () => {
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
           </Link>
           <div>
-            <HamburgerMenuIcon className='w-5 h-5' />
+            {!navOpen ? (
+              <HamburgerMenuIcon onClick={() => setNavOpen(!navOpen)} className='w-5 h-5' />
+            ) : (
+              <Cross2Icon onClick={() => setNavOpen(!navOpen)} className='w-5 h-5' />
+            )}
           </div>
         </div>
       </div>
+
       <div className='w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white border-b border-b-gray-100 z-20'>
         <div className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer'>About Us</Link>
@@ -62,6 +68,22 @@ const Navbar = () => {
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
         </div>
       </div>
+
+      <div className={`${!navOpen && 'hidden'} w-full h-auto py-2 md:hidden flex items-center justify-center bg-white border-b border-b-gray-100 z-20`}>
+        <div className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
+          <Link href='/about-us' className='cursor-pointer'>About Us</Link>
+          <Link href='/training-certificate' className='cursor-pointer'>Training Certificate</Link>
+          <Link href='/job-openings' className='cursor-pointer'>Job Openings</Link>
+          <Link href='/admission' className='cursor-pointer'>Admission</Link>
+          <Link href='/reviews' className='cursor-pointer'>Reviews</Link>
+          <Link href='/blogs' className='cursor-pointer'>Blogs</Link>
+          <Link href='/payment' className='cursor-pointer'>Payment</Link>
+          <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
+          <Link href='/technical-support' className='cursor-pointer'>24/7 Technical Support</Link>
+          <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
+        </div>
+      </div>
+
       <div className={`${isActive ? 'flex' : 'hidden'} w-full h-auto bg-white text-[#1a1a1a] transition-all flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
         <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-2 md:grid-cols-3 gap-4 py-4'>
           <div className='col-span-1 flex flex-col gap-2'>
