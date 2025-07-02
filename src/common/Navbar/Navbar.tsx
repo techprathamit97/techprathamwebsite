@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { BackpackIcon, Cross2Icon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { allCourses } from '@/components/assets/courses';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
-  const [selectedCourseIdx, setSelectedCourseIdx] = useState(0);
+  const [selectedCategoryIdx, setSelectedCategoryIdx] = useState(0);
+
+  const coursesByCategory = React.useMemo(() => {
+    const categories = [...new Set(allCourses.map(course => course.category))];
+    
+    return categories.map(category => ({
+      name: category,
+      courses: allCourses.filter(course => course.category === category)
+    }));
+  }, []);
 
   return (
     <div className={`${isActive ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
@@ -85,30 +94,64 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className={`transition-all duration-300 ${!isActive ? '-top-72 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] transition-all flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
-        <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-2 md:grid-cols-3 gap-4 py-8'>
-          <div className='col-span-1 flex flex-col gap-2'>
-            {courses.map((course, idx) => (
+      <div className={`transition-all duration-300 border-b border-b-gray-200 ${!isActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] transition-all flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
+        <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-8'>
+          {/* Categories Column */}
+          <div className='col-span-1 flex h-80 flex-col gap-2 overflow-auto'>
+            <h3 className='font-semibold text-lg mb-2 text-gray-800'>Course Categories</h3>
+            {coursesByCategory.map((category, idx) => (
               <button
-                key={course.name}
-                className={`text-left px-3 py-2 rounded ${selectedCourseIdx === idx ? 'bg-red-700 text-white font-semibold' : 'hover:bg-gray-100'}`}
-                onClick={() => setSelectedCourseIdx(idx)}
+                key={category.name}
+                className={`text-left px-3 py-2 rounded transition-all duration-200 ${
+                  selectedCategoryIdx === idx 
+                    ? 'bg-red-700 text-white font-semibold' 
+                    : 'hover:bg-gray-100 text-gray-700'
+                }`}
+                onClick={() => setSelectedCategoryIdx(idx)}
               >
-                {course.name}
+                {category.name}
+                <span className='ml-2 text-xs opacity-75'>
+                  ({category.courses.length})
+                </span>
               </button>
             ))}
           </div>
-          <div className='col-span-1 md:col-span-2 p-4 flex flex-col items-center bg-gray-50 rounded gap-2 border border-gray-200'>
-            <div className='rounded w-full'>
-              {courses[selectedCourseIdx].data}
+
+          {/* Courses Display Column */}
+          <div className='col-span-1 md:col-span-2 p-4 flex flex-col bg-gray-50 rounded gap-4 border border-gray-200 max-h-80 overflow-y-auto'>
+            <div className='sticky top-0 bg-gray-50 pb-2 border-b border-gray-200'>
+              <h3 className='font-semibold text-lg text-gray-800'>
+                {coursesByCategory[selectedCategoryIdx]?.name} Courses
+              </h3>
             </div>
-            <div className='w-full flex flex-row flex-wrap gap-2 justify-start items-center'>
-              {courses[selectedCourseIdx].subCourses.map((subCourse) => (
+            
+            <div className='grid grid-cols-1 gap-3'>
+              {coursesByCategory[selectedCategoryIdx]?.courses.map((course) => (
                 <Link
-                  key={subCourse.name}
-                  href={subCourse.link}
+                  key={course.link}
+                  href={`/courses/${course.link}`}
+                  onClick={() => setIsActive(!isActive)}
+                  className='block p-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all duration-200 group'
                 >
-                  <Button variant='manual'>{subCourse.name}</Button>
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex items-start justify-between'>
+                      <h4 className='font-medium text-gray-900 group-hover:text-red-700 transition-colors'>
+                        {course.title}
+                      </h4>
+                      <span className='text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap ml-2'>
+                        {course.level}
+                      </span>
+                    </div>
+                    <p className='text-sm text-gray-600 line-clamp-2'>
+                      {course.shortDesc}
+                    </p>
+                    <div className='flex items-center gap-4 text-xs text-gray-500'>
+                      <span className='flex items-center gap-1'>
+                        ⭐ {course.rating}
+                      </span>
+                      <span>📅 {course.duration}</span>
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -120,79 +163,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-
-type SubCourse = {
-  name: string;
-  link: string;
-};
-
-type Course = {
-  name: string;
-  data: string;
-  subCourses: SubCourse[];
-};
-
-const courses: Course[] = [
-  {
-    name: 'Web Development',
-    data: 'Learn HTML, CSS, JavaScript, React, and more.',
-    subCourses: [
-      { name: 'HTML & CSS', link: '/courses/web-development/html-css' },
-      { name: 'JavaScript', link: '/courses/web-development/javascript' },
-      { name: 'React', link: '/courses/web-development/react' },
-      { name: 'Node.js', link: '/courses/web-development/nodejs' },
-    ],
-  },
-  {
-    name: 'Data Science',
-    data: 'Explore Python, Machine Learning, and Data Analysis.',
-    subCourses: [
-      { name: 'Python Basics', link: '/courses/data-science/python' },
-      { name: 'Machine Learning', link: '/courses/data-science/machine-learning' },
-      { name: 'Data Analysis', link: '/courses/data-science/data-analysis' },
-    ],
-  },
-  {
-    name: 'Cloud Computing',
-    data: 'AWS, Azure, GCP, and cloud architecture.',
-    subCourses: [
-      { name: 'AWS', link: '/courses/cloud-computing/aws' },
-      { name: 'Azure', link: '/courses/cloud-computing/azure' },
-      { name: 'GCP', link: '/courses/cloud-computing/gcp' },
-    ],
-  },
-  {
-    name: 'Cyber Security',
-    data: 'Network security, ethical hacking, and more.',
-    subCourses: [
-      { name: 'Network Security', link: '/courses/cyber-security/network-security' },
-      { name: 'Ethical Hacking', link: '/courses/cyber-security/ethical-hacking' },
-    ],
-  },
-  {
-    name: 'Mobile App Development',
-    data: 'Build apps with Flutter, React Native, and Android.',
-    subCourses: [
-      { name: 'Flutter', link: '/courses/mobile-app-development/flutter' },
-      { name: 'React Native', link: '/courses/mobile-app-development/react-native' },
-      { name: 'Android', link: '/courses/mobile-app-development/android' },
-    ],
-  },
-  {
-    name: 'UI/UX Design',
-    data: 'Design principles, Figma, and prototyping.',
-    subCourses: [
-      { name: 'Figma', link: '/courses/ui-ux-design/figma' },
-      { name: 'Prototyping', link: '/courses/ui-ux-design/prototyping' },
-    ],
-  },
-  {
-    name: 'DevOps',
-    data: 'CI/CD, Docker, Kubernetes, and automation.',
-    subCourses: [
-      { name: 'CI/CD', link: '/courses/devops/cicd' },
-      { name: 'Docker', link: '/courses/devops/docker' },
-      { name: 'Kubernetes', link: '/courses/devops/kubernetes' },
-    ],
-  },
-];
