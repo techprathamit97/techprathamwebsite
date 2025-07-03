@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectMongo from '@/utils/mongodb.js';
-import { Admin } from '@/models/admin.js';
+import connectMongo from '@/utils/mongodb';
+import { Admin } from '@/models/admin';
 
 export async function GET(request: NextRequest) {
     try {

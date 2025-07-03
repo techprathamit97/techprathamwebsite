@@ -5,8 +5,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import bcrypt from "bcryptjs";
-import connect from "@/utils/mongodb.js";
-import { Admin } from '@/models/admin.js';
+import connect from "@/utils/mongodb";
+import { Admin } from '@/models/admin';
 
 const authOptions: any = {
     // Configure one or more authentication providers
