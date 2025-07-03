@@ -138,7 +138,7 @@ const Register = () => {
                 {loading && <Loader />}
 
                 {sessionStatus !== "authenticated" ? (
-                    <div className="w-full flex-1 min-h-0 bg-white md:px-8 px-0 py-8 pt-0">
+                    <div className="w-full flex-1 min-h-0 bg-white md:px-8 px-0 py-8">
                         <div className='bg-[#EDEBE9] w-full h-full flex flex-col items-center justify-center md:rounded-2xl rounded-none px-8 py-8 overflow-hidden'>
                             <div className="w-full flex flex-col row-start-2 items-center justify-center">
 

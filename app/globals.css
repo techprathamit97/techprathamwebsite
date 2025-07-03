@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Love+Light&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @tailwind base;
@@ -90,12 +89,22 @@ body {
   color: var(--foreground);
 }
 
-.courier-prime {
-  font-family: "Courier Prime", monospace;
+.libre-baskerville-regular {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.love-light {
-  font-family: "Love Light", cursive;
+.libre-baskerville-bold {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.libre-baskerville-regular-italic {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .shadowBorder {
@@ -104,5 +113,5 @@ body {
 }
 
 .boxShadow {
-    box-shadow: rgba(255, 0, 0, 0.2) 0px 0px 100px 20px;
+  box-shadow: rgba(255, 0, 0, 0.2) 0px 0px 100px 20px;
 }
