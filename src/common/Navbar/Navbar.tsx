@@ -49,7 +49,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* mobile design */}
         <div className='w-11/12 md:hidden flex flex-row items-center justify-between'>
           <Link href={'/'} aria-label='Techpratham'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
@@ -74,7 +73,6 @@ const Navbar = () => {
           <Link href='/blogs' className='cursor-pointer'>Blogs</Link>
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
-          <Link href='/technical-support' className='cursor-pointer'>24/7 Technical Support</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
         </div>
       </div>
@@ -89,7 +87,6 @@ const Navbar = () => {
           <Link href='/blogs' className='cursor-pointer'>Blogs</Link>
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
-          <Link href='/technical-support' className='cursor-pointer'>24/7 Technical Support</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
         </div>
       </div>
