@@ -1,9 +1,8 @@
-// pages/_app.tsx
-
-import type { AppProps } from 'next/app'
-import { Metadata } from 'next'
-import '../app/globals.css'
-import { UserProvider } from '@/context/userContext'
+import type { AppProps } from 'next/app';
+import '../app/globals.css';
+import { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
+import { UserProvider } from '@/context/userContext';
 
 export const metadata: Metadata = {
     title: "India's No.1 Best IT Training Institute in India | Corporate Learning",
@@ -13,11 +12,11 @@ export const metadata: Metadata = {
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <>
+        <SessionProvider session={pageProps.session}>
             <UserProvider>
                 <Component {...pageProps} />
             </UserProvider>
-        </>
+        </SessionProvider>
     )
 }
 
