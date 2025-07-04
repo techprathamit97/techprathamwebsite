@@ -6,10 +6,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import bcrypt from "bcryptjs";
 import connect from "@/utils/mongodb";
-import { Admin } from '@/models/admin';
+import { Admin } from '@/models/admin.js';
 
 const authOptions: any = {
-    // Configure one or more authentication providers
     providers: [
         CredentialsProvider({
             id: "credentials",
@@ -22,17 +21,19 @@ const authOptions: any = {
                 await connect();
                 try {
                     const user = await Admin.findOne({ email: credentials.email });
-                    if (user) {
-                        const isPasswordCorrect = await bcrypt.compare(
-                            credentials.password,
-                            user.password
-                        );
-                        if (isPasswordCorrect) {
-                            return user;
-                        }
+                    if (!user) {
+                        throw new Error("USER_NOT_FOUND");
                     }
+                    const isPasswordCorrect = await bcrypt.compare(
+                        credentials.password,
+                        user.password
+                    );
+                    if (!isPasswordCorrect) {
+                        throw new Error("INVALID_PASSWORD");
+                    }
+                    return user;
                 } catch (err: any) {
-                    throw new Error(err);
+                    throw new Error(err.message || "AUTH_ERROR");
                 }
             },
         }),
@@ -40,7 +41,6 @@ const authOptions: any = {
             clientId: process.env.GOOGLE_CLIENT_ID ?? "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? ""
         })
-        // ...add more providers here
     ],
     callbacks: {
         async signIn({ user, account }: { user: AuthUser; account: Account }) {
@@ -52,17 +52,11 @@ const authOptions: any = {
                 try {
                     const existingUser = await Admin.findOne({ email: user.email });
                     if (!existingUser) {
-                        const newUser = new Admin({
-                            email: user.email,
-                        });
-
-                        await newUser.save();
-                        return true;
+                        throw new Error("USER_NOT_FOUND");
                     }
                     return true;
-                } catch (err) {
-                    console.log("Error saving user", err);
-                    return false;
+                } catch (err: any) {
+                    throw new Error(err.message || "GOOGLE_SIGNIN_ERROR");
                 }
             }
         },

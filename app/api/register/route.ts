@@ -4,7 +4,7 @@ import { Admin } from '@/models/admin';
 import { NextResponse } from "next/server";
 
 export const POST = async (request: any) => {
-  const { email, password } = await request.json();
+  const { email, password, name, phone } = await request.json();
 
   await connect();
   console.log("connected with db");
@@ -18,6 +18,8 @@ export const POST = async (request: any) => {
   const hashedPassword = await bcrypt.hash(password, 5);
   const newUser = new Admin({
     email,
+    name,
+    phone,
     password: hashedPassword,
   });
 
