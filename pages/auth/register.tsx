@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -58,7 +57,7 @@ const Register = () => {
             setLoading(true);
 
             const userData = {
-                fullName: data.name,
+                name: data.name,
                 email: data.email,
                 phone: data.phone,
                 password: data.password,
@@ -117,20 +116,20 @@ const Register = () => {
         <React.Fragment>
             <Head>
                 <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
-                <title>Register | TechPratham</title>
-                <meta name="description" content="Register for TechPratham to access resources, events, and community features. Join now and be part of the tech learning revolution." />
-                <meta name="keywords" content="TechPratham Register, Sign Up, TechPratham Registration, Join TechPratham" />
-                <meta name="author" content="TechPratham Team" />
+                <title>Admin Register | SLIET Alumni Association</title>
+                <meta name="description" content="Register as an administrator for the SLIET Alumni Association platform. Gain access to backend tools to manage users, events, and announcements." />
+                <meta name="keywords" content="SLIET Admin Register, Admin Sign Up, SLIET Alumni Admin, Admin Registration SLIET Longowal" />
+                <meta name="author" content="SLIET Alumni Association Admin Team" />
 
-                <meta property="og:title" content="Register | TechPratham" />
-                <meta property="og:description" content="Create your TechPratham account to access exclusive resources, events, and the tech community." />
-                <meta property="og:image" content="/logo/og-techpratham.png" />
-                <meta property="og:url" content="https://techpratham.in/auth/register/" />
+                <meta property="og:title" content="Admin Register | SLIET Alumni Association" />
+                <meta property="og:description" content="Create your administrator account to manage and monitor the SLIET Alumni Association platform." />
+                <meta property="og:image" content="/logo/og-saa.png" />
+                <meta property="og:url" content="https://admin.slietalumni.in/auth/register/" />
 
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Register | TechPratham" />
-                <meta name="twitter:description" content="Register now to join TechPratham and unlock access to learning resources, events, and more." />
-                <meta name="twitter:image" content="/logo/og-techpratham.png" />
+                <meta name="twitter:title" content="Admin Register | SLIET Alumni Association" />
+                <meta name="twitter:description" content="Register now to join the SLIET Alumni admin panel and take control of alumni data and platform updates." />
+                <meta name="twitter:image" content="/logo/og-saa.png" />
             </Head>
 
             <div className="w-full fixed md:h-screen h-auto flex flex-col items-center justify-start md:overflow-hidden overflow-auto">
@@ -138,7 +137,7 @@ const Register = () => {
                 {loading && <Loader />}
 
                 {sessionStatus !== "authenticated" ? (
-                    <div className="w-full flex-1 min-h-0 bg-white md:px-8 px-0 py-8">
+                    <div className="w-full flex-1 min-h-0 bg-white md:px-8 px-0 md:py-8 py-0">
                         <div className='bg-[#EDEBE9] w-full h-full flex flex-col items-center justify-center md:rounded-2xl rounded-none px-8 py-8 overflow-hidden'>
                             <div className="w-full flex flex-col row-start-2 items-center justify-center">
 

@@ -8,7 +8,7 @@ const HeroHome = () => {
 
             <div className='h-full w-11/12 z-10 py-20 flex flex-col items-start justify-end'>
                 <div className='md:w-1/2 w-full lg:text-6xl md:text-5xl text-2xl font-semibold capitalize libre-baskerville-bold'>
-                    Our Mision is to <span className='text-orange-500'>build nation</span> through Education
+                    "Our Mision is to <span className='text-orange-500'>build nation</span> through Education!"
                 </div>
                 <div className='md:text-4xl text-xl capitalize md:mt-5 mt-2'>That is beyond limitation</div>
             </div>

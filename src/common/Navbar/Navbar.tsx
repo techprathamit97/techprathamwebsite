@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { BackpackIcon, Cross2Icon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 import { allCourses } from '@/components/assets/courses';
+import { UserContext } from '@/context/userContext';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [selectedCategoryIdx, setSelectedCategoryIdx] = useState(0);
+  const { authenticated } = useContext(UserContext);
 
   const coursesByCategory = React.useMemo(() => {
     const categories = [...new Set(allCourses.map(course => course.category))];
-    
+
     return categories.map(category => ({
       name: category,
       courses: allCourses.filter(course => course.category === category)
@@ -74,6 +76,11 @@ const Navbar = () => {
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
+          {authenticated ? (
+            <Link href='/account' className='cursor-pointer'>Account</Link>
+          ) : (
+            <Link href='/auth/login' className='cursor-pointer'>Login</Link>
+          )}
         </div>
       </div>
 
@@ -88,6 +95,11 @@ const Navbar = () => {
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
+          {authenticated ? (
+            <Link href='/account' className='cursor-pointer'>Account</Link>
+          ) : (
+            <Link href='/auth/login' className='cursor-pointer'>Login</Link>
+          )}
         </div>
       </div>
 
@@ -99,11 +111,10 @@ const Navbar = () => {
             {coursesByCategory.map((category, idx) => (
               <button
                 key={category.name}
-                className={`text-left px-3 py-2 rounded transition-all duration-200 ${
-                  selectedCategoryIdx === idx 
-                    ? 'bg-red-700 text-white font-semibold' 
-                    : 'hover:bg-gray-100 text-gray-700'
-                }`}
+                className={`text-left px-3 py-2 rounded transition-all duration-200 ${selectedCategoryIdx === idx
+                  ? 'bg-red-700 text-white font-semibold'
+                  : 'hover:bg-gray-100 text-gray-700'
+                  }`}
                 onClick={() => setSelectedCategoryIdx(idx)}
               >
                 {category.name}
@@ -121,7 +132,7 @@ const Navbar = () => {
                 {coursesByCategory[selectedCategoryIdx]?.name} Courses
               </h3>
             </div>
-            
+
             <div className='grid grid-cols-1 gap-3'>
               {coursesByCategory[selectedCategoryIdx]?.courses.map((course) => (
                 <Link
