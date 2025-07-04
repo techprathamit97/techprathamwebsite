@@ -12,6 +12,7 @@ const AdminAccount = () => {
         loading,
         authenticated,
         userData,
+        refreshUserData,
     } = useContext(UserContext);
 
     // Loading state
@@ -45,6 +46,11 @@ const AdminAccount = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 py-8">
+            <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
+                <div className="flex items-center justify-between">
+                    here navigations
+                </div>
+            </div>
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
@@ -62,6 +68,7 @@ const AdminAccount = () => {
                         </div>
                         <div className="flex space-x-2">
                             <button
+                                onClick={() => refreshUserData()}
                                 className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
                                 disabled={loading}
                             >

@@ -18,34 +18,39 @@ export const UserProvider = ({ children }) => {
 
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!user) {
-        setLoading(false);
-        return;
-      }
+  const fetchUserData = async () => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
-      setLoading(true);
-      if (user) {
-        try {
-          const res = await fetch(`/api/users/email?email=${user}`);
-          if (!res.ok) {
-            throw new Error("Failed to fetch user details");
-          }
-
-          const userData = await res.json();
-          setUserData(userData);
-          setAuthenticated(true);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        } finally {
-          setLoading(false);
+    setLoading(true);
+    if (user) {
+      try {
+        const res = await fetch(`/api/users/email?email=${user}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch user details");
         }
-      }
-    };
 
+        const userData = await res.json();
+        setUserData(userData);
+        setAuthenticated(true);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, [user]);
+
+  const refreshUserData = () => {
+    setLoading(true);
+    fetchUserData();
+  };
 
   return (
     <UserContext.Provider
@@ -58,6 +63,7 @@ export const UserProvider = ({ children }) => {
         setAuthenticated,
         userData,
         currentYear,
+        refreshUserData,
       }}
     >
       {children}
