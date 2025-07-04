@@ -121,14 +121,14 @@ const Login = () => {
                                             Your email address
                                             <span className=' text-red-500'> *</span>
                                         </Label>
-                                        <Input type="email" id="email" placeholder='variant@provider.com' className='mt-1 mb-4 placeholder:font-normal w-full min-h-11 h-full indent-1 bg-white' required />
+                                        <Input type="email" id="email" placeholder='variant@provider.com' className='mt-1 mb-4 placeholder:font-normal w-full md:h-10 h-11 indent-1 bg-white' required />
 
                                         <Label htmlFor="password" className=' text-sm font-normal text-[#1a202c]'>
                                             Password
                                             <span className=' text-red-500'> *</span>
                                         </Label>
                                         <div className='mt-1 relative'>
-                                            <Input type={`${showPass ? 'text' : 'password'}`} id="password" placeholder='password' className=" placeholder:font-normal w-full min-h-11 h-full indent-1 bg-white" required />
+                                            <Input type={`${showPass ? 'text' : 'password'}`} id="password" placeholder='password' className=" placeholder:font-normal w-full md:h-10 h-11 indent-1 bg-white" required />
                                             <div onClick={() => setShowPass(!showPass)} className='absolute inset-y-0 right-0 w-14 bg-[#efeff0] text-sm text-[#1d1d1d] font-medium flex items-center justify-center cursor-pointer m-1 rounded-r'>{showPass ? 'Hide' : 'Show'}</div>
                                         </div>
                                         {error && (
@@ -137,7 +137,7 @@ const Login = () => {
                                             </div>
                                         )}
 
-                                        <Button type='submit' variant='default' className="mt-10 min-h-11 cursor-pointer">Log in</Button>
+                                        <Button type='submit' variant='default' className="mt-10 md:h-10 h-11 cursor-pointer">Log in</Button>
 
                                     </form>
 
@@ -147,17 +147,10 @@ const Login = () => {
                                         <hr className='w-full border-[#0000004d] h-[1px]' />
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                                        <Button variant='default' onClick={() => { signIn("google"); }} className="w-full min-h-11 px-4 flex flex-row items-center justify-center gap-2 cursor-pointer">
-                                            <FaGoogle className="text-lg" />
-                                            Login with Google
-                                        </Button>
-
-                                        <Button variant='default' onClick={() => { signIn("linkedin"); }} className="w-full min-h-11 px-4 flex flex-row items-center justify-center gap-2 cursor-pointer">
-                                            <LinkedInLogoIcon className="w-5 h-5" />
-                                            Login with LinkedIn
-                                        </Button>
-                                    </div>
+                                    <Button variant='default' onClick={() => { signIn("google"); }} className="w-full md:h-10 h-11 px-4 flex flex-row items-center justify-center gap-2 cursor-pointer">
+                                        <FaGoogle className="text-lg" />
+                                        Login with Google
+                                    </Button>
 
                                     <div className='w-full text-center mt-4 flex items-center justify-center'>
                                         <p className=' text-sm text-[#1a202c] flex flex-row gap-2'>
