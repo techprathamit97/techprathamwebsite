@@ -13,9 +13,10 @@ const AdminAccount = () => {
         authenticated,
         userData,
         refreshUserData,
+        currentTab,
+        setCurrentTab
     } = useContext(UserContext);
 
-    // Loading state
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -27,7 +28,6 @@ const AdminAccount = () => {
         );
     }
 
-    // Not authenticated state
     if (!authenticated) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -52,7 +52,7 @@ const AdminAccount = () => {
                 </div>
             </div>
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
+
                 <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -84,135 +84,133 @@ const AdminAccount = () => {
                     </div>
                 </div>
 
-                {/* Profile Information */}
-                <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Information</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Name */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900">{userData.name || 'Not provided'}</p>
+                {currentTab === 'profile' && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
+                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Information</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900">{userData.name || 'Not provided'}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Email */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900">{userData.email || 'Not provided'}</p>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900">{userData.email || 'Not provided'}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Phone */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900">{userData.phone || 'Not provided'}</p>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900">{userData.phone || 'Not provided'}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Position */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Position/Role</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900">{userData.position || 'Not specified'}</p>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Position/Role</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900">{userData.position || 'Not specified'}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* User Type */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">User Type</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${userData.userType === 'admin'
-                                    ? 'bg-purple-100 text-purple-800'
-                                    : 'bg-blue-100 text-blue-800'
-                                    }`}>
-                                    {userData.userType || 'user'}
-                                </span>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">User Type</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${userData.userType === 'admin'
+                                        ? 'bg-purple-100 text-purple-800'
+                                        : 'bg-blue-100 text-blue-800'
+                                        }`}>
+                                        {userData.userType || 'user'}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Profile Description */}
-                        <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Description</label>
-                            <div className="bg-gray-50 rounded-md p-3 min-h-[100px]">
-                                <p className="text-gray-900">{userData.profile || 'No profile description provided'}</p>
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Profile Description</label>
+                                <div className="bg-gray-50 rounded-md p-3 min-h-[100px]">
+                                    <p className="text-gray-900">{userData.profile || 'No profile description provided'}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* Account Information */}
-                <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Account Information</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Account ID</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900 font-mono text-sm break-all">
-                                    {userData._id || 'Not available'}
-                                </p>
+                {currentTab === 'account' && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
+                        <h2 className="text-xl font-semibold text-gray-900 mb-4">Account Information</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Account ID</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900 font-mono text-sm break-all">
+                                        {userData._id || 'Not available'}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Session Email</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <p className="text-gray-900">
-                                    {session?.user?.email || 'Not available'}
-                                </p>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Session Email</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <p className="text-gray-900">
+                                        {session?.user?.email || 'Not available'}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* System Information */}
-                <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">System Information</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Authentication Status</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${authenticated
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-red-100 text-red-800'
-                                    }`}>
-                                    {authenticated ? 'Authenticated' : 'Not Authenticated'}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Session Status</label>
-                            <div className="bg-gray-50 rounded-md p-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${sessionStatus === 'authenticated'
-                                    ? 'bg-green-100 text-green-800'
-                                    : sessionStatus === 'loading'
-                                        ? 'bg-yellow-100 text-yellow-800'
+                {currentTab === 'system' && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
+                        <h2 className="text-xl font-semibold text-gray-900 mb-4">System Information</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Authentication Status</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${authenticated
+                                        ? 'bg-green-100 text-green-800'
                                         : 'bg-red-100 text-red-800'
-                                    }`}>
-                                    {sessionStatus || 'Unknown'}
-                                </span>
+                                        }`}>
+                                        {authenticated ? 'Authenticated' : 'Not Authenticated'}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Session Status</label>
+                                <div className="bg-gray-50 rounded-md p-3">
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${sessionStatus === 'authenticated'
+                                        ? 'bg-green-100 text-green-800'
+                                        : sessionStatus === 'loading'
+                                            ? 'bg-yellow-100 text-yellow-800'
+                                            : 'bg-red-100 text-red-800'
+                                        }`}>
+                                        {sessionStatus || 'Unknown'}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* Raw Data (for debugging) */}
-                <div className="bg-white shadow-sm rounded-lg p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Raw Data (Debug)</h2>
-                    <details className="cursor-pointer">
-                        <summary className="text-sm text-gray-600 hover:text-gray-800 mb-4">
-                            Click to view raw admin data
-                        </summary>
-                        <div className="bg-gray-100 rounded-md p-4">
-                            <pre className="text-sm overflow-x-auto whitespace-pre-wrap">
-                                {JSON.stringify(userData, null, 2)}
-                            </pre>
-                        </div>
-                    </details>
-                </div>
+                {currentTab === 'rawdata' && (
+                    <div className="bg-white shadow-sm rounded-lg p-6">
+                        <h2 className="text-xl font-semibold text-gray-900 mb-4">Raw Data (Debug)</h2>
+                        <details className="cursor-pointer">
+                            <summary className="text-sm text-gray-600 hover:text-gray-800 mb-4">
+                                Click to view raw admin data
+                            </summary>
+                            <div className="bg-gray-100 rounded-md p-4">
+                                <pre className="text-sm overflow-x-auto whitespace-pre-wrap">
+                                    {JSON.stringify(userData, null, 2)}
+                                </pre>
+                            </div>
+                        </details>
+                    </div>
+                )}
             </div>
         </div>
     );

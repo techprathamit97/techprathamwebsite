@@ -10,6 +10,8 @@ export const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("");
 
+  const [currentTab, setCurrentTab] = useState("profile");
+
   const { data: session } = useSession();
   const user = session?.user?.email || null;
 
@@ -64,6 +66,8 @@ export const UserProvider = ({ children }) => {
         userData,
         currentYear,
         refreshUserData,
+        currentTab,
+        setCurrentTab
       }}
     >
       {children}
