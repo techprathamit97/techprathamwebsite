@@ -1,8 +1,9 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { AvatarIcon, DashboardIcon, GearIcon, LaptopIcon } from '@radix-ui/react-icons';
 
 const dummyUserData = {
     name: "John Doe",
@@ -24,7 +25,8 @@ const dummyAuthenticated = true;
 const dummyLoading = false;
 
 const AdminAccount = () => {
-    // Loading state
+    const [currentTab, setCurrentTab] = useState('profile');
+
     if (dummyLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -36,7 +38,6 @@ const AdminAccount = () => {
         );
     }
 
-    // Not authenticated state
     if (!dummyAuthenticated) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -54,40 +55,57 @@ const AdminAccount = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gray-900">
-            <div className="grid grid-cols-8 h-full">
+        <div className="min-h-screen w-full bg-[#121421]">
+            <div className="grid grid-cols-5 h-full">
 
-                <div className="col-span-2 bg-gray-600 p-6 mb-6 h-full flex flex-col gap-4">
+                <div className="col-span-1 bg-[#242935] p-6 min-h-full flex flex-col flex-1">
 
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 mb-10">
                         <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
                             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-40 h-auto' />
                         </Link>
                     </div>
 
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile</h2>
+                    <div onClick={() => setCurrentTab('profile')} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <AvatarIcon className='w-6 h-6' />
+                        <div>Profile</div>
+                    </div>
 
-                    <button className='bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors'>
-                        Profile
-                    </button>
+                    <div className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <DashboardIcon className='w-6 h-6' />
+                        <div>Dashboard</div>
+                    </div>
 
-                    <button className='bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors'>
-                        Profile
-                    </button>
+                    <div className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <LaptopIcon className='w-6 h-6' />
+                        <div>Course</div>
+                    </div>
 
-                    <button className='bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors'>
-                        Profile
-                    </button>
+                    <div onClick={() => setCurrentTab('account')} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <AvatarIcon className='w-6 h-6' />
+                        <div>Account</div>
+                    </div>
 
-                    <button className='bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-colors'>
-                        Profile
-                    </button>
+                    <div onClick={() => setCurrentTab('system')} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <GearIcon className='w-6 h-6' />
+                        <div>System</div>
+                    </div>
+
+                    <div onClick={() => setCurrentTab('rawdata')} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <LaptopIcon className='w-6 h-6' />
+                        <div>Raw Data</div>
+                    </div>
+
+                    <div onClick={() => setCurrentTab('rawdata')} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                        <LaptopIcon className='w-6 h-6' />
+                        <div>Raw Data</div>
+                    </div>
 
                 </div>
 
-                <div className="col-span-6 w-full">
-                    {/* Header */}
-                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
+                <div className="col-span-4 w-full h-full p-8">
+
+                    <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 <div className="bg-purple-100 p-3 rounded-full">
@@ -96,8 +114,8 @@ const AdminAccount = () => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h1 className="text-3xl font-bold text-gray-900">Admin Account</h1>
-                                    <p className="text-gray-600">View your administrator profile information</p>
+                                    <h1 className="text-3xl font-bold text-white">Admin Account</h1>
+                                    <p className="text-gray-400">View your administrator profile information</p>
                                 </div>
                             </div>
 
@@ -119,124 +137,128 @@ const AdminAccount = () => {
                         </div>
                     </div>
 
-                    {/* Profile Information */}
-                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Information</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Name */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900">{dummyUserData.name}</p>
-                                </div>
-                            </div>
+                    {currentTab === 'profile' && (
+                        <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
+                            <h2 className="text-xl font-semibold text-white mb-6">Profile Information</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            {/* Email */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900">{dummyUserData.email}</p>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-white">{dummyUserData.name}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Phone */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900">{dummyUserData.phone}</p>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-white">{dummyUserData.email}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Position */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Position/Role</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900">{dummyUserData.position}</p>
+                                {/* Phone */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-white">{dummyUserData.phone}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* User Type */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">User Type</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                        {dummyUserData.userType}
-                                    </span>
+                                {/* Position */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Position/Role</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-white">{dummyUserData.position}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Profile Description */}
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Profile Description</label>
-                                <div className="bg-gray-50 rounded-md p-3 min-h-[100px]">
-                                    <p className="text-gray-900">{dummyUserData.profile}</p>
+                                {/* User Type */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">User Type</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900 text-purple-200">
+                                            {dummyUserData.userType}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Account Information */}
-                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4">Account Information</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Account ID</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900 font-mono text-sm break-all">
-                                        {dummyUserData._id}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Session Email</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <p className="text-gray-900">
-                                        {dummySession.user.email}
-                                    </p>
+                                {/* Profile Description */}
+                                <div className="md:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Profile Description</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3 min-h-[100px]">
+                                        <p className="text-white">{dummyUserData.profile}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
-                    {/* System Information */}
-                    <div className="bg-white shadow-sm rounded-lg p-6 mb-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4">System Information</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Authentication Status</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        Authenticated
-                                    </span>
+                    {currentTab === 'account' && (
+                        <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
+                            <h2 className="text-xl font-semibold text-white mb-4">Account Information</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Account ID</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-purple-200 font-mono text-sm break-all">
+                                            {dummyUserData._id}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Session Status</label>
-                                <div className="bg-gray-50 rounded-md p-3">
-                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        {dummySessionStatus}
-                                    </span>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-purple-200">
+                                            {dummySession.user.email}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
-                    {/* Raw Data (for debugging) */}
-                    <div className="bg-white shadow-sm rounded-lg p-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4">Raw Data (Debug)</h2>
-                        <details className="cursor-pointer">
-                            <summary className="text-sm text-gray-600 hover:text-gray-800 mb-4">
-                                Click to view raw admin data
-                            </summary>
-                            <div className="bg-gray-100 rounded-md p-4">
-                                <pre className="text-sm overflow-x-auto whitespace-pre-wrap">
-                                    {JSON.stringify(dummyUserData, null, 2)}
-                                </pre>
+                    {currentTab === 'system' && (
+                        <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
+                            <h2 className="text-xl font-semibold text-white mb-4">System Information</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Authentication Status</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900 text-green-200">
+                                            Authenticated
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Session Status</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900 text-green-200">
+                                            {dummySessionStatus}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </details>
-                    </div>
+                        </div>
+                    )}
+
+                    {currentTab === 'rawdata' && (
+                        <div className="bg-[#242935] shadow-sm rounded-lg p-6">
+                            <h2 className="text-xl font-semibold text-white mb-4">Raw Data (Debug)</h2>
+                            <details className="cursor-pointer">
+                                <summary className="text-sm text-gray-400 hover:text-gray-200 mb-4">
+                                    Click to view raw admin data
+                                </summary>
+                                <div className="bg-[#1a1d29] rounded-md p-4">
+                                    <pre className="text-sm text-purple-200 overflow-x-auto whitespace-pre-wrap">
+                                        {JSON.stringify(dummyUserData, null, 2)}
+                                    </pre>
+                                </div>
+                            </details>
+                        </div>
+                    )}
+
                 </div>
 
             </div>
