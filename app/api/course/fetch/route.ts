@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import connectMongo from '@/utils/mongodb';
+import connect from '@/utils/mongodb';
 import course from '@/models/course';
 
 export async function GET() {
     try {
-        await connectMongo();
+        await connect();
         const courseItem = await course.find();
 
         return NextResponse.json(courseItem, { status: 200 });

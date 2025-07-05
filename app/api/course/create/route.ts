@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectMongo from '@/utils/mongodb';
+import connect from '@/utils/mongodb';
 import course from '@/models/course';
 
 export async function POST(request: NextRequest) {
     try {
-        await connectMongo();
+        await connect();
 
         const body = await request.json();
         const courseItem = await course.create(body);
