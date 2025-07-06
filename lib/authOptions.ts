@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import connect from "@/utils/mongodb";
-import { Admin } from "@/models/admin";
+import { User } from "@/models/user";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials: any) {
                 await connect();
                 try {
-                    const user = await Admin.findOne({ email: credentials.email });
+                    const user = await User.findOne({ email: credentials.email });
                     if (!user) {
                         throw new Error("Email Not Found");
                     }
@@ -47,9 +47,9 @@ export const authOptions: NextAuthOptions = {
             if (account?.provider === "credentials") return true;
             if (account?.provider === "google") {
                 await connect();
-                const existingUser = await Admin.findOne({ email: user.email });
+                const existingUser = await User.findOne({ email: user.email });
                 if (!existingUser) {
-                    const newUser = new Admin({ email: user.email, fullName: user.name });
+                    const newUser = new User({ email: user.email, fullName: user.name });
                     await newUser.save();
                 }
                 return true;

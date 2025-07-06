@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connect from '@/utils/mongodb';
-import { Admin } from '@/models/admin';
+import { User } from '@/models/user';
 
 export async function PUT(request: NextRequest) {
     try {
@@ -15,7 +15,7 @@ export async function PUT(request: NextRequest) {
 
         const body = await request.json();
 
-        const updatedUser = await Admin.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
             { email },
             { $set: body },
             { new: true, runValidators: true }

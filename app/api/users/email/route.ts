@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connect from '@/utils/mongodb';
-import { Admin } from '@/models/admin';
+import { User } from '@/models/user';
 
 export async function GET(request: NextRequest) {
     try {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
         }
 
         // Find the user by email
-        const user = await Admin.findOne({ email });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return NextResponse.json({ message: 'User not found' }, { status: 404 });

@@ -1,7 +1,7 @@
-import connect from "@/utils/mongodb";
-import bcrypt from "bcryptjs";
-import { Admin } from '@/models/admin';
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import connect from '@/utils/mongodb';
+import { User } from '@/models/user';
+import bcrypt from 'bcryptjs';
 
 export const POST = async (request: any) => {
   const { email, password, name, phone } = await request.json();
@@ -9,14 +9,14 @@ export const POST = async (request: any) => {
   await connect();
   console.log("connected with db");
 
-  const existingUser = await Admin.findOne({ email });
+  const existingUser = await User.findOne({ email });
 
   if (existingUser) {
     return new NextResponse("Email is already in use", { status: 400 });
   }
 
   const hashedPassword = await bcrypt.hash(password, 5);
-  const newUser = new Admin({
+  const newUser = new User({
     email,
     name,
     phone,
