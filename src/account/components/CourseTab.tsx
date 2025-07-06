@@ -52,7 +52,7 @@ const courseSchema = z.object({
 
 type CourseFormData = z.infer<typeof courseSchema>;
 
-const CourseTab = ({ userData }: any) => {
+const CourseTab = () => {
     const [newSkill, setNewSkill] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 

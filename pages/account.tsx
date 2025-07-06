@@ -211,7 +211,7 @@ const AdminAccount = () => {
                     )}
 
                     {currentTab === 'courses' && (
-                        <CourseTab userData={userData} />
+                        <CourseTab />
                     )}
 
                     {currentTab === 'account' && (
