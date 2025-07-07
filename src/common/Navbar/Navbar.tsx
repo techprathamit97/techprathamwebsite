@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [selectedCategoryIdx, setSelectedCategoryIdx] = useState(0);
-  const { authenticated } = useContext(UserContext);
+  const { authenticated, isAdmin, loading } = useContext(UserContext);
 
   const coursesByCategory = React.useMemo(() => {
     const categories = [...new Set(allCourses.map(course => course.category))];
@@ -76,8 +76,14 @@ const Navbar = () => {
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
-          {authenticated ? (
-            <Link href='/account' className='cursor-pointer'>Account</Link>
+          {loading ? (
+            <span className='cursor-pointer opacity-50'>Loading...</span>
+          ) : authenticated ? (
+            isAdmin ? (
+              <Link href='/admin/dashboard' className='cursor-pointer'>Admin Dashboard</Link>
+            ) : (
+              <Link href='/user/dashboard' className='cursor-pointer'>Dashboard</Link>
+            )
           ) : (
             <Link href='/auth/login' className='cursor-pointer'>Login</Link>
           )}
@@ -95,8 +101,14 @@ const Navbar = () => {
           <Link href='/payment' className='cursor-pointer'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer'>Contact Us</Link>
           <Link href='/student-zone' className='cursor-pointer'>Student Zone</Link>
-          {authenticated ? (
-            <Link href='/account' className='cursor-pointer'>Account</Link>
+          {loading ? (
+            <span className='cursor-pointer opacity-50'>Loading...</span>
+          ) : authenticated ? (
+            isAdmin ? (
+              <Link href='/admin/dashboard' className='cursor-pointer'>Admin Dashboard</Link>
+            ) : (
+              <Link href='/user/dashboard' className='cursor-pointer'>Dashboard</Link>
+            )
           ) : (
             <Link href='/auth/login' className='cursor-pointer'>Login</Link>
           )}
