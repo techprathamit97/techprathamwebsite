@@ -14,6 +14,7 @@ import SkillSection from '@/src/courses/common/SkillSection/SkillSection';
 import FaqSection from '@/src/courses/common/FaqSection/FaqSection';
 import TestimonialSection from '@/src/courses/common/TestimonialSection/TestimonialSection';
 import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
+import CourseCertification from '@/src/courses/components/CourseCertification/CourseCertification';
 
 const CourseDataPage = () => {
     const router = useRouter();
@@ -57,21 +58,19 @@ const CourseDataPage = () => {
 
                 <HeaderSection course={course} />
 
-                <FeatureSection />
+                <SkillSection course={course} />
 
                 <IntroSection course={course} />
 
                 <PlanSection />
 
-                <SpecialitySection />
-
                 <CurriculumSection course={course} />
 
-                <SkillSection course={course} />
+                <TestimonialSection course={course} />
 
                 <FaqSection course={course} />
 
-                <TestimonialSection course={course} />
+                <CourseCertification />
 
                 <OtherCourse course={course} />
 
@@ -83,3 +82,6 @@ const CourseDataPage = () => {
 }
 
 export default CourseDataPage
+
+{/* <FeatureSection /> */ }
+{/* <SpecialitySection /> */ }
