@@ -2,10 +2,10 @@
 import React, { useContext, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
-import Sidebar from '@/src/account/common/Sidebar';
-import TopBar from '@/src/account/common/TopBar';
 import AdminLoader from '@/src/account/common/AdminLoader';
 import SignOut from '@/src/account/common/SignOut';
+import AdminSidebar from '@/src/account/common/AdminSidebar';
+import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const AdminAccount = () => {
     const { data: session, status: sessionStatus } = useSession();
@@ -27,11 +27,11 @@ const AdminAccount = () => {
                 <div className="h-screen w-full fixed bg-[#121421]">
                     <div className="grid grid-cols-5 h-full">
 
-                        <Sidebar />
+                        <AdminSidebar />
 
                         <div className="col-span-4 w-full h-full overflow-y-auto p-8">
 
-                            <TopBar />
+                            <AdminTopBar />
 
                             <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
                                 <h2 className="text-xl font-semibold text-white mb-4">Dashboard</h2>

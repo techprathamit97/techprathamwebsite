@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Sidebar from '@/src/account/common/Sidebar';
-import TopBar from '@/src/account/common/TopBar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { UserContext } from '@/context/userContext';
-import AdminLoader from '@/src/account/common/AdminLoader';
 import SignOut from '@/src/account/common/SignOut';
+import AdminLoader from '@/src/account/common/AdminLoader';
+import AdminSidebar from '@/src/account/common/AdminSidebar';
+import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const courses = () => {
   const { authenticated, loading } = useContext(UserContext);
@@ -51,11 +51,11 @@ const courses = () => {
         <div className="h-screen w-full fixed bg-[#121421]">
           <div className="grid grid-cols-5 h-full">
 
-            <Sidebar />
+            <AdminSidebar />
 
             <div className="col-span-4 w-full h-full overflow-y-auto p-8">
 
-              <TopBar />
+              <AdminTopBar />
 
               {isLoading ? (
                 <div className="min-h-screen flex items-center justify-center bg-gray-50">

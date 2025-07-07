@@ -9,8 +9,9 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("");
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const [currentTab, setCurrentTab] = useState("profile");
+  const [userData, setUserData] = useState({});
 
   const { data: session } = useSession();
   const user = session?.user?.email || null;
@@ -18,30 +19,34 @@ export const UserProvider = ({ children }) => {
   const yearData = new Date();
   let currentYear = yearData.getFullYear();
 
-  const [userData, setUserData] = useState({});
-
   const fetchUserData = async () => {
     if (!user) {
       setLoading(false);
+      setAuthenticated(false);
+      setIsAdmin(false);
+      setUserData({});
       return;
     }
 
     setLoading(true);
-    if (user) {
-      try {
-        const res = await fetch(`/api/users/email?email=${user}`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch user details");
-        }
-
-        const userData = await res.json();
-        setUserData(userData);
-        setAuthenticated(true);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
+    try {
+      const res = await fetch(`/api/users/email?email=${user}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch user details");
       }
+
+      const fetchedUserData = await res.json();
+      setUserData(fetchedUserData);
+      setAuthenticated(true);
+
+      setIsAdmin(fetchedUserData?.role?.type === "admin");
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setAuthenticated(false);
+      setIsAdmin(false);
+      setUserData({});
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,8 +55,18 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   const refreshUserData = () => {
-    setLoading(true);
     fetchUserData();
+  };
+
+  const checkAdminAccess = () => {
+    return userData?.role?.type === "admin";
+  };
+
+  const getUserRole = () => {
+    return {
+      type: userData?.role?.type || "user",
+      position: userData?.role?.position || "",
+    };
   };
 
   return (
@@ -67,7 +82,10 @@ export const UserProvider = ({ children }) => {
         currentYear,
         refreshUserData,
         currentTab,
-        setCurrentTab
+        setCurrentTab,
+        isAdmin,
+        checkAdminAccess,
+        getUserRole,
       }}
     >
       {children}
