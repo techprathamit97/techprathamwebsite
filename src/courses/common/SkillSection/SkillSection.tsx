@@ -7,9 +7,9 @@ const SkillSection = ({ course }: any) => {
                 <div className='text-2xl font-semibold text-left flex flex-row gap-4 items-center justify-start'>
                     <div>Top Skills & Tools Covered</div>
                 </div>
-                <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4'>
+                <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-2 border-orange-500'>
                     {course?.skills_data.map((skill: any, idx: any) => (
-                        <div key={idx} className='px-4 py-2 border rounded shadow-sm bg-white'>
+                        <div key={idx} className='p-6'>
                             {skill}
                         </div>
                     ))}

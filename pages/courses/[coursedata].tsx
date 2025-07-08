@@ -82,6 +82,3 @@ const CourseDataPage = () => {
 }
 
 export default CourseDataPage
-
-{/* <FeatureSection /> */ }
-{/* <SpecialitySection /> */ }

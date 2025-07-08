@@ -116,20 +116,20 @@ const Register = () => {
         <React.Fragment>
             <Head>
                 <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
-                <title>Admin Register | SLIET Alumni Association</title>
-                <meta name="description" content="Register as an administrator for the SLIET Alumni Association platform. Gain access to backend tools to manage users, events, and announcements." />
-                <meta name="keywords" content="SLIET Admin Register, Admin Sign Up, SLIET Alumni Admin, Admin Registration SLIET Longowal" />
-                <meta name="author" content="SLIET Alumni Association Admin Team" />
+                <title>Register | TechPratham</title>
+                <meta name="description" content="Create your TechPratham account and get access to powerful tools and resources for learning, innovation, and growth." />
+                <meta name="keywords" content="TechPratham Register, Sign Up TechPratham, Join TechPratham, Tech Learning Platform" />
+                <meta name="author" content="TechPratham Team" />
 
-                <meta property="og:title" content="Admin Register | SLIET Alumni Association" />
-                <meta property="og:description" content="Create your administrator account to manage and monitor the SLIET Alumni Association platform." />
-                <meta property="og:image" content="/logo/og-saa.png" />
-                <meta property="og:url" content="https://admin.slietalumni.in/auth/register/" />
+                <meta property="og:title" content="Register | TechPratham" />
+                <meta property="og:description" content="Join TechPratham to access personalized tech learning, projects, and innovation opportunities." />
+                <meta property="og:image" content="/logo/og-techpratham.png" />
+                <meta property="og:url" content="https://techpratham.in/auth/register/" />
 
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Admin Register | SLIET Alumni Association" />
-                <meta name="twitter:description" content="Register now to join the SLIET Alumni admin panel and take control of alumni data and platform updates." />
-                <meta name="twitter:image" content="/logo/og-saa.png" />
+                <meta name="twitter:title" content="Register | TechPratham" />
+                <meta name="twitter:description" content="Register now on TechPratham to unlock personalized tools and learning experiences for your tech journey." />
+                <meta name="twitter:image" content="/logo/og-techpratham.png" />
             </Head>
 
             <div className="w-full fixed md:h-screen h-auto flex flex-col items-center justify-start md:overflow-hidden overflow-auto">
@@ -264,7 +264,7 @@ const Register = () => {
                                                             htmlFor="privacyPolicyAccepted"
                                                             className="text-sm font-normal cursor-pointer"
                                                         >
-                                                            I have read and agree to the Privacy Policy of the SLIET Alumni Association website.
+                                                            I have read and agree to the Privacy Policy of the Techpratham website.
                                                             <span className='text-red-500'> *</span>
                                                         </Label>
                                                     </div>
