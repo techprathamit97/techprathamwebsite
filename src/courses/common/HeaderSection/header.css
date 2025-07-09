@@ -1,0 +1,5 @@
+.headerImage {
+    background-image: url('/course/course-banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

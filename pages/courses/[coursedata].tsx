@@ -1,20 +1,20 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { allCourses } from '@/components/assets/courses';
 import Navbar from '@/src/common/Navbar/Navbar';
 import Footer from '@/src/common/Footer/Footer';
-import { allCourses } from '@/components/assets/courses';
 import HeaderSection from '@/src/courses/common/HeaderSection/HeaderSection';
-import FeatureSection from '@/src/courses/common/FeatureSection/FeatureSection';
 import IntroSection from '@/src/courses/common/IntroSection/IntroSection';
 import PlanSection from '@/src/courses/common/PlanSection/PlanSection';
-import SpecialitySection from '@/src/courses/common/SpecialitySection/SpecialitySection';
 import CurriculumSection from '@/src/courses/common/CurriculumSection/CurriculumSection';
 import SkillSection from '@/src/courses/common/SkillSection/SkillSection';
 import FaqSection from '@/src/courses/common/FaqSection/FaqSection';
 import TestimonialSection from '@/src/courses/common/TestimonialSection/TestimonialSection';
 import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
-import CourseCertification from '@/src/courses/components/CourseCertification/CourseCertification';
+import CourseCertification from '@/src/courses/common/CourseCertification/CourseCertification';
+import ProjectSection from '@/src/courses/common/ProjectSection/ProjectSection';
+import AssesmentSection from '@/src/courses/common/AssesmentSection/AssesmentSection';
 
 const CourseDataPage = () => {
     const router = useRouter();
@@ -65,6 +65,10 @@ const CourseDataPage = () => {
                 <PlanSection />
 
                 <CurriculumSection course={course} />
+
+                <ProjectSection course={course} />
+
+                <AssesmentSection course={course} />
 
                 <TestimonialSection course={course} />
 

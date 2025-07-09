@@ -45,16 +45,16 @@ const OtherCourse = ({ course }: any) => {
             <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center py-16 h-auto'>
 
                 {course && course.category && (
-                    <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                    <h2 className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize mb-10">
                         Other {course.category} Courses
                     </h2>
                 )}
 
                 <div className="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center">
-                    {relatedCourses.map((courseItem, index) => (
+                    {relatedCourses.slice(0, 3).map((courseItem, index) => (
                         <div
                             key={index}
-                            className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform"
+                            className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white"
                         >
                             <div className="flex justify-between items-start mb-3">
                                 <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{courseItem.title}</div>
