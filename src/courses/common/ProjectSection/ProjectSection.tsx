@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
 
 const ProjectSection = ({ course }: any) => {
     return (
@@ -10,15 +11,18 @@ const ProjectSection = ({ course }: any) => {
                 </div>
 
                 <div className='w-full h-auto flex flex-col gap-8 items-center justify-center mt-6'>
-                    <div className='w-64 h-64 rounded-full border border-red-800 md:text-3xl text-2xl md:font-semibold font-medium flex items-center justify-center text-center'>
-                        {course.title}
+                    <div className='w-72 h-72 relative flex items-center justify-center'>
+                        <div className='w-44 md:text-2xl text-xl md:font-semibold font-medium text-center'>
+                            {course.title}
+                        </div>
+                        <Image src='/course/project.png' alt='' width={40} height={40} className='w-full absolute top-0 right-0' />
                     </div>
 
-                    <div className='flex flex-row gap-20 items-center justify-between'>
+                    <div className='flex flex-row gap-20 items-start justify-between'>
                         {course.projects.map((item: any, index: any) => (
-                            <div className='w-full flex flex-col items-center justify-center text-center text-white'>
-                                <div className='bg-gray-600 w-full p-4'>{item.title}</div>
-                                <div className='bg-blue-700 w-full p-4'>{item.objective}</div>
+                            <div key={index} className='w-full flex flex-col items-center justify-center text-center shadow text-white'>
+                                <div className='bg-[#D1CCC8] text-black w-full p-4'>{item.title}</div>
+                                <div className='bg-[#283256] w-full p-4'>{item.objective}</div>
                             </div>
                         ))}
                     </div>

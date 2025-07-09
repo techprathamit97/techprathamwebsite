@@ -3,13 +3,11 @@ import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import './header.css';
-import { Separator } from '@/components/ui/separator';
-import Image from 'next/image';
 
 const HeaderSection = ({ course }: any) => {
     return (
         <div className='flex flex-col items-center justify-center w-full h-auto headerImage text-white'>
-            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 py-16">
+            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 py-20">
                 <div>
                     <div className='flex flex-row gap-2 items-center justify-start mb-6'>
                         <span>Courses</span>
@@ -80,7 +78,7 @@ const HeaderSection = ({ course }: any) => {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full h-full">
-                    <iframe width="100%" height="315" src={course.videoLink} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="rounded-lg shadow-lg"></iframe>
+                    <iframe width="100%" height="365" src={course.videoLink} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="rounded-lg shadow-lg"></iframe>
                 </div>
             </div>
         </div>
