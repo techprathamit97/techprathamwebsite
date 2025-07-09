@@ -13,7 +13,13 @@ export const allCourses = [
         curriculum_data: [
             {
                 que: "What is included in the training plan?",
-                ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress."
+                ans: "The training plan includes interactive sessions, hands-on projects, and regular assessments to track your progress.",
+                topics: [
+                    "Core Concepts",
+                    "Tenant",
+                    "Basic Navigation",
+                    "Functional Area",
+                ]
             },
             {
                 que: "How long does the training last?",
