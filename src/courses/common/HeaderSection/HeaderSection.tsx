@@ -1,9 +1,14 @@
 import React from 'react';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { CircleCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import './header.css';
+import { Separator } from '@/components/ui/separator';
+import Image from 'next/image';
 
 const HeaderSection = ({ course }: any) => {
     return (
-        <div className='flex flex-col items-center justify-center w-full h-auto bg-gradient-to-tl from-[#371414] to-[#D1090F] text-white'>
+        <div className='flex flex-col items-center justify-center w-full h-auto headerImage text-white'>
             <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 py-16">
                 <div>
                     <div className='flex flex-row gap-2 items-center justify-start mb-6'>
@@ -14,25 +19,64 @@ const HeaderSection = ({ course }: any) => {
                         <span>{course.title}</span>
                     </div>
 
-                    <div className="text-3xl font-semibold leading-tight flex-1 pr-2 mb-3">{course.title}</div>
+                    <span className={`px-4 py-1 rounded-full text-base font-normal bg-gray-700 text-gray-200`}>
+                        {course.category}
+                    </span>
 
-                    <div className="mb-3 flex flex-row gap-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-700`}>
-                            {course.category}
+                    <div className="text-3xl font-semibold leading-tight flex-1 pr-2 mt-3 mb-1">{course.title}</div>
+                    <div className="text-base mb-4 flex-grow flex flex-row gap-2">
+                        <CircleCheck className='w-6 h-6 mt-[2px]' />
+                        <div>{course.shortDesc}</div>
+                    </div>
+
+                    <div className="flex items-center gap-1 mb-4">
+                        <span className="flex flex-row items-center justify-start">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" className="w-6 h-6">
+                                <defs>
+                                    <linearGradient id="halfFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="50%" stopColor="#fcbc05" />
+                                        <stop offset="50%" stopColor="#ffffff" />
+                                    </linearGradient>
+                                </defs>
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                    fill="url(#halfFill)"
+                                    stroke="#fcbc05"
+                                    strokeWidth="0.5"
+                                />
+                            </svg>
                         </span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-red-400`}>
-                            {course.level}
-                        </span>
-                        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                            {course.duration}
+                        <span className="text-[#fcbc05] text-base font-medium">{course.rating}</span>
+                    </div>
+
+                    <div className="flex px-6 py-3 gap-4 rounded-xl border border-gray-200 max-w-fit mb-4">
+                        <div className="flex flex-col gap-1">
+                            <p className="md:text-sm xs:text-xs text-gray-300">Level</p>
+                            <p className="md:text-xl xs:text-base font-semibold text-gray-200">{course.level}</p>
+                        </div>
+                        <div className="h-8 w-px bg-gray-300 self-center"></div>
+                        <div className="flex flex-col gap-1">
+                            <p className="md:text-sm xs:text-xs text-gray-300">Duration</p>
+                            <p className="md:text-xl xs:text-base font-semibold text-gray-200">{course.duration}</p>
                         </div>
                     </div>
 
-                    <div className="text-sm mb-4 flex-grow leading-relaxed">{course.shortDesc}</div>
-
-                    <div className="flex items-center gap-1 mb-4">
-                        <span className="text-yellow-500">★★★★★</span>
-                        <span className="text-yellow-600 text-sm font-medium">{course.rating}</span>
+                    <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
+                        <Button className='bg-[#525252]'>PLACEMENT REPORT</Button>
+                        <Button className='bg-[#00000041] border border-white'>DOWNLOAD CURRICULUM</Button>
+                        <Button className='bg-[#00000041] border border-white'>INTERVIEW QUESTIONS</Button>
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full h-full">

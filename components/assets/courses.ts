@@ -36,6 +36,21 @@ export const allCourses = [
             'Effective Communication Skills',
             'Career Guidance & Mentorship',
         ],
+        projects: [
+            {
+                title: "Generative AI Implementation & Training Program",
+                objective: "Develop and deploy a comprehensive generative AI training curriculum with hands-on workshops covering prompt engineering, model fine-tuning, and enterprise integration use cases"
+            },
+            {
+                title: "AI-Powered Content Generation Platform",
+                objective: "Build an automated content creation system using generative AI for marketing materials, documentation, and customer communications"
+            },
+            {
+                title: "Conversational AI Chatbot Development",
+                objective: "Create and deploy intelligent chatbots with natural language processing capabilities for customer support and internal knowledge management"
+            }
+        ],
+        assesment_link: "",
         faqs_data: [
             {
                 que: "What is included in the training plan?",
