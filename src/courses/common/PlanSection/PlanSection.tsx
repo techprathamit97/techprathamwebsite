@@ -1,40 +1,21 @@
-import React, { useState } from 'react';
-import { CaretUpIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
+import React from 'react';
 
 const PlanSection = () => {
-    const [selected, setSelected] = useState<number | null>(null);
-
-    const toggle = (i: number) => {
-        if (selected === i) {
-            return setSelected(null);
-        }
-        setSelected(i);
-    };
-
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6 bg-[#f7f7f7] text-black'>
             <div className='md:w-10/12 w-11/12 h-auto flex flex-col py-16 gap-6'>
                 <div className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Training Plan</div>
-                <div className="relative grid md:grid-cols-2 grid-cols-1 gap-4">
+                <div className="relative grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
                     {training_data?.map((item: any, index: any) => (
-                        <div className="w-full md:text-base text-sm py-3 px-4 cursor-pointer border rounded shadow-sm bg-white text-black" key={index} onClick={() => toggle(index)}>
-                            <div className="flex items-center justify-between">
-                                <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
-                                {selected === index ? (
-                                    <CaretUpIcon className='md:flex hidden w-6 h-6 transition-all duration-300 rotate-0' />
-                                ) : (
-                                    <CaretUpIcon className='md:flex hidden w-6 h-6 transition-all duration-300 rotate-180' />
-                                )}
-                            </div>
-                            <div
-                                className={
-                                    selected === index
-                                        ? "overflow-hidden transition-all pt-3 pb-2 max-h-96 ease-out duration-700 font-light"
-                                        : "overflow-hidden transition-all max-h-0 duration-300"
-                                }
-                            >
-                                <p>{item.ans}</p>
-                            </div>
+                        <div className="w-full py-4 px-5 cursor-pointer border rounded shadow-sm bg-white text-black" key={index}>
+                            <Image src='/course/trainer.png' alt='' width={40} height={40} className='w-12 mb-3' />
+                            <h3 className="text-base md:text-lg font-medium text-gray-900 tracking-tight">
+                                {item.que}
+                            </h3>
+                            <p className="text-sm md:text-base text-gray-600 leading-relaxed max-w-3xl">
+                                {item.ans}
+                            </p>
                         </div>
                     ))}
                 </div>
