@@ -49,9 +49,9 @@ const TestimonialSection = ({ course }: any) => {
           className="mySwiper testimonialStyle"
         >
           {testimonialsData.map((testimonial) => (
-            <SwiperSlide key={testimonial.id} className="w-80 h-auto flex flex-col gap-5 shadow-lg bg-white rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <SwiperSlide key={testimonial.id} className="w-80 h-auto flex flex-col gap-2 bg-white rounded-lg p-6 transition-shadow duration-300">
               <div className="w-full flex flex-row items-start justify-start gap-2">
-                <div className={`w-12 h-12 ${testimonial.avatarColor} rounded flex items-center justify-center text-white font-bold text-lg`}>
+                <div className={`w-12 h-12 bg-[#283256] rounded flex items-center justify-center text-white font-bold text-2xl`}>
                   {testimonial.avatar}
                 </div>
                 <div className="flex flex-col text-left">
@@ -59,10 +59,10 @@ const TestimonialSection = ({ course }: any) => {
                   <div className="text-gray-500 text-sm">{testimonial.date}</div>
                 </div>
               </div>
-              <div className="w-full flex items-start text-left gap-2 mb-2">
+              <div className="w-full flex items-start text-left gap-2">
                 <span className='text-yellow-400 text-2xl'>{renderStars(testimonial.rating)}</span>
               </div>
-              <div className="text-gray-700 leading-relaxed text-base text-left">{testimonial.testimonial}</div>
+              <div className="text-gray-700 flex-1 leading-relaxed text-base text-left">{testimonial.testimonial}</div>
             </SwiperSlide>
           ))}
         </Swiper>

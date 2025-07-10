@@ -81,7 +81,7 @@ const OtherCourse = ({ course }: any) => {
                                 </div>
                             </div>
 
-                            <Link href={`/courses${courseItem.link}`} className="w-full">
+                            <Link href={`/courses/${courseItem.link}`} className="w-full">
                                 <Button
                                     variant="default"
                                     className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
