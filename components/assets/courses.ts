@@ -10,6 +10,9 @@ export const allCourses = [
         category: "AI & Machine Learning",
         link: "advance-generative-ai-course",
         videoLink: "https://www.youtube.com/embed/yy9GZ5_BWGE",
+        placement_report: "",
+        curriculum: "",
+        interview: "",
         curriculum_data: [
             {
                 que: "What is included in the training plan?",
@@ -856,7 +859,6 @@ export const allCourses = [
             }
         ]
     },
-
     // Cloud Computing
     {
         title: "AWS Solutions Architect",
@@ -1086,7 +1088,6 @@ export const allCourses = [
             }
         ]
     },
-
     // Fashion & Interior
     {
         title: "Fashion Design Fundamentals",
@@ -1317,7 +1318,6 @@ export const allCourses = [
             }
         ]
     },
-
     // SAP Courses
     {
         title: "SAP HANA Database Administration",
@@ -1547,7 +1547,6 @@ export const allCourses = [
             }
         ]
     },
-
     // HR Courses
     {
         title: "Strategic Human Resources Management",

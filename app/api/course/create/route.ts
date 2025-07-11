@@ -7,10 +7,14 @@ export async function POST(request: NextRequest) {
         await connect();
 
         const body = await request.json();
-        const courseItem = await course.create(body);
+        
+        const courseItems = Array.isArray(body) 
+            ? await course.insertMany(body)
+            : await course.create(body);
 
-        return NextResponse.json(courseItem, { status: 201 });
+        return NextResponse.json(courseItems, { status: 201 });
     } catch (error: any) {
+        console.error('Database error:', error);
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
