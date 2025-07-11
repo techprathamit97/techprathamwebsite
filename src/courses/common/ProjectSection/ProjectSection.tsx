@@ -19,7 +19,7 @@ const ProjectSection = ({ course }: any) => {
                     </div>
 
                     <div className='flex flex-row gap-20 items-start justify-between'>
-                        {course.projects.map((item: any, index: any) => (
+                        {course?.projects?.map((item: any, index: any) => (
                             <div key={index} className='w-full flex flex-col items-center justify-center text-center shadow text-white'>
                                 <div className='bg-[#D1CCC8] text-black w-full p-4'>{item.title}</div>
                                 <div className='bg-[#283256] w-full p-4'>{item.objective}</div>

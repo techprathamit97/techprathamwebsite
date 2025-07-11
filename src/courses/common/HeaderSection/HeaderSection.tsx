@@ -3,6 +3,7 @@ import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import './header.css';
+import Image from 'next/image';
 
 const HeaderSection = ({ course }: any) => {
     return (
@@ -27,36 +28,60 @@ const HeaderSection = ({ course }: any) => {
                         <div>{course.shortDesc}</div>
                     </div>
 
-                    <div className="flex items-center gap-1 mb-4">
-                        <span className="flex flex-row items-center justify-start">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <svg width="20" height="20" viewBox="0 0 24 24" className="w-6 h-6">
-                                <defs>
-                                    <linearGradient id="halfFill" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="50%" stopColor="#fcbc05" />
-                                        <stop offset="50%" stopColor="#ffffff" />
-                                    </linearGradient>
-                                </defs>
-                                <path
-                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                                    fill="url(#halfFill)"
-                                    stroke="#fcbc05"
-                                    strokeWidth="0.5"
-                                />
-                            </svg>
-                        </span>
-                        <span className="text-[#fcbc05] text-base font-medium">{course.rating}</span>
+                    <div className='w-full h-auto flex flex-row items-center justify-between mb-4'>
+                        <div className="flex items-center gap-1">
+                            <span className="flex flex-row items-center justify-start">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fcbc05" className="w-6 h-6">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" className="w-6 h-6">
+                                    <defs>
+                                        <linearGradient id="halfFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="50%" stopColor="#fcbc05" />
+                                            <stop offset="50%" stopColor="#ffffff" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path
+                                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                        fill="url(#halfFill)"
+                                        stroke="#fcbc05"
+                                        strokeWidth="0.5"
+                                    />
+                                </svg>
+                            </span>
+                            <span className="text-[#fcbc05] text-base font-medium">{course.rating}</span>
+                        </div>
+                        <div className="flex flex-row gap-2 text-base font-normal">
+                            <div className="flex flex-row gap-2 items-center">
+                                <Image alt="google" src="/course/rating/google.svg" width="15" height="15" className='h-5 w-auto' />
+                                <span>4.2/5</span>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <Image alt="Sulekha" src="/course/rating/sul.png" width="15" height="15" className='h-5 w-auto' />
+                                <span>4.8/5</span>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <Image alt="Urbonpro" src="/course/rating/urbonpro.png" width="15" height="15" className='h-5 w-auto' />
+                                <span>4.6/5</span>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <Image alt="Just Dial" src="/course/rating/justdial.png" width="15" height="15" className='h-5 w-auto' />
+                                <span>4.3/5</span>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <Image alt="Fb" src="/course/rating/facebook.svg" width="15" height="15" className='h-5 w-auto' />
+                                <span>4.5/5</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex px-6 py-3 gap-4 rounded-xl border border-gray-200 max-w-fit mb-4">
@@ -76,9 +101,6 @@ const HeaderSection = ({ course }: any) => {
                         <Button className='bg-[#00000041] border border-white'>DOWNLOAD CURRICULUM</Button>
                         <Button className='bg-[#00000041] border border-white'>INTERVIEW QUESTIONS</Button>
                     </div>
-                </div>
-                <div className="flex items-center justify-center w-full h-full">
-                    <iframe width="100%" height="365" src={course.videoLink} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="rounded-lg shadow-lg"></iframe>
                 </div>
             </div>
         </div>
