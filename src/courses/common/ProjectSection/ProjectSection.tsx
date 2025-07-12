@@ -11,11 +11,11 @@ const ProjectSection = ({ course }: any) => {
                 </div>
 
                 <div className='w-full h-auto flex flex-col gap-8 items-center justify-center mt-6'>
-                    <div className='w-72 h-72 relative flex items-center justify-center'>
-                        <div className='w-44 md:text-2xl text-xl md:font-semibold font-medium text-center'>
+                    <div className='w-96 h-96 relative flex items-center justify-center'>
+                        <div className='w-48 h-48 z-10 flex items-center justify-center md:text-2xl text-xl md:font-semibold font-medium text-center rounded-full bg-[#D1CCC8] text-black'>
                             {course.title}
                         </div>
-                        <Image src='/course/project.png' alt='' width={40} height={40} className='w-full absolute top-0 right-0' />
+                        <Image src='/course/project.svg' alt='' width={40} height={40} className='w-full absolute top-0 right-0' />
                     </div>
 
                     <div className='flex flex-row gap-20 items-start justify-between'>
