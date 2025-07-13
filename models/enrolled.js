@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const enrolledSchema = new mongoose.Schema(
   {
-    course_link: { type: String, required: true, unique: true },
+    course_link: { type: String, required: true },
     course_title: { type: String, required: true },
     course_desc: { type: String, required: true },
     duration: { type: String, required: true },

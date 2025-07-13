@@ -15,13 +15,12 @@ import Head from 'next/head';
 import Loader from '@/components/common/Loader/Loader';
 import Session from '@/components/common/Session/Session';
 
-interface adminFormData {
+interface RegisterFormData {
     name: string
     email: string
     phone: string
-    userType: string
-    position: string
     password: string
+    position: string
 }
 
 const Register = () => {
@@ -34,7 +33,7 @@ const Register = () => {
     const [showPass, setShowPass] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const [isChecked, setIsChecked] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = (checked: boolean) => {
         setIsChecked(checked);
@@ -50,9 +49,9 @@ const Register = () => {
         }
     }, [sessionStatus, router, forwardurl]);
 
-    const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<adminFormData>({});
+    const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<RegisterFormData>({});
 
-    const onSubmit: SubmitHandler<adminFormData> = async (data) => {
+    const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
         try {
             setLoading(true);
 
@@ -61,8 +60,15 @@ const Register = () => {
                 email: data.email,
                 phone: data.phone,
                 password: data.password,
-                userType: 'user',
-                position: data.position,
+                role: {
+                    type: 'user',
+                    position: data.position,
+                },
+                profile: "",
+                courses: {
+                    enrolled: [],
+                    completed: []
+                }
             };
 
             const userResponse = await fetch('/api/register', {
@@ -168,6 +174,10 @@ const Register = () => {
                                                         id="fullName"
                                                         {...register("name", {
                                                             required: "Full name is required",
+                                                            minLength: {
+                                                                value: 2,
+                                                                message: "Name must be at least 2 characters"
+                                                            },
                                                             maxLength: {
                                                                 value: 50,
                                                                 message: "Name cannot exceed 50 characters"
@@ -223,6 +233,26 @@ const Register = () => {
                                                     {errors.phone && <span className="text-sm text-red-500 mt-1">{errors.phone.message}</span>}
                                                 </div>
 
+                                                {/* Position Field */}
+                                                <div className='flex flex-col w-full h-auto mb-4'>
+                                                    <Label htmlFor="position" className='text-sm font-normal text-[#1a202c] mb-1'>
+                                                        Position/Role
+                                                    </Label>
+                                                    <Input
+                                                        type="text"
+                                                        id="position"
+                                                        {...register("position", {
+                                                            maxLength: {
+                                                                value: 100,
+                                                                message: "Position cannot exceed 100 characters"
+                                                            }
+                                                        })}
+                                                        placeholder='e.g., Student, Developer, Designer'
+                                                        className='w-full min-h-11 h-full indent-1 bg-white'
+                                                    />
+                                                    {errors.position && <span className="text-sm text-red-500 mt-1">{errors.position.message}</span>}
+                                                </div>
+
                                                 {/* Password Field */}
                                                 <div className='flex flex-col w-full h-auto mb-4'>
                                                     <Label htmlFor="password" className='text-sm font-normal text-[#1a202c] mb-1'>
@@ -238,6 +268,10 @@ const Register = () => {
                                                                 minLength: {
                                                                     value: 8,
                                                                     message: "Password must be at least 8 characters"
+                                                                },
+                                                                pattern: {
+                                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+                                                                    message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
                                                                 }
                                                             })}
                                                             placeholder='Enter Your Password'
@@ -264,13 +298,28 @@ const Register = () => {
                                                             htmlFor="privacyPolicyAccepted"
                                                             className="text-sm font-normal cursor-pointer"
                                                         >
-                                                            I have read and agree to the Privacy Policy of the Techpratham website.
+                                                            I have read and agree to the{' '}
+                                                            <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+                                                                Privacy Policy
+                                                            </Link>
+                                                            {' '}and{' '}
+                                                            <Link href="/terms-of-service" className="text-blue-600 hover:underline">
+                                                                Terms of Service
+                                                            </Link>
+                                                            {' '}of the TechPratham website.
                                                             <span className='text-red-500'> *</span>
                                                         </Label>
                                                     </div>
                                                 </div>
 
-                                                <Button type='submit' variant='default' className='w-full min-h-11 mt-2' disabled={!isChecked}>Register</Button>
+                                                <Button 
+                                                    type='submit' 
+                                                    variant='default' 
+                                                    className='w-full min-h-11 mt-2' 
+                                                    disabled={!isChecked || loading}
+                                                >
+                                                    {loading ? 'Creating Account...' : 'Register'}
+                                                </Button>
 
                                                 <div className='w-full text-center mt-4 flex items-center justify-center'>
                                                     <p className='text-sm text-[#1a202c] flex flex-row gap-2'>
@@ -297,4 +346,4 @@ const Register = () => {
     );
 };
 
-export default Register
+export default Register;
