@@ -11,6 +11,11 @@ const faqSchema = new mongoose.Schema({
   ans: { type: String, required: true },
 });
 
+const projectSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  objective: { type: String, required: true },
+});
+
 const courseSchema = new mongoose.Schema(
   {
     link: { type: String, required: true, unique: true },
@@ -29,6 +34,7 @@ const courseSchema = new mongoose.Schema(
     skills_data: [String],
     assesment_link: { type: String, required: true },
     faqs_data: [faqSchema],
+    project_data: [projectSchema],
   },
   {
     timestamps: true,

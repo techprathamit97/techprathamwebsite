@@ -2,50 +2,18 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    phone: {
-      type: String,
-      default: "",
-    },
-    name: {
-      type: String,
-      default: "",
-    },
-    profile: {
-      type: String,
-      default: "",
-    },
-    password: {
-      type: String,
-      default: "",
-    },
+    email: { type: String, required: true, unique: true },
+    phone: { type: String, default: "" },
+    name: { type: String, default: "" },
+    profile: { type: String, default: "" },
+    password: { type: String, default: "" },
     role: {
-      type: {
-        type: String,
-        default: "user",
-      },
-      position: {
-        type: String,
-        default: "",
-      },
+      type: { type: String, default: "user" },
+      position: { type: String, default: "" },
     },
     courses: {
-      enrolled: [
-        {
-          type: String,
-          default: [],
-        }
-      ],
-      completed: [
-        {
-          type: String,
-          default: [],
-        }
-      ],
+      enrolled: [{ type: String, default: [] }],
+      completed: [{ type: String, default: [] }],
     },
   },
   {
