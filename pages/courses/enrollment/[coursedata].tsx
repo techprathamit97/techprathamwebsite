@@ -4,23 +4,37 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { signIn } from 'next-auth/react';
 import Navbar from '@/src/common/Navbar/Navbar';
-import Footer from '@/src/common/Footer/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, CheckCircle, User, Mail, Phone, BookOpen, Clock, BarChart3, Tag } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Loader2, CheckCircle, User, Mail, Phone, BookOpen, Clock, BarChart3, Tag, UserPlus, LogIn, AlertCircle } from 'lucide-react';
 import { UserContext } from '@/context/userContext';
+import FooterSm from '@/src/common/FooterSm/FooterSm';
+import Link from 'next/link';
 
-// Zod schema for form validation
+// Zod schema for user registration
+const registrationSchema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^[0-9]{10}$/, 'Phone number must be 10 digits'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+});
+
+// Zod schema for enrollment (existing users)
 const enrollmentSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits').regex(/^\+?[1-9]\d{1,14}$/, 'Please enter a valid phone number'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^[0-9]{10}$/, 'Phone number must be 10 digits'),
 });
 
+type RegistrationFormData = z.infer<typeof registrationSchema>;
 type EnrollmentFormData = z.infer<typeof enrollmentSchema>;
 
 interface Curriculum {
@@ -54,6 +68,8 @@ interface Course {
   faqs_data: FAQ[];
 }
 
+type FormStep = 'registration' | 'enrollment' | 'userExists';
+
 const CourseEnrollPage: React.FC = () => {
   const router = useRouter();
   const { userData } = useContext(UserContext);
@@ -63,20 +79,31 @@ const CourseEnrollPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'userExists'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [currentStep, setCurrentStep] = useState<FormStep>('registration');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [existingUserEmail, setExistingUserEmail] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<EnrollmentFormData>({
+  // Registration form
+  const registrationForm = useForm<RegistrationFormData>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      email: '',
+      name: '',
+      phone: '',
+      password: '',
+    }
+  });
+
+  // Enrollment form
+  const enrollmentForm = useForm<EnrollmentFormData>({
     resolver: zodResolver(enrollmentSchema),
     defaultValues: {
-      email: userData.email || '',
-      name: userData.name || '',
-      phone: userData.phone || '',
+      email: userData?.email || '',
+      name: userData?.name || '',
+      phone: userData?.phone || '',
     }
   });
 
@@ -114,7 +141,96 @@ const CourseEnrollPage: React.FC = () => {
     fetchCourseData();
   }, [coursedata]);
 
-  const onSubmit = async (data: EnrollmentFormData) => {
+  useEffect(() => {
+    if (userData?.email) {
+      setCurrentStep('enrollment');
+      enrollmentForm.reset({
+        email: userData.email,
+        name: userData.name || '',
+        phone: userData.phone || '',
+      });
+    } else {
+      setCurrentStep('registration');
+    }
+  }, [userData, enrollmentForm]);
+
+  const handleRegistration = async (data: RegistrationFormData) => {
+    if (!isChecked) {
+      setErrorMessage('Please accept the terms and conditions');
+      setSubmitStatus('error');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setSubmitStatus('idle');
+      setErrorMessage('');
+
+      const userData = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        role: {
+          type: 'user',
+          position: '',
+        },
+        profile: "",
+        courses: {
+          enrolled: [],
+          completed: []
+        }
+      };
+
+      const userResponse = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (userResponse.ok) {
+        const loginRes = await signIn("credentials", {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+        });
+
+        if (loginRes?.error) {
+          setErrorMessage('Registration successful, but login failed. Please try logging in manually.');
+          setSubmitStatus('error');
+        } else {
+          setCurrentStep('enrollment');
+          enrollmentForm.reset({
+            email: data.email,
+            name: data.name,
+            phone: data.phone,
+          });
+          setSubmitStatus('success');
+        }
+      } else {
+        const errorData = await userResponse.json();
+        
+        if (errorData.message && errorData.message.includes('already exists') || errorData.message.includes('already registered')) {
+          setExistingUserEmail(data.email);
+          setSubmitStatus('userExists');
+          setCurrentStep('userExists');
+        } else {
+          setErrorMessage(errorData.message || 'Registration failed');
+          setSubmitStatus('error');
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setErrorMessage('An unexpected error occurred');
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleEnrollment = async (data: EnrollmentFormData) => {
     if (!course) return;
 
     setIsSubmitting(true);
@@ -122,7 +238,6 @@ const CourseEnrollPage: React.FC = () => {
     setErrorMessage('');
 
     try {
-      // Prepare enrollment data
       const enrollmentData = {
         course_link: course.link,
         course_title: course.title,
@@ -140,8 +255,7 @@ const CourseEnrollPage: React.FC = () => {
         courseCompletion: false
       };
 
-      // API call to submit enrollment
-      const response = await fetch('/api/enrollment', {
+      const response = await fetch('/api/course/enrollment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,7 +269,7 @@ const CourseEnrollPage: React.FC = () => {
       }
 
       setSubmitStatus('success');
-      reset();
+      enrollmentForm.reset();
     } catch (error) {
       setSubmitStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
@@ -164,7 +278,17 @@ const CourseEnrollPage: React.FC = () => {
     }
   };
 
-  // Loading state
+  const handleLogin = async () => {
+    router.push(`/login?returnUrl=${encodeURIComponent(router.asPath)}`);
+  };
+
+  const handleBackToRegistration = () => {
+    setCurrentStep('registration');
+    setSubmitStatus('idle');
+    setErrorMessage('');
+    setExistingUserEmail('');
+  };
+
   if (loading) {
     return (
       <React.Fragment>
@@ -178,12 +302,11 @@ const CourseEnrollPage: React.FC = () => {
             <p className="text-gray-600">Loading course data...</p>
           </div>
         </div>
-        <Footer />
+        <FooterSm />
       </React.Fragment>
     );
   }
 
-  // Error state
   if (error || !course) {
     return (
       <React.Fragment>
@@ -207,7 +330,7 @@ const CourseEnrollPage: React.FC = () => {
             </button>
           </div>
         </div>
-        <Footer />
+        <FooterSm />
       </React.Fragment>
     );
   }
@@ -227,14 +350,12 @@ const CourseEnrollPage: React.FC = () => {
         <meta name="keywords" content={keywords} />
         <meta name="author" content="the-bipu" />
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
         <meta property="og:url" content={url} />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -255,18 +376,41 @@ const CourseEnrollPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Enrollment Form */}
+          {/* Dynamic Form Container */}
           <div className="w-full max-w-2xl">
             <Card className="shadow-lg">
               <CardHeader className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <BookOpen className="h-6 w-6 text-red-700" />
-                  <CardTitle className="text-2xl font-bold text-gray-900">
-                    Enroll in Course
-                  </CardTitle>
+                  {currentStep === 'registration' ? (
+                    <>
+                      <UserPlus className="h-6 w-6 text-red-700" />
+                      <CardTitle className="text-2xl font-bold text-gray-900">
+                        Create Account
+                      </CardTitle>
+                    </>
+                  ) : currentStep === 'enrollment' ? (
+                    <>
+                      <BookOpen className="h-6 w-6 text-red-700" />
+                      <CardTitle className="text-2xl font-bold text-gray-900">
+                        Enroll in Course
+                      </CardTitle>
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="h-6 w-6 text-yellow-600" />
+                      <CardTitle className="text-2xl font-bold text-gray-900">
+                        Account Already Exists
+                      </CardTitle>
+                    </>
+                  )}
                 </div>
                 <CardDescription className="text-gray-600">
-                  Complete your enrollment for this course. All fields are required.
+                  {currentStep === 'registration'
+                    ? 'Create your account to enroll in this course.'
+                    : currentStep === 'enrollment'
+                      ? 'Complete your enrollment for this course.'
+                      : 'An account with this email already exists. Please log in to continue.'
+                  }
                 </CardDescription>
               </CardHeader>
 
@@ -274,7 +418,6 @@ const CourseEnrollPage: React.FC = () => {
                 {/* Course Information Display */}
                 <div className="bg-gray-50 p-4 rounded-lg space-y-3">
                   <h3 className="font-semibold text-gray-900 mb-3">Course Details</h3>
-
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col items-start">
                       <div className='flex space-x-2'>
@@ -283,7 +426,6 @@ const CourseEnrollPage: React.FC = () => {
                       </div>
                       <span className="text-sm font-medium">{course.title}</span>
                     </div>
-
                     <div className="flex flex-col items-start">
                       <div className='flex space-x-2'>
                         <Clock className="h-4 w-4 text-gray-500" />
@@ -291,7 +433,6 @@ const CourseEnrollPage: React.FC = () => {
                       </div>
                       <span className="text-sm font-medium">{course.duration}</span>
                     </div>
-
                     <div className="flex flex-col items-start">
                       <div className='flex space-x-2'>
                         <BarChart3 className="h-4 w-4 text-gray-500" />
@@ -299,7 +440,6 @@ const CourseEnrollPage: React.FC = () => {
                       </div>
                       <span className="text-sm font-medium">{course.level}</span>
                     </div>
-
                     <div className="flex flex-col items-start">
                       <div className='flex space-x-2'>
                         <Tag className="h-4 w-4 text-gray-500" />
@@ -307,15 +447,18 @@ const CourseEnrollPage: React.FC = () => {
                       </div>
                       <span className="text-sm font-medium">{course.category}</span>
                     </div>
-
                   </div>
                 </div>
 
+                {/* Status Messages */}
                 {submitStatus === 'success' && (
                   <Alert className="border-green-200 bg-green-50">
                     <CheckCircle className="h-4 w-4 text-green-600" />
                     <AlertDescription className="text-green-800">
-                      Enrollment submitted successfully! You will receive a confirmation email shortly.
+                      {currentStep === 'registration'
+                        ? 'Account created successfully! Now you can enroll in the course.'
+                        : 'Enrollment submitted successfully! You will receive a confirmation email shortly.'
+                      }
                     </AlertDescription>
                   </Alert>
                 )}
@@ -328,100 +471,241 @@ const CourseEnrollPage: React.FC = () => {
                   </Alert>
                 )}
 
-                <div className="space-y-4">
+                {submitStatus === 'userExists' && (
+                  <Alert className="border-yellow-200 bg-yellow-50">
+                    <AlertCircle className="h-4 w-4 text-yellow-600" />
+                    <AlertDescription className="text-yellow-800">
+                      An account with the email <strong>{existingUserEmail}</strong> already exists. Please log in to continue with your enrollment.
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {/* User Exists - Login Prompt */}
+                {currentStep === 'userExists' && (
                   <div className="space-y-4">
-                    {/* Name Field */}
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="flex items-center space-x-2">
-                        <User className="h-4 w-4" />
-                        <span>Full Name</span>
-                      </Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="Enter your full name"
-                        {...register('name')}
-                        className={errors.name ? 'border-red-500' : ''}
-                      />
-                      {errors.name && (
-                        <p className="text-sm text-red-600">{errors.name.message}</p>
-                      )}
-                    </div>
-
-                    {/* Email Field */}
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="flex items-center space-x-2">
-                        <Mail className="h-4 w-4" />
-                        <span>Email Address</span>
-                      </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email address"
-                        {...register('email')}
-                        className={errors.email ? 'border-red-500' : ''}
-                      />
-                      {errors.email && (
-                        <p className="text-sm text-red-600">{errors.email.message}</p>
-                      )}
-                    </div>
-
-                    {/* Phone Field */}
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="flex items-center space-x-2">
-                        <Phone className="h-4 w-4" />
-                        <span>Phone Number</span>
-                      </Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="Enter your phone number"
-                        {...register('phone')}
-                        className={errors.phone ? 'border-red-500' : ''}
-                      />
-                      {errors.phone && (
-                        <p className="text-sm text-red-600">{errors.phone.message}</p>
-                      )}
+                    <div className="text-center">
+                      <p className="text-gray-600 mb-4">
+                        You already have an account with us. Please log in to enroll in this course.
+                      </p>
+                      <div className="space-y-3">
+                        <Button
+                          onClick={handleLogin}
+                          className="w-full bg-red-700 hover:bg-red-800 text-white"
+                        >
+                          <LogIn className="mr-2 h-4 w-4" />
+                          Login to Continue
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={handleBackToRegistration}
+                          className="w-full text-gray-600 hover:text-gray-800"
+                        >
+                          Try Different Email
+                        </Button>
+                      </div>
                     </div>
                   </div>
+                )}
 
-                  {/* Submit Button */}
-                  <Button
-                    type="submit"
-                    className="w-full bg-red-700 hover:bg-red-800 text-white"
-                    disabled={isSubmitting}
-                    onClick={handleSubmit(onSubmit)}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Processing Enrollment...
-                      </>
-                    ) : (
-                      'Enroll Now'
-                    )}
-                  </Button>
-                </div>
+                {/* Registration Form */}
+                {currentStep === 'registration' && (
+                  <form onSubmit={registrationForm.handleSubmit(handleRegistration)} className="space-y-4">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="reg-name" className="flex items-center space-x-2">
+                          <User className="h-4 w-4" />
+                          <span>Full Name</span>
+                        </Label>
+                        <Input
+                          id="reg-name"
+                          type="text"
+                          placeholder="Enter your full name"
+                          {...registrationForm.register('name')}
+                          className={registrationForm.formState.errors.name ? 'border-red-500' : ''}
+                        />
+                        {registrationForm.formState.errors.name && (
+                          <p className="text-sm text-red-600">{registrationForm.formState.errors.name.message}</p>
+                        )}
+                      </div>
 
-                {/* Terms and Conditions */}
-                <div className="text-center text-xs text-gray-500 mt-4">
-                  By clicking "Enroll Now", you agree to our{' '}
-                  <a href="/terms" className="text-red-700 hover:underline">
-                    Terms of Service
-                  </a>{' '}
-                  and{' '}
-                  <a href="/privacy" className="text-red-700 hover:underline">
-                    Privacy Policy
-                  </a>
-                  .
-                </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="reg-email" className="flex items-center space-x-2">
+                          <Mail className="h-4 w-4" />
+                          <span>Email Address</span>
+                        </Label>
+                        <Input
+                          id="reg-email"
+                          type="email"
+                          placeholder="Enter your email address"
+                          {...registrationForm.register('email')}
+                          className={registrationForm.formState.errors.email ? 'border-red-500' : ''}
+                        />
+                        {registrationForm.formState.errors.email && (
+                          <p className="text-sm text-red-600">{registrationForm.formState.errors.email.message}</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="reg-phone" className="flex items-center space-x-2">
+                          <Phone className="h-4 w-4" />
+                          <span>Phone Number</span>
+                        </Label>
+                        <Input
+                          id="reg-phone"
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          {...registrationForm.register('phone')}
+                          className={registrationForm.formState.errors.phone ? 'border-red-500' : ''}
+                        />
+                        {registrationForm.formState.errors.phone && (
+                          <p className="text-sm text-red-600">{registrationForm.formState.errors.phone.message}</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="reg-password" className="flex items-center space-x-2">
+                          <span>Password</span>
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="reg-password"
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="Enter your password"
+                            {...registrationForm.register('password')}
+                            className={registrationForm.formState.errors.password ? 'border-red-500' : ''}
+                          />
+                          <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-0 w-14 bg-gray-100 text-sm text-gray-700 font-medium flex items-center justify-center cursor-pointer m-1 rounded-r"
+                          >
+                            {showPassword ? 'Hide' : 'Show'}
+                          </div>
+                        </div>
+                        {registrationForm.formState.errors.password && (
+                          <p className="text-sm text-red-600">{registrationForm.formState.errors.password.message}</p>
+                        )}
+                      </div>
+
+                      <div className="flex items-start space-x-2">
+                        <Checkbox
+                          id="terms"
+                          checked={isChecked}
+                          onCheckedChange={(checked) => setIsChecked(checked === true)}
+                        />
+                        <div className="flex flex-col">
+                          <Label htmlFor="terms" className="text-sm font-normal cursor-pointer">
+                            I have read and agree to the{' '}
+                            <Link href="/privacy-policy" className="text-blue-600 hover:underline">
+                              Privacy Policy
+                            </Link>
+                            {' '}and{' '}
+                            <Link href="/terms-of-service" className="text-blue-600 hover:underline">
+                              Terms of Service
+                            </Link>
+                            {' '}of the TechPratham website.
+                            <span className='text-red-500'> *</span>
+                          </Label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full bg-red-700 hover:bg-red-800 text-white"
+                      disabled={!isChecked || isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Creating Account...
+                        </>
+                      ) : (
+                        'Create Account'
+                      )}
+                    </Button>
+                  </form>
+                )}
+
+                {/* Enrollment Form */}
+                {currentStep === 'enrollment' && (
+                  <form onSubmit={enrollmentForm.handleSubmit(handleEnrollment)} className="space-y-4">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="enroll-name" className="flex items-center space-x-2">
+                          <User className="h-4 w-4" />
+                          <span>Full Name</span>
+                        </Label>
+                        <Input
+                          id="enroll-name"
+                          type="text"
+                          placeholder="Enter your full name"
+                          {...enrollmentForm.register('name')}
+                          className={enrollmentForm.formState.errors.name ? 'border-red-500' : ''}
+                        />
+                        {enrollmentForm.formState.errors.name && (
+                          <p className="text-sm text-red-600">{enrollmentForm.formState.errors.name.message}</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="enroll-email" className="flex items-center space-x-2">
+                          <Mail className="h-4 w-4" />
+                          <span>Email Address</span>
+                        </Label>
+                        <Input
+                          id="enroll-email"
+                          type="email"
+                          placeholder="Enter your email address"
+                          {...enrollmentForm.register('email')}
+                          className={enrollmentForm.formState.errors.email ? 'border-red-500' : ''}
+                        />
+                        {enrollmentForm.formState.errors.email && (
+                          <p className="text-sm text-red-600">{enrollmentForm.formState.errors.email.message}</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="enroll-phone" className="flex items-center space-x-2">
+                          <Phone className="h-4 w-4" />
+                          <span>Phone Number</span>
+                        </Label>
+                        <Input
+                          id="enroll-phone"
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          {...enrollmentForm.register('phone')}
+                          className={enrollmentForm.formState.errors.phone ? 'border-red-500' : ''}
+                        />
+                        {enrollmentForm.formState.errors.phone && (
+                          <p className="text-sm text-red-600">{enrollmentForm.formState.errors.phone.message}</p>
+                        )}
+                      </div>
+
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full bg-red-700 hover:bg-red-800 text-white"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Enrolling...
+                        </>
+                      ) : (
+                        'Enroll Now'
+                      )}
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
 
-      <Footer />
+      <FooterSm />
     </React.Fragment>
   );
 };
