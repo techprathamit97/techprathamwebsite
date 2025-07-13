@@ -36,6 +36,11 @@ const faqSchema = z.object({
     ans: z.string().min(1, "Answer is required")
 });
 
+const projectSchema = z.object({
+    title: z.string().min(1, "Title is required"),
+    objective: z.string().min(1, "Objective is required")
+});
+
 const courseSchema = z.object({
     title: z.string().min(1, "Title is required"),
     shortDesc: z.string().min(1, "Short description is required"),
@@ -47,12 +52,13 @@ const courseSchema = z.object({
     placement_report: z.string().min(1, "Placement report is required"),
     curriculum: z.string().min(1, "Curriculum is required"),
     interview: z.string().min(1, "Interview information is required"),
-    link: z.string().url("Please enter a valid URL").min(1, "Course link is required"),
+    link: z.string().min(1, "Course link is required"),
     videoLink: z.string().url("Please enter a valid URL").min(1, "Video link is required"),
     assesment_link: z.string().url("Please enter a valid URL").min(1, "Assessment link is required"),
     curriculum_data: z.array(curriculumSchema).optional(),
     skills_data: z.array(z.string()).optional(),
-    faqs_data: z.array(faqSchema).optional()
+    faqs_data: z.array(faqSchema).optional(),
+    project_data: z.array(projectSchema).optional(),
 });
 
 type CourseFormData = z.infer<typeof courseSchema>;
@@ -189,7 +195,8 @@ const CourseTab = () => {
             assesment_link: '',
             curriculum_data: [{ que: '', ans: '', topics: [] }],
             skills_data: [],
-            faqs_data: [{ que: '', ans: '' }]
+            faqs_data: [{ que: '', ans: '' }],
+            project_data: [{ title: '', objective: '' }],
         }
     });
 
@@ -209,6 +216,15 @@ const CourseTab = () => {
     } = useFieldArray({
         control: form.control,
         name: 'faqs_data'
+    });
+
+    const {
+        fields: projectFields,
+        append: appendProject,
+        remove: removeProject
+    } = useFieldArray({
+        control: form.control,
+        name: 'project_data'
     });
 
     const addSkill = () => {
@@ -418,7 +434,7 @@ const CourseTab = () => {
                                     name="curriculum"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Curriculum Summary *</FormLabel>
+                                            <FormLabel>Curriculum Link *</FormLabel>
                                             <FormControl>
                                                 <Textarea
                                                     placeholder="Brief overview of the curriculum"
@@ -436,7 +452,7 @@ const CourseTab = () => {
                                     name="interview"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Interview Information *</FormLabel>
+                                            <FormLabel>Interview Link *</FormLabel>
                                             <FormControl>
                                                 <Textarea
                                                     placeholder="Interview preparation details"
@@ -622,6 +638,71 @@ const CourseTab = () => {
                                                         <FormControl>
                                                             <Textarea
                                                                 placeholder="Enter detailed answer"
+                                                                rows={3}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Project Section */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <FormLabel>Projects</FormLabel>
+                                    <Button
+                                        type="button"
+                                        onClick={() => appendProject({ title: '', objective: '' })}
+                                        variant="outline"
+                                        size="sm"
+                                    >
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add Project
+                                    </Button>
+                                </div>
+                                {projectFields.map((field, index) => (
+                                    <div key={field.id} className="border rounded-lg p-4 space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <h4 className="font-medium">FAQ {index + 1}</h4>
+                                            {projectFields.length > 1 && (
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => removeProject(index)}
+                                                    variant="destructive"
+                                                    size="sm"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <FormField
+                                                control={form.control}
+                                                name={`project_data.${index}.title`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Title</FormLabel>
+                                                        <FormControl>
+                                                            <Input placeholder="Enter project title" {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name={`project_data.${index}.objective`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Answer</FormLabel>
+                                                        <FormControl>
+                                                            <Textarea
+                                                                placeholder="Enter project objective"
                                                                 rows={3}
                                                                 {...field}
                                                             />

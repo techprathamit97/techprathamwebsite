@@ -115,3 +115,10 @@ body {
 .boxShadow {
   box-shadow: rgba(255, 0, 0, 0.2) 0px 0px 100px 20px;
 }
+
+.courseBgGirl {
+  background-image: url('../public/course/girl-doing-course.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

@@ -4,12 +4,13 @@ import { CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import './header.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HeaderSection = ({ course }: any) => {
     return (
         <div className='flex flex-col items-center justify-center w-full h-auto headerImage text-white'>
-            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 py-20">
-                <div>
+            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 items-center py-20">
+                <div className='w-full h-auto'>
                     <div className='flex flex-row gap-2 items-center justify-start mb-6'>
                         <span>Courses</span>
                         <ChevronRightIcon />
@@ -97,10 +98,16 @@ const HeaderSection = ({ course }: any) => {
                     </div>
 
                     <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
-                        <Button className='bg-[#525252]'>PLACEMENT REPORT</Button>
-                        <Button className='bg-[#00000041] border border-white'>DOWNLOAD CURRICULUM</Button>
-                        <Button className='bg-[#00000041] border border-white'>INTERVIEW QUESTIONS</Button>
+                        <Button variant='manual'>PLACEMENT REPORT</Button>
+                        <Button variant='outline'>DOWNLOAD CURRICULUM</Button>
+                        <Button variant='outline'>INTERVIEW QUESTIONS</Button>
                     </div>
+                </div>
+                <div className='w-full flex flex-col gap-4 bg-white p-4 rounded-md'>
+                    <Image src='/course/girl-with-laptop.png' alt='' width={300} height={300} className='w-full h-72 object-cover rounded' />
+                    <Link href={`/courses/enrollment/${course.link}`} className='w-full'>
+                        <Button variant='manual' className='w-full'>Enroll Now</Button>
+                    </Link>
                 </div>
             </div>
         </div>
