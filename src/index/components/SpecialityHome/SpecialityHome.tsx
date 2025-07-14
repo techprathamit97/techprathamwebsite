@@ -17,34 +17,35 @@ const SpecialityHome = () => {
         <div className='flex flex-row gap-4'>
           <div className='w-16 h-auto flex flex-col items-center justify-start'>
             <div className='w-16 h-16 rounded bg-blue-500 flex items-center justify-center'>
-              <LightningBoltIcon className='w-8 h-8' />
+              <Image src='/home/speciality/training.png' alt='' className='w-10 h-10 rounded-sm' width={40} height={40} />
             </div>
             <Image src='/home/speciality/arrow.svg' alt='' width={10} height={10} className='w-auto h-auto' />
           </div>
-          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-md boxShadow'>
+          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent backdrop-blur-sm transition-colors hover:red-orange-500/20'>
             <div className='font-semibold md:text-2xl text-xl'>Training Mode</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Choose from two versatile training modes designed to match your learning preferences:</div>
             <div className='md:w-10/12 w-full bg-[#121212] md:rounded-lg rounded-none p-3 flex md:flex-row flex-col md:gap-4 gap-3 items-center justify-between mt-4'>
-              <div className='flex flex-row gap-2 font-light'>
-                <Image src='/home/recognition/company.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
+              <div className='flex flex-row gap-3 font-light'>
+                <Image src='/home/speciality/camera.png' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
                 <span>100% Live Online Classes</span>
               </div>
-              <div className='flex flex-row gap-2 font-light'>
-                <Image src='/home/recognition/company.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
+              <div className='flex flex-row gap-3 font-light'>
+                <Image src='/home/speciality/hybrid.png' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
                 <span>Hybrid Mode Classes</span>
               </div>
             </div>
+            <div className='text-gray-200 text-sm font-normal mt-4'><span className='text-orange-600'>*Important Note:</span> Hybrid learning combines the best of both worlds—virtual flexibility and face-to-face collaboration.</div>
           </div>
         </div>
 
         <div className='flex flex-row gap-4'>
           <div className='w-16 h-auto flex flex-col items-center justify-start'>
             <div className='w-16 h-16 rounded bg-violet-500 flex items-center justify-center'>
-              <LightningBoltIcon className='w-8 h-8' />
+              <Image src='/home/speciality/practical.png' alt='' className='w-10 h-10 rounded-sm' width={40} height={40} />
             </div>
             <Image src='/home/speciality/arrow.svg' alt='' width={10} height={10} className='w-auto h-auto' />
           </div>
-          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-md boxShadow'>
+          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent backdrop-blur-sm transition-colors hover:red-orange-500/20'>
             <div className='font-semibold md:text-2xl text-xl'>Hands-On Practical Training</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Dive deep into real-world scenarios across industries like BFSI, Retail, Healthcare, and more. Out raining ensures practical relevence tailored to sectors such as:</div>
             <div className='flex flex-row flex-wrap gap-2 mt-4'>
@@ -61,15 +62,15 @@ const SpecialityHome = () => {
         <div className='flex flex-row gap-4'>
           <div className='w-16 h-auto flex flex-col items-center justify-start'>
             <div className='w-16 h-16 rounded bg-green-500 flex items-center justify-center'>
-              <LightningBoltIcon className='w-8 h-8' />
+              <Image src='/home/speciality/project.png' alt='' className='w-10 h-10 rounded-sm' width={40} height={40} />
             </div>
             <Image src='/home/speciality/arrow.svg' alt='' width={10} height={10} className='w-auto h-auto' />
           </div>
-          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-md boxShadow'>
+          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent backdrop-blur-sm transition-colors hover:red-orange-500/20'>
             <div className='font-semibold md:text-2xl text-xl'>Real Projects, Real Outcomes</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Through our Trending courses get hands-on experience with real-world challenges. Work on 100+ industry-specific projects under the guidance of professionals:</div>
             <div className='md:w-9/12 w-full bg-[#121212] md:rounded-lg rounded-none p-3 flex flex-row items-center justify-between gap-3 mt-4'>
-              <Image src='/home/recognition/company.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
+              <Image src='/home/speciality/isi_mark.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
               <div className='w-auto'>Earn Certification for every project you complete:</div>
             </div>
           </div>
@@ -78,11 +79,11 @@ const SpecialityHome = () => {
         <div className='flex flex-row gap-4'>
           <div className='w-16 h-auto flex flex-col items-center justify-start'>
             <div className='w-16 h-16 rounded bg-orange-500 flex items-center justify-center'>
-              <LightningBoltIcon className='w-8 h-8' />
+              <Image src='/home/speciality/career.png' alt='' className='w-10 h-10 rounded-sm' width={40} height={40} />
             </div>
             <Image src='/home/speciality/arrow.svg' alt='' width={10} height={10} className='w-auto h-auto' />
           </div>
-          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-md boxShadow'>
+          <div className='w-11/12 bg-black text-white md:p-6 p-4 rounded-xl border border-red-500/10 bg-gradient-to-r from-red-500/10 to-transparent backdrop-blur-sm transition-colors hover:red-orange-500/20'>
             <div className='font-semibold md:text-2xl text-xl'>Achieve Your Career Aspirations</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Leverage our placement support to secure your dream job. Our career services include:</div>
             <div className='flex flex-col gap-2 mt-4'>
