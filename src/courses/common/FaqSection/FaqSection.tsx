@@ -1,4 +1,5 @@
 import { CaretUpIcon } from '@radix-ui/react-icons';
+import { CircleCheckBig } from 'lucide-react';
 import React, { useState } from 'react';
 
 const FaqSection = ({ course }: any) => {
@@ -21,7 +22,7 @@ const FaqSection = ({ course }: any) => {
                     {course?.faqs_data?.map((item: any, index: any) => (
                         <div className='w-full md:text-base text-sm p-4 rounded-md cursor-pointer text-black bg-[#f7f7f7]' key={index} onClick={() => toggle(index)}>
                             <div className="flex items-center justify-between">
-                                <p className="md:pr-4 pr-0 font-normal">{item.que}</p>
+                                <p className="md:pr-4 pr-0 text-lg font-normal">{item.que}</p>
                                 {selected === index ? (
                                     <CaretUpIcon className='md:flex hidden w-6 h-6 transition-all duration-300 rotate-0' />
                                 ) : (
@@ -35,7 +36,7 @@ const FaqSection = ({ course }: any) => {
                                         : "overflow-hidden transition-all max-h-0 duration-300"
                                 }
                             >
-                                <p>{item.ans}</p>
+                                <p className='flex flex-row gap-2 items-center justify-start'><CircleCheckBig className='w-5 h-5' /> {item.ans}</p>
                             </div>
                         </div>
                     ))}

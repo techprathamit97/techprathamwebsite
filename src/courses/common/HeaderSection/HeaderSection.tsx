@@ -98,13 +98,19 @@ const HeaderSection = ({ course }: any) => {
                     </div>
 
                     <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
-                        <Button variant='manual'>PLACEMENT REPORT</Button>
-                        <Button variant='outline'>DOWNLOAD CURRICULUM</Button>
-                        <Button variant='outline'>INTERVIEW QUESTIONS</Button>
+                        <Link href={course?.placement_report} className='w-auto'>
+                            <Button variant='manual' className='w-full'>PLACEMENT REPORT</Button>
+                        </Link>
+                        <Link href={course?.curriculum} className='w-auto'>
+                            <Button variant='outline' className='w-full'>DOWNLOAD CURRICULUM</Button>
+                        </Link>
+                        <Link href={course?.interview} className='w-auto'>
+                            <Button variant='outline' className='w-full'>INTERVIEW QUESTIONS</Button>
+                        </Link>
                     </div>
                 </div>
-                <div className='w-full flex flex-col gap-4 bg-white p-4 rounded-md'>
-                    <Image src='/course/girl-with-laptop.png' alt='' width={300} height={300} className='w-full h-72 object-cover rounded' />
+                <div className='w-auto max-w-96 flex flex-col items-center justify-center gap-4 bg-white p-4 rounded-md'>
+                    <Image src='/course/hero.png' alt='' width={300} height={300} className='w-full h-80 object-cover rounded' />
                     <Link href={`/courses/enrollment/${course.link}`} className='w-full'>
                         <Button variant='manual' className='w-full'>Enroll Now</Button>
                     </Link>
