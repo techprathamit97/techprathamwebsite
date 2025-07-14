@@ -6,13 +6,13 @@ import Link from 'next/link';
 
 const AssesmentSection = ({ course }: any) => {
     return (
-        <div className='w-full h-auto flex flex-col items-center justify-center gap-6 bg-[#fff] text-black'>
+        <div className='w-full h-auto flex flex-col items-center justify-center gap-6 bg-blue-500 text-white'>
             <div className='md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 py-8 gap-6'>
                 <div className='w-full h-auto flex flex-col justify-center'>
-                    <div className='text-3xl font-medium'>Self Assessment</div>
+                    <div className='text-3xl font-semibold'>Self Assessment</div>
                     <div className='text-lg mb-4'>Learn, Grow & Test your skill with Online Assessment Exam to achieve your Certification Goals</div>
-                    <Link href='/'>
-                        <Button>Take Free Practices Test <ChevronRightIcon /> </Button>
+                    <Link href={course.assesment_link}>
+                        <Button variant='outline'>Take Free Practices Test <ChevronRightIcon /> </Button>
                     </Link>
                 </div>
                 <div className='w-full h-auto'>

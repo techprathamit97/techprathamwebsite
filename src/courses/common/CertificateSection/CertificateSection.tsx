@@ -4,7 +4,7 @@ import React from 'react'
 const CertificateSection = ({ course }: any) => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center gap-6 pt-16 bg-[#f7f7f7] text-black'>
-            <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col p-8 gap-6 border-2 border-blue-800 rounded-xl bg-white'>
+            <div className='md:w-10/12 w-11/12 h-auto flex md:flex-row flex-col p-8 gap-6 border-4 border-blue-500 rounded-xl bg-white shadow'>
                 <div className='w-auto h-auto'>
                     <Image src='/course/certificate/certify.png' alt='' width={400} height={300} className='md:w-96 w-full h-auto border border-gray-200' />
                 </div>

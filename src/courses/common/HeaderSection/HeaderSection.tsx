@@ -109,12 +109,6 @@ const HeaderSection = ({ course }: any) => {
                         </Link>
                     </div>
                 </div>
-                <div className='w-auto max-w-96 flex flex-col items-center justify-center gap-4 bg-white p-4 rounded-md'>
-                    <Image src='/course/hero.png' alt='' width={300} height={300} className='w-full h-80 object-cover rounded' />
-                    <Link href={`/courses/enrollment/${course.link}`} className='w-full'>
-                        <Button variant='manual' className='w-full'>Enroll Now</Button>
-                    </Link>
-                </div>
             </div>
         </div>
     )
