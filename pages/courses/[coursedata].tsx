@@ -14,6 +14,7 @@ import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
 import CourseCertification from '@/src/courses/common/CourseCertification/CourseCertification';
 import ProjectSection from '@/src/courses/common/ProjectSection/ProjectSection';
 import AssesmentSection from '@/src/courses/common/AssesmentSection/AssesmentSection';
+import CertificateSection from '@/src/courses/common/CertificateSection/CertificateSection';
 
 interface Curriculum {
   que: string;
@@ -180,6 +181,7 @@ const CourseDataPage: React.FC = () => {
         <CurriculumSection course={course} />
         <ProjectSection course={course} />
         <AssesmentSection course={course} />
+        <CertificateSection course={course} />
         <TestimonialSection course={course} />
         <FaqSection course={course} />
         <CourseCertification />
