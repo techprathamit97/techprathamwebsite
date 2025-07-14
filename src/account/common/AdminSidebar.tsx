@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, LaptopIcon } from '@radix-ui/react-icons';
+import { ArchiveIcon, AvatarIcon, DashboardIcon, ExitIcon, GearIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { signOut } from 'next-auth/react';
 
 const AdminSidebar = () => {
@@ -28,6 +28,11 @@ const AdminSidebar = () => {
                 <Link href='/admin/dashboard/courses' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
                     <LaptopIcon className='w-6 h-6' />
                     <div>Courses</div>
+                </Link>
+
+                <Link href='/admin/dashboard/requests' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                    <ArchiveIcon className='w-6 h-6' />
+                    <div>Requests</div>
                 </Link>
 
                 <Link href='/admin/dashboard/account' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
