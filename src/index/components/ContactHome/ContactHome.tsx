@@ -76,7 +76,7 @@ const ContactHome = () => {
 
         <div className='lg:w-1/2 md:w-9/12 w-full h-auto flex flex-col gap-5 items-center justify-center'>
           <div className='md:text-4xl text-2xl bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text md:font-bold font-semibold'>Request Call Back</div>
-          <form className='w-full flex flex-col md:gap-6 gap-4 boxShadow md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
+          <form className='w-full flex flex-col md:gap-6 gap-4  md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
 
             <input {...register('fullName')} type="text" id='fullName' name='fullName' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Full Name' required />
 

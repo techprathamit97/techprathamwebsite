@@ -16,7 +16,7 @@ const SpecialityAbout = () => {
 
                     {speciality.map((service: any, index: any) => (
                         <div key={index} className="w-full h-auto bg-white text-black flex flex-col gap-3 items-start p-5 cursor-pointer shadowBorder">
-                            <Image src={`/about/${service.icon}`} alt='' width={30} height={30} className='w-16 h-auto' />
+                            <Image src={`/about/icons/${service.icon}`} alt='' width={30} height={30} className='w-16 h-auto' />
                             <div className="text-lg font-semibold">{service.title}</div>
                             <div className="text-base font-normal text-justify">{service.description}</div>
                         </div>
@@ -32,13 +32,13 @@ export default SpecialityAbout
 
 const speciality = [
     {
-        icon: "it-experts.png",
+        icon: "coach.png",
         title: "IT Experts as Trainers",
         description:
             "Our trainers are industry leaders, skilled at simplifying complex concepts and empowering you with practical knowledge to excel in your IT career. As professional experts, they bring real-world experience and insights to help you achieve success.",
     },
     {
-        icon: "laptop.png",
+        icon: "training.png",
         title: "Fully Hands-on Training",
         description:
             "We believe the best way to learn is by doing. That’s why Our all courses are built around immersive, hands on sessions that mirror real challenges. From day one, you will gain practical experience and develop the skills employers demand.",
@@ -50,19 +50,19 @@ const speciality = [
             "We understand the importance of balancing learning with other commitments. we offer flexible scheduling options to ensure you can learn at a time that suits you bestw hether you are a student or a working professional.",
     },
     {
-         icon: "it-experts.png",
+         icon: "fees.png",
         title: "Affordable Fees",
         description:
             "We believe that quality education should be accessible to everyone. Our training programs are offered at budget friendly prices, ensuring you receive top instruction without straining your finances.",
     },
     {
-        icon: "laptop.png",
+        icon: "lab.png",
         title: "Lab Assistance",
         description:
             "Our dedicated lab support ensures you never face technical challenges alone. Bring your laptop, and our team will assist you in setting up the necessary software and tools, so you can focus entirely on learning and building your skills.",
     },
     {
-        icon: "timing.png",
+        icon: "interview.png",
         title: "Interview Preparation",
         description:
             "Our courses include comprehensive interview preparation, featuring commonly asked questions, practical scenarios, and industry specific insights. Prepare yourself with the skills and confidence to stand out and secure your dream job.",
