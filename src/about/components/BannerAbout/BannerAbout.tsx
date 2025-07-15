@@ -1,6 +1,6 @@
-import { DotFilledIcon } from '@radix-ui/react-icons'
-import Image from 'next/image'
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
+import { CircleCheckBig } from 'lucide-react';
 
 const BannerAbout = () => {
     return (
@@ -13,23 +13,23 @@ const BannerAbout = () => {
                     </div>
                     <div className="mt-4 grid gap-2">
                         <div className="text-base md:text-lg font-normal flex items-center">
-                            <DotFilledIcon className='mr-2' />
+                            <CircleCheckBig className='mr-2 w-5 h-5' />
                             More than 68806+ Students Trained.
                         </div>
                         <div className="text-base md:text-lg font-normal flex items-center">
-                            <DotFilledIcon className='mr-2' />
+                            <CircleCheckBig className='mr-2 w-5 h-5' />
                             Team of 470+ Experienced & Certified Instructors.
                         </div>
                         <div className="text-base md:text-lg font-normal flex items-center">
-                            <DotFilledIcon className='mr-2' />
+                            <CircleCheckBig className='mr-2 w-5 h-5' />
                             250+ Collaboration with Universities & Companies.
                         </div>
                         <div className="text-base md:text-lg font-normal flex items-center">
-                            <DotFilledIcon className='mr-2' />
+                            <CircleCheckBig className='mr-2 w-5 h-5' />
                             ISO 9001:2015 Accredited Company.
                         </div>
                         <div className="text-base md:text-lg font-normal flex items-center">
-                            <DotFilledIcon className='mr-2' />
+                            <CircleCheckBig className='mr-2 w-5 h-5' />
                             Industry Recognised Verifiable Certificate.
                         </div>
                     </div>
