@@ -42,8 +42,10 @@ const CertificationHome = () => {
         className="mySwiper swiperCertificate"
       >
         {client.map((item, index) => (
-          <SwiperSlide key={index} className='md:w-80 w-56 md:h-80 h-56 flex items-center justify-center bg-[#fff] p-6'>
-            <Image src={item.image} alt={item.altText} width={300} height={300} className='w-full h-auto object-cover' />
+          <SwiperSlide key={index} className='md:w-80 w-56 md:h-80 h-56 flex flex-col items-center justify-center bg-[#fff] p-6'>
+            <div className="flex items-center justify-center w-full h-full">
+              <Image src={item.image} alt={item.altText} className="object-contain max-w-full max-h-full" fill={false} width={300} height={300} />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

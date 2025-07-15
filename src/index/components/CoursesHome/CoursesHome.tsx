@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { ChevronRightIcon } from 'lucide-react';
+import Link from 'next/link';
 import React, { useState } from 'react'
 
 interface Course {
@@ -94,22 +95,24 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
                 </div>
               </div>
 
-              <Button
-                variant="default"
-                className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-blue-700 transition-colors duration-200"
-              >
-                View More
-              </Button>
+              <Link href={`/courses/${course?.link}`}>
+                <Button
+                  variant="default"
+                  className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-blue-700 transition-colors duration-200"
+                >
+                  View More
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
 
-        <div className='mt-10'>
+        <Link href='/courses' className='mt-10'>
           <Button className='flex items-center justify-center text-base font-normal rounded-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] text-white'>
             <span>View More Courses</span>
             <ChevronRightIcon />
           </Button>
-        </div>
+        </Link>
 
       </div>
     </div>

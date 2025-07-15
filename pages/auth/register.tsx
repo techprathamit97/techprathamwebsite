@@ -20,7 +20,6 @@ interface RegisterFormData {
     email: string
     phone: string
     password: string
-    position: string
 }
 
 const Register = () => {
@@ -62,7 +61,7 @@ const Register = () => {
                 password: data.password,
                 role: {
                     type: 'user',
-                    position: data.position,
+                    position: '',
                 },
                 profile: "",
                 courses: {
@@ -231,26 +230,6 @@ const Register = () => {
                                                         className='w-full min-h-11 h-full indent-1 bg-white'
                                                     />
                                                     {errors.phone && <span className="text-sm text-red-500 mt-1">{errors.phone.message}</span>}
-                                                </div>
-
-                                                {/* Position Field */}
-                                                <div className='flex flex-col w-full h-auto mb-4'>
-                                                    <Label htmlFor="position" className='text-sm font-normal text-[#1a202c] mb-1'>
-                                                        Position/Role
-                                                    </Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="position"
-                                                        {...register("position", {
-                                                            maxLength: {
-                                                                value: 100,
-                                                                message: "Position cannot exceed 100 characters"
-                                                            }
-                                                        })}
-                                                        placeholder='e.g., Student, Developer, Designer'
-                                                        className='w-full min-h-11 h-full indent-1 bg-white'
-                                                    />
-                                                    {errors.position && <span className="text-sm text-red-500 mt-1">{errors.position.message}</span>}
                                                 </div>
 
                                                 {/* Password Field */}

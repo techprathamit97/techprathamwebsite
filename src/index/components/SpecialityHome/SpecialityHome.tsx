@@ -49,12 +49,30 @@ const SpecialityHome = () => {
             <div className='font-semibold md:text-2xl text-xl'>Hands-On Practical Training</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Dive deep into real-world scenarios across industries like BFSI, Retail, Healthcare, and more. Out raining ensures practical relevence tailored to sectors such as:</div>
             <div className='flex flex-row flex-wrap gap-2 mt-4'>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>Manufacturing</Badge>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>Technology</Badge>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>Consulting</Badge>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>Healthcare</Badge>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>BFSI</Badge>
-              <Badge className='md:px-5 px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212]'>Retail</Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/manufacture.png' alt='' width={22} height={22} />
+                <div>Manufacturing</div>
+              </Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/technology.png' alt='' width={22} height={22} />
+                <div>Technology</div>
+              </Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/consulting.png' alt='' width={22} height={22} />
+                <div>Consulting</div>
+              </Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/healthcare.png' alt='' width={22} height={22} />
+                <div>Healthcare</div>
+              </Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/bfsi.png' alt='' width={22} height={22} />
+                <div>BFSI</div>
+              </Badge>
+              <Badge className='px-3 md:py-1 py-0 text-base font-light cursor-pointer bg-[#121212] flex flex-row gap-2 items-center justify-center'>
+                <Image src='/home/speciality/icons/retail.png' alt='' width={22} height={22} />
+                <div>Retail</div>
+              </Badge>
             </div>
           </div>
         </div>
@@ -70,7 +88,7 @@ const SpecialityHome = () => {
             <div className='font-semibold md:text-2xl text-xl'>Real Projects, Real Outcomes</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Through our Trending courses get hands-on experience with real-world challenges. Work on 100+ industry-specific projects under the guidance of professionals:</div>
             <div className='md:w-9/12 w-full bg-[#121212] md:rounded-lg rounded-none p-3 flex flex-row items-center justify-between gap-3 mt-4'>
-              <Image src='/home/speciality/isi_mark.svg' alt='' className='w-14 h-14 rounded-sm' width={40} height={40} />
+              <Image src='/home/speciality/isi_mark.svg' alt='' className='w-16 h-full rounded-sm' width={40} height={40} />
               <div className='w-auto'>Earn Certification for every project you complete:</div>
             </div>
           </div>
@@ -87,10 +105,10 @@ const SpecialityHome = () => {
             <div className='font-semibold md:text-2xl text-xl'>Achieve Your Career Aspirations</div>
             <div className='text-gray-200 md:text-base text-sm md:font-medium font-light'>Leverage our placement support to secure your dream job. Our career services include:</div>
             <div className='flex flex-col gap-2 mt-4'>
-              <div className='bg-[#000] font-light md:text-base text-sm'>- Placement Assistance: Connect with top recuiters.</div>
-              <div className='bg-[#000] font-light md:text-base text-sm'>- Mock interview Sessions: Sharpen your interview skills.</div>
-              <div className='bg-[#000] font-light md:text-base text-sm'>- Resume Optimizations: Craft a professional resume that stands out.</div>
-              <div className='bg-[#000] font-light md:text-base text-sm'>- Exclusive Interview Opportunities: Access high-value job openings in leading companies.</div>
+              <div className='font-light md:text-base text-sm'>- Placement Assistance: Connect with top recuiters.</div>
+              <div className='font-light md:text-base text-sm'>- Mock interview Sessions: Sharpen your interview skills.</div>
+              <div className='font-light md:text-base text-sm'>- Resume Optimizations: Craft a professional resume that stands out.</div>
+              <div className='font-light md:text-base text-sm'>- Exclusive Interview Opportunities: Access high-value job openings in leading companies.</div>
             </div>
           </div>
         </div>
