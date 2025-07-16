@@ -7,7 +7,6 @@ import HeaderSection from '@/src/courses/common/HeaderSection/HeaderSection';
 import IntroSection from '@/src/courses/common/IntroSection/IntroSection';
 import PlanSection from '@/src/courses/common/PlanSection/PlanSection';
 import CurriculumSection from '@/src/courses/common/CurriculumSection/CurriculumSection';
-import SkillSection from '@/src/courses/common/SkillSection/SkillSection';
 import FaqSection from '@/src/courses/common/FaqSection/FaqSection';
 import TestimonialSection from '@/src/courses/common/TestimonialSection/TestimonialSection';
 import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
@@ -175,7 +174,6 @@ const CourseDataPage: React.FC = () => {
 
       <div className='w-full h-auto flex flex-col items-center justify-center md:pt-28 sm:pt-24 pt-10'>
         <HeaderSection course={course} />
-        <SkillSection course={course} />
         <IntroSection course={course} />
         <PlanSection />
         <CurriculumSection course={course} />
