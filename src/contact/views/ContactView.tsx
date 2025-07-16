@@ -20,8 +20,6 @@ const ContactView = () => {
 
       <AddressContact />
 
-      <FormContact />
-
     </div>
   )
 }
