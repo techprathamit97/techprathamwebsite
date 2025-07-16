@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
 
   const coursesByCategory = React.useMemo((): CourseCategory[] => {
     if (!course || course.length === 0) return [];
-    
+
     const categories = [...new Set(course.map(c => c?.category).filter(Boolean))];
 
     return categories.map(category => ({
@@ -95,43 +95,42 @@ const Navbar: React.FC = () => {
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
             <Image src={'/navbar/techpratham.svg'} alt='Techpratham Logo' width={100} height={50} className='w-40 h-auto' />
           </Link>
-          
-          <button 
-            onClick={handleCoursesToggle} 
+
+          <button
+            onClick={handleCoursesToggle}
             className='lg:flex hidden flex-row gap-2 items-center justify-center ml-4 cursor-pointer hover:opacity-80 transition-opacity'
             aria-label='Toggle courses menu'
           >
             <DashboardIcon className='w-4 h-4' />
             <span>Courses</span>
           </button>
-          
+
           <div className='flex flex-row gap-6 items-center justify-center'>
             <div className='flex flex-row lg:w-96 md:w-72'>
-              <Input 
-                className='lg:max-w-96 max-w-72 h-10 bg-white text-black rounded-r-none rounded-l-md' 
+              <Input
+                className='lg:max-w-96 max-w-72 h-10 bg-white text-black rounded-r-none rounded-l-md'
                 placeholder='Search courses...'
                 aria-label='Search courses'
               />
-              <button 
+              <button
                 className='p-2 bg-red-700 flex items-center justify-center rounded-r-md hover:bg-red-800 transition-colors'
                 aria-label='Search'
               >
                 <Search className='w-4 h-4' />
               </button>
             </div>
-            
+
             <button className='lg:hidden flex' onClick={handleNavToggle} aria-label='Toggle navigation menu'>
               <HamburgerMenuIcon className='w-5 h-5' />
             </button>
           </div>
-          
+
           <Link href='/corporate-training' className='lg:flex hidden flex-row gap-2 items-center justify-center cursor-pointer hover:opacity-80 transition-opacity'>
             <BackpackIcon className='w-4 h-4' />
             <span>Corporate Training</span>
           </Link>
         </div>
 
-        {/* Mobile Navigation Header */}
         <div className='w-11/12 md:hidden flex flex-row items-center justify-between'>
           <Link href={'/'} aria-label='Techpratham'>
             <Image src={'/navbar/techpratham.svg'} alt='Techpratham Logo' width={100} height={50} className='w-40 h-auto' />
@@ -146,7 +145,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Desktop Secondary Navigation */}
       <div className={`w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white border-b border-b-gray-100 z-20`}>
         <nav className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors'>About Us</Link>
@@ -157,7 +155,7 @@ const Navbar: React.FC = () => {
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors'>Blogs</Link>
           <Link href='/payment' className='cursor-pointer hover:text-red-700 transition-colors'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer hover:text-red-700 transition-colors'>Contact Us</Link>
-          <Link href='/student-zone' className='cursor-pointer hover:text-red-700 transition-colors'>Student Zone</Link>
+          <Link href='https://completedads.in/' target='_blank' className='cursor-pointer hover:text-red-700 transition-colors'>Student Zone</Link>
           {loading ? (
             <span className='cursor-pointer opacity-50'>Loading...</span>
           ) : authenticated ? (
@@ -172,7 +170,6 @@ const Navbar: React.FC = () => {
         </nav>
       </div>
 
-      {/* Mobile Secondary Navigation */}
       <div className={`${!navOpen && 'hidden'} w-full h-auto py-2 md:hidden flex items-center justify-center bg-white border-b border-b-gray-100 z-20`}>
         <nav className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-col gap-4 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>About Us</Link>
@@ -183,7 +180,7 @@ const Navbar: React.FC = () => {
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Blogs</Link>
           <Link href='/payment' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Contact Us</Link>
-          <Link href='/student-zone' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Student Zone</Link>
+          <Link href='https://completedads.in/' target='_blank' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Student Zone</Link>
           {loading ? (
             <span className='cursor-pointer opacity-50'>Loading...</span>
           ) : authenticated ? (
@@ -198,10 +195,9 @@ const Navbar: React.FC = () => {
         </nav>
       </div>
 
-      {/* Courses Dropdown */}
       <div className={`transition-all duration-300 border-b border-b-gray-200 ${!isActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
         <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-8'>
-          {/* Categories Column */}
+
           <div className='col-span-1 flex h-80 flex-col gap-2 overflow-auto'>
             <h3 className='font-semibold text-lg mb-2 text-gray-800'>Course Categories</h3>
             {isLoading ? (
@@ -232,7 +228,6 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Courses Display Column */}
           <div className='col-span-1 md:col-span-2 p-4 flex flex-col bg-gray-50 rounded gap-4 border border-gray-200 max-h-80 overflow-y-auto'>
             <div className='bg-gray-50 pb-2 border-b border-gray-200'>
               <h3 className='font-semibold text-lg text-gray-800'>
