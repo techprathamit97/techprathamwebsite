@@ -2,7 +2,8 @@
 
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
-import Image from 'next/image';
+import ReviewsHeader from '../components/ReviewsHeader/ReviewsHeader';
+import ReviewsSection from '../components/ReviewsSection/ReviewsSection';
 
 const ReviewsView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -14,20 +15,9 @@ const ReviewsView = () => {
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
-      <div className='w-full h-auto flex flex-col items-center justify-center gap-6 lg:pt-40 md:pt-24 sm:pt-24 pt-10'>
-        <div className='px-4 py-1 rounded border-2 border-black text-black uppercase font-semibold'>
-          Reviews
-        </div>
-        <div className='w-11/12 text-center lg:text-5xl md:text-4xl sm:text-3xl text-xl font-bold'>
-          Share Your Experience
-        </div>
-        <div className='text-center text-base md:text-lg'>
-          Let us know your thoughts about our training.<br />
-          For support, contact us at <a href="mailto:support@techpratham.com" className="text-blue-600 underline">support@techpratham.com</a>.
-        </div>
+      <ReviewsHeader />
 
-        <Image src='/support/support.svg' alt='' width={400} height={500} className='md:w-9/12 w-11/12 h-96 object-cover mt-8 rounded-t-3xl' />
-      </div>
+      <ReviewsSection />
 
     </div>
   )
