@@ -1,7 +1,7 @@
-import { Separator } from '@/components/ui/separator';
-import { CaretUpIcon } from '@radix-ui/react-icons';
-import { CircleCheckBig } from 'lucide-react';
 import React, { useState } from 'react';
+import { CircleCheckBig } from 'lucide-react';
+import { CaretUpIcon } from '@radix-ui/react-icons';
+import { Separator } from '@/components/ui/separator';
 
 const CurriculumSection = ({ course }: any) => {
     const [selected, setSelected] = useState<number | null>(0);

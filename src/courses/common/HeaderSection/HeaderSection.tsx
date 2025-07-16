@@ -2,9 +2,9 @@ import React from 'react';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import './header.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import './header.css';
 
 const HeaderSection = ({ course }: any) => {
     return (

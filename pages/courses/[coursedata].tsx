@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+
 import Navbar from '@/src/common/Navbar/Navbar';
 import Footer from '@/src/common/Footer/Footer';
 import HeaderSection from '@/src/courses/common/HeaderSection/HeaderSection';
@@ -9,11 +10,11 @@ import PlanSection from '@/src/courses/common/PlanSection/PlanSection';
 import CurriculumSection from '@/src/courses/common/CurriculumSection/CurriculumSection';
 import FaqSection from '@/src/courses/common/FaqSection/FaqSection';
 import TestimonialSection from '@/src/courses/common/TestimonialSection/TestimonialSection';
-import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
 import CourseCertification from '@/src/courses/common/CourseCertification/CourseCertification';
 import ProjectSection from '@/src/courses/common/ProjectSection/ProjectSection';
 import AssesmentSection from '@/src/courses/common/AssesmentSection/AssesmentSection';
 import CertificateSection from '@/src/courses/common/CertificateSection/CertificateSection';
+import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
 
 interface Curriculum {
   que: string;

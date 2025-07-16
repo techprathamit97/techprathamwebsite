@@ -1,7 +1,7 @@
-import { allCourses } from '@/components/assets/courses';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { allCourses } from '@/components/assets/courses';
 
 const OtherCourse = ({ course }: any) => {
     const getLevelColor = (level: any) => {
