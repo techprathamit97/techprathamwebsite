@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -7,11 +9,38 @@ import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+const verifyPaymentSchema = z.object({
+  advance: z.boolean(),
+  advanceAmount: z.number().min(0),
+  totalAmount: z.number().min(0),
+  verifyPayment: z.boolean(),
+  courseCompletion: z.boolean(),
+});
+
 const Requests = () => {
-  const { authenticated, loading } = useContext(UserContext);
+  const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
 
   const [requestData, setRequestData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchRequestData = async () => {
     setIsLoading(true);
@@ -37,24 +66,66 @@ const Requests = () => {
     }
   };
 
-  const handleVerifyPayment = async (requestId: string) => {
+  const form = useForm<z.infer<typeof verifyPaymentSchema>>({
+    resolver: zodResolver(verifyPaymentSchema),
+    defaultValues: {
+      advance: false,
+      advanceAmount: 0,
+      totalAmount: 0,
+      verifyPayment: false,
+      courseCompletion: false,
+    },
+  });
+
+  const watchAdvance = form.watch("advance");
+
+  const handleVerifyPayment = (request: any) => {
+    setSelectedRequest(request);
+    // Pre-populate form with existing data
+    form.reset({
+      advance: request.advance || false,
+      advanceAmount: request.advanceAmount || 0,
+      totalAmount: request.totalAmount || 0,
+      verifyPayment: request.verifyPayment || false,
+      courseCompletion: request.courseCompletion || false,
+    });
+  };
+
+  const onSubmit = async (values: z.infer<typeof verifyPaymentSchema>) => {
+    if (!selectedRequest) return;
+
+    setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/course/requests/${requestId}/verify`, {
-        method: 'PATCH',
+      const updateData = {
+        email: selectedRequest.email,
+        course_link: selectedRequest.course_link,
+        ...values,
+      };
+
+      const res = await fetch('/api/course/verify', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ verifyPayment: true }),
+        body: JSON.stringify(updateData),
       });
+
+      if (!res.ok) throw new Error(`Update failed with status ${res.status}`);
+
+      const updatedRequest = await res.json();
+      console.log('Payment verification updated:', updatedRequest);
       
-      if (res.ok) {
-        // Refresh the data after successful verification
-        fetchRequestData();
-      } else {
-        console.error('Failed to verify payment');
-      }
+      // Refresh the request data
+      await fetchRequestData();
+      
+      // Close dialog and reset form
+      setSelectedRequest(null);
+      form.reset();
+      
     } catch (error) {
-      console.error('Error verifying payment:', error);
+      console.error('Failed to update payment verification:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -62,7 +133,13 @@ const Requests = () => {
     if (authenticated) {
       fetchRequestData();
     }
-  }, [authenticated])
+  }, [authenticated]);
+
+  useEffect(() => {
+    if (!watchAdvance) {
+      form.setValue("advanceAmount", 0);
+    }
+  }, [watchAdvance, form]);
 
   return (
     <React.Fragment>
@@ -164,12 +241,168 @@ const Requests = () => {
                                 View Course
                               </Button>
                             </Link>
-                            <Button
-                              onClick={() => handleVerifyPayment(request._id)}
-                              className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
-                            >
-                              Verify Payment
-                            </Button>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  onClick={() => handleVerifyPayment(request)}
+                                  className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                                >
+                                  Verify Payment
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
+                                <DialogHeader>
+                                  <DialogTitle>Verify Payment - {selectedRequest?.course_title}</DialogTitle>
+                                </DialogHeader>
+                                
+                                {selectedRequest && (
+                                  <>
+                                    {/* Course Details */}
+                                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                      <h4 className="font-semibold text-gray-800 mb-2">Course Details</h4>
+                                      <div className="space-y-2 text-sm">
+                                        <div><span className="font-medium">Title:</span> {selectedRequest.course_title}</div>
+                                        <div><span className="font-medium">Description:</span> {selectedRequest.course_desc}</div>
+                                        <div><span className="font-medium">Duration:</span> {selectedRequest.duration}</div>
+                                        <div><span className="font-medium">Level:</span> {selectedRequest.level}</div>
+                                        <div><span className="font-medium">Category:</span> {selectedRequest.category}</div>
+                                        <div><span className="font-medium">Course Link:</span> {selectedRequest.course_link}</div>
+                                      </div>
+                                    </div>
+
+                                    {/* Student Details */}
+                                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                      <h4 className="font-semibold text-gray-800 mb-2">Student Details</h4>
+                                      <div className="space-y-2 text-sm">
+                                        <div><span className="font-medium">Name:</span> {selectedRequest.name}</div>
+                                        <div><span className="font-medium">Email:</span> {selectedRequest.email}</div>
+                                        <div><span className="font-medium">Phone:</span> {selectedRequest.phone}</div>
+                                      </div>
+                                    </div>
+
+                                    {/* Payment Verification Form */}
+                                    <Form {...form}>
+                                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                          <FormField
+                                            control={form.control}
+                                            name="advance"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Advance Payment</FormLabel>
+                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                  <FormControl>
+                                                    <SelectTrigger>
+                                                      <SelectValue placeholder="Select advance payment" />
+                                                    </SelectTrigger>
+                                                  </FormControl>
+                                                  <SelectContent>
+                                                    <SelectItem value="true">Yes</SelectItem>
+                                                    <SelectItem value="false">No</SelectItem>
+                                                  </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+
+                                          <FormField
+                                            control={form.control}
+                                            name="advanceAmount"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Advance Amount</FormLabel>
+                                                <FormControl>
+                                                  <Input
+                                                    type="number"
+                                                    placeholder="0"
+                                                    disabled={!watchAdvance}
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                  />
+                                                </FormControl>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+                                        </div>
+
+                                        <FormField
+                                          control={form.control}
+                                          name="totalAmount"
+                                          render={({ field }) => (
+                                            <FormItem>
+                                              <FormLabel>Total Amount</FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  type="number"
+                                                  placeholder="0"
+                                                  {...field}
+                                                  onChange={(e) => field.onChange(Number(e.target.value))}
+                                                />
+                                              </FormControl>
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                          <FormField
+                                            control={form.control}
+                                            name="verifyPayment"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Verify Payment</FormLabel>
+                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                  <FormControl>
+                                                    <SelectTrigger>
+                                                      <SelectValue placeholder="Select verification status" />
+                                                    </SelectTrigger>
+                                                  </FormControl>
+                                                  <SelectContent>
+                                                    <SelectItem value="true">Verified</SelectItem>
+                                                    <SelectItem value="false">Not Verified</SelectItem>
+                                                  </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+
+                                          <FormField
+                                            control={form.control}
+                                            name="courseCompletion"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Course Completion</FormLabel>
+                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                  <FormControl>
+                                                    <SelectTrigger>
+                                                      <SelectValue placeholder="Select completion status" />
+                                                    </SelectTrigger>
+                                                  </FormControl>
+                                                  <SelectContent>
+                                                    <SelectItem value="true">Completed</SelectItem>
+                                                    <SelectItem value="false">Not Completed</SelectItem>
+                                                  </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+                                        </div>
+
+                                        <div className="flex gap-2 pt-4">
+                                          <Button type="submit" disabled={isSubmitting} className="flex-1">
+                                            {isSubmitting ? 'Updating...' : 'Update Payment Status'}
+                                          </Button>
+                                        </div>
+                                      </form>
+                                    </Form>
+                                  </>
+                                )}
+                              </DialogContent>
+                            </Dialog>
                           </div>
 
                           {/* Timestamp */}
