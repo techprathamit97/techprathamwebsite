@@ -35,12 +35,17 @@ const FormContact = () => {
 
     return (
         <div
-            className='p-[3px] shadow flex items-center justify-center w-full h-auto rounded-xl bg-gradient-to-tl'
+            className='p-[3px] shadow-lg flex items-center justify-center w-[500px] min-w-[500px] h-auto rounded-xl absolute top-40'
             style={{
                 backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
             }}
         >
             <form className='w-full flex flex-col gap-4 p-6 rounded-lg bg-white h-full' onSubmit={handleSubmit(onSubmit)}>
+
+                <div className='mb-3'>
+                    <div>Have Questions?</div>
+                    <div className='font-bold text-2xl'>Request a call for our executive.</div>
+                </div>
 
                 <div className='w-full'>
                     <label htmlFor='fullName' className='block mb-1 text-sm font-medium text-gray-700'>Full Name</label>

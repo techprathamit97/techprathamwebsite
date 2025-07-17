@@ -7,6 +7,9 @@ const AddressContact = () => {
     return (
         <div className='w-10/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 place-content-center'>
             <div className='w-full h-auto flex flex-col gap-5 py-16 z-10 text-left'>
+                <div className='w-full h-auto flex flex-col items-start justify-center'>
+                    <div className='text-2xl font-semibold border-b-2 border-b-[#C6151D] text-[#C6151D]'>Reach us</div>
+                </div>
                 <div
                     className='p-[3px] shadow flex items-center justify-center w-full h-auto rounded-xl bg-gradient-to-tl'
                     style={{
@@ -20,15 +23,15 @@ const AddressContact = () => {
                             <div className='font-semibold'>G-31, 1st Floor Sector-3, Noida 201301</div>
                             <div>info@techpratham.com</div>
                         </div>
-                        <div className='w-full flex flex-row justify-end gap-4 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center'>
+                        <div className='w-full flex flex-row justify-end gap-3 mt-4'>
+                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
                             </div>
-                            <div className='w-auto flex flex-row gap-2'>
+                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
@@ -51,15 +54,15 @@ const AddressContact = () => {
                             <div className='font-semibold'>C-2, Sector-1, Noida, Uttar Pradesh - 201301</div>
                             <div>+91-8882178896, info@techpratham.com</div>
                         </div>
-                        <div className='w-full flex flex-row justify-end gap-4 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center'>
+                        <div className='w-full flex flex-row justify-end gap-3 mt-4'>
+                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
                             </div>
-                            <div className='w-auto flex flex-row gap-2'>
+                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
@@ -82,15 +85,15 @@ const AddressContact = () => {
                             <div className='font-semibold'>VS Arcade, 71, Hitech, Madhapur Road, Jubilee Enclave, HITEC City, Hyderabad</div>
                             <div>info@techpratham.com</div>
                         </div>
-                        <div className='w-full flex flex-row justify-end gap-4 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center'>
+                        <div className='w-full flex flex-row justify-end gap-3 mt-4'>
+                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
                             </div>
-                            <div className='w-auto flex flex-row gap-2'>
+                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
