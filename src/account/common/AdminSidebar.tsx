@@ -35,6 +35,16 @@ const AdminSidebar = () => {
                     <div>Requests</div>
                 </Link>
 
+                <Link href='/admin/dashboard/enrolled' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                    <ArchiveIcon className='w-6 h-6' />
+                    <div>Enrolled</div>
+                </Link>
+
+                <Link href='/admin/dashboard/completed' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                    <ArchiveIcon className='w-6 h-6' />
+                    <div>Completed</div>
+                </Link>
+
                 <Link href='/admin/dashboard/account' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
                     <AvatarIcon className='w-6 h-6' />
                     <div>Account</div>

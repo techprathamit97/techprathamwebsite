@@ -1,6 +1,5 @@
 "use client";
-import React, { useContext, useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 import AdminLoader from '@/src/account/common/AdminLoader';
 import SignOut from '@/src/account/common/SignOut';
@@ -8,20 +7,17 @@ import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const AdminAccount = () => {
-    const { data: session, status: sessionStatus } = useSession();
-    const {
-        loading,
-        authenticated,
-        userData,
-        currentTab,
-        setCurrentTab
-    } = useContext(UserContext);
+    const { loading, authenticated, userData, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
+
+    useEffect(() => {
+        setCurrentTab("dashboard");
+    }, [currentTab]);
 
     return (
         <React.Fragment>
             {loading ? (
                 <AdminLoader />
-            ) : !authenticated ? (
+            ) : (!authenticated || !isAdmin) ? (
                 <SignOut />
             ) : (
                 <div className="h-screen w-full fixed bg-[#121421]">
@@ -49,7 +45,7 @@ const AdminAccount = () => {
                                         <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
                                         <div className="bg-[#1a1d29] rounded-md p-3">
                                             <p className="text-purple-200">
-                                                {session?.user?.email || 'Not available'}
+                                                {userData?.email || 'Not available'}
                                             </p>
                                         </div>
                                     </div>
