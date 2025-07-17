@@ -2,11 +2,8 @@
 
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
-import Image from 'next/image';
-import { ArrowTopRightIcon } from '@radix-ui/react-icons';
-import { Clock3, MapPin } from 'lucide-react';
 import HeaderJobs from '../components/HeaderJobs/HeaderJobs';
-import CardJobs from '../components/CardJobs/CardJobs';
+import JobsSection from '../components/JobsSection/JobsSection';
 
 const JobsView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -20,7 +17,7 @@ const JobsView = () => {
 
       <HeaderJobs />
 
-      <CardJobs />
+      <JobsSection />
 
     </div>
   )
