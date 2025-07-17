@@ -9,8 +9,8 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Autoplay } from 'swiper/modules';import { Clock } from 'lucide-react';
-;
+import { Autoplay } from 'swiper/modules';
+import { Clock } from 'lucide-react';
 
 const TestmonialHome = () => {
 
@@ -37,9 +37,6 @@ const TestmonialHome = () => {
             },
             1024: {
               slidesPerView: 3,
-            },
-            1280: {
-              slidesPerView: 4,
             },
           }}
           autoplay={{

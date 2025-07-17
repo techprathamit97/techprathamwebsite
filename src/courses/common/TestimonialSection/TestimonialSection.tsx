@@ -9,8 +9,8 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Autoplay } from 'swiper/modules';import { Clock } from 'lucide-react';
-;
+import { Autoplay } from 'swiper/modules';
+import { Clock } from 'lucide-react';
 
 const TestimonialSection = ({ course }: any) => {
 
