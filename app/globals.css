@@ -117,8 +117,17 @@ body {
 }
 
 .courseBgGirl {
-  background-image: url('../public/course/girl-doing-course.png');
+  background-image: url("../public/course/girl-doing-course.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
