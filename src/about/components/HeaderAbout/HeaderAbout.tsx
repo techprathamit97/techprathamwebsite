@@ -4,7 +4,7 @@ import Image from 'next/image';
 const HeaderAbout = () => {
     return (
         <div className='w-full h-auto flex flex-col items-center justify-center lg:pt-30 md:pt-24 sm:pt-24 pt-10'>
-            <div className='bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex flex-col items-center justify-center'>
+            <div className='w-full h-auto bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex flex-col items-center justify-center'>
                 <div className='md:w-10/12 w-11/12 flex md:flex-row flex-col items-center justify-between'>
                     <div className='w-1/2 text-left lg:text-3xl md:text-2xl sm:text-xl text-xl font-medium'>
                         Our Mission is to build nation through education and beyond limitation.
@@ -18,7 +18,7 @@ const HeaderAbout = () => {
                     <br /><br />
                     Our mission is to bridge the gap between traditional learning and the evolving demands of the tech industry by offering innovative, industry relevant training programs. What sets us apart is our commitment to creating a learning environment that is not only accessible but also engaging and impactful. With flexible schedules, expert mentorship, and real world project experience, we ensure every student is equipped to achieve their career goals.
                 </div>
-                <Image src='/about/mission.jpg' alt='' width={400} height={300} className='w-full h-96 rounded-md shadow-md object-cover' />
+                <Image src='/about/mission.png' alt='' width={400} height={300} className='w-full h-96 rounded-md shadow-md object-cover' />
             </div>
 
         </div>
