@@ -8,7 +8,7 @@ import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const courses = () => {
-  const { authenticated, loading } = useContext(UserContext);
+  const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
 
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +41,15 @@ const courses = () => {
     }
   }, [authenticated])
 
+  useEffect(() => {
+    setCurrentTab("courses");
+  }, [currentTab]);
+
   return (
     <React.Fragment>
       {loading ? (
         <AdminLoader />
-      ) : !authenticated ? (
+      ) : (!authenticated || !isAdmin) ? (
         <SignOut />
       ) : (
         <div className="h-screen w-full fixed bg-[#121421]">

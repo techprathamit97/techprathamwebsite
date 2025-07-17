@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
 import SignOut from '@/src/account/common/SignOut';
@@ -7,14 +7,18 @@ import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const account = () => {
-    const { userData, loading, authenticated } = useContext(UserContext);
+    const { userData, loading, authenticated, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
     const { data: session, status: sessionStatus } = useSession();
+
+    useEffect(() => {
+        setCurrentTab("account");
+    }, [currentTab]);
 
     return (
         <React.Fragment>
             {loading ? (
                 <AdminLoader />
-            ) : !authenticated ? (
+            ) : (!authenticated || !isAdmin) ? (
                 <SignOut />
             ) : (
                 <div className="h-screen w-full fixed bg-[#121421]">

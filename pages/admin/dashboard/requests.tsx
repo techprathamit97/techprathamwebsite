@@ -114,14 +114,14 @@ const Requests = () => {
 
       const updatedRequest = await res.json();
       console.log('Payment verification updated:', updatedRequest);
-      
+
       // Refresh the request data
       await fetchRequestData();
-      
+
       // Close dialog and reset form
       setSelectedRequest(null);
       form.reset();
-      
+
     } catch (error) {
       console.error('Failed to update payment verification:', error);
     } finally {
@@ -141,11 +141,15 @@ const Requests = () => {
     }
   }, [watchAdvance, form]);
 
+  useEffect(() => {
+    setCurrentTab("requests");
+  }, [currentTab]);
+
   return (
     <React.Fragment>
       {loading ? (
         <AdminLoader />
-      ) : !authenticated ? (
+      ) : (!authenticated || !isAdmin) ? (
         <SignOut />
       ) : (
         <div className="h-screen w-full fixed bg-[#121421]">
@@ -254,7 +258,7 @@ const Requests = () => {
                                 <DialogHeader>
                                   <DialogTitle>Verify Payment - {selectedRequest?.course_title}</DialogTitle>
                                 </DialogHeader>
-                                
+
                                 {selectedRequest && (
                                   <>
                                     {/* Course Details */}

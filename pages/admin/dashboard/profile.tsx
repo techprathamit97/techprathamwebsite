@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 import SignOut from '@/src/account/common/SignOut';
 import AdminLoader from '@/src/account/common/AdminLoader';
@@ -6,13 +6,17 @@ import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const profile = () => {
-  const { userData, loading, authenticated } = useContext(UserContext);
+  const { userData, loading, authenticated, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
+
+  useEffect(() => {
+    setCurrentTab("profile");
+  }, [currentTab]);
 
   return (
     <React.Fragment>
       {loading ? (
         <AdminLoader />
-      ) : !authenticated ? (
+      ) : (!authenticated || !isAdmin) ? (
         <SignOut />
       ) : (
         <div className="h-screen w-full fixed bg-[#121421]" >
