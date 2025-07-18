@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { UserContext } from '@/context/userContext';
@@ -9,13 +9,44 @@ import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+
+interface Certificate {
+    certificateId: string;
+    enrolledDate: string;
+    completionDate: string;
+}
+
+interface Course {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    course_title: string;
+    course_desc: string;
+    course_link: string;
+    category: string;
+    level: string;
+    duration: string;
+    totalAmount: number;
+    advanceAmount: number;
+    finalPayment: number;
+    advance: boolean;
+    verifyPayment: boolean;
+    courseCompletion: boolean;
+    certificate: Certificate | null;
+    createdAt: string;
+    updatedAt: string;
+}
 
 const Completed = () => {
     const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
 
-    const [completedData, setCompletedData] = useState([]);
+    const [completedData, setCompletedData] = useState<Course[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const fetchCompletedData = async () => {
         setIsLoading(true);
@@ -28,15 +59,7 @@ const Completed = () => {
             if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
 
             const data = await res.json();
-            // Filter only completed courses with full payment
-            const completedCourses = data.filter((course: {
-                verifyPayment: boolean,
-                courseCompletion: boolean,
-                advance: boolean,
-                advanceAmount: number,
-                finalPayment: number,
-                totalAmount: number
-            }) => {
+            const completedCourses = data.filter((course: Course) => {
                 const isPaymentComplete = course.verifyPayment &&
                     (course.advance ?
                         (course.advanceAmount + course.finalPayment >= course.totalAmount) :
@@ -61,7 +84,90 @@ const Completed = () => {
         }
     }, [authenticated]);
 
-    const getPaymentBadge = (course: any) => {
+    // Generate certificate for selected course
+    const generateCertificate = (course: Course) => {
+        setSelectedCourse(course);
+        // Small delay to ensure the canvas is ready
+        setTimeout(() => {
+            drawCertificate(course);
+        }, 100);
+    };
+
+    const drawCertificate = async (course: Course) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        await document.fonts.ready;
+
+        const image = new Image();
+        image.onload = () => {
+            const formatDate = (dateString: string | undefined) => {
+                if (!dateString) return 'N/A';
+                try {
+                    return new Date(dateString).toLocaleDateString('en-GB');
+                } catch (e) {
+                    console.error("Could not parse date:", dateString);
+                    return 'Invalid Date';
+                }
+            };
+
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
+
+            // Set font for name and course title
+            ctx.font = '120px "Caramel", sans-serif';
+            ctx.fillStyle = '#AD0200';
+            ctx.textAlign = 'center';
+
+            // Student name (centered, red color)
+            const studentName = course.name;
+            ctx.fillText(studentName, canvas.width / 2, 1283);
+
+            // Course title (centered, below name)
+            ctx.font = '120px "Caramel", sans-serif';
+            ctx.fillStyle = '#E2C77B';
+            const courseTitle = course.course_title;
+            ctx.fillText(courseTitle, canvas.width / 2, 1529);
+
+            // Date range
+            ctx.font = 'bold 35px Arial, sans-serif';
+            ctx.fillStyle = '#333333';
+            const enrolledDate = formatDate(course.certificate?.enrolledDate);
+            const completionDate = formatDate(course.certificate?.completionDate);
+            ctx.fillText(enrolledDate, 500, 1680);
+            ctx.fillText(completionDate, 770, 1680);
+
+            // Certificate ID (top right)
+            ctx.font = 'bold 35px Arial, sans-serif';
+            ctx.fillStyle = '#333333';
+            ctx.textAlign = 'right';
+            const certificateIdNo = course?.certificate?.certificateId || 'N/A';
+            ctx.fillText(certificateIdNo, canvas.width - 110, 134);
+
+            // Date (top right, below certificate ID)
+            const currentDate = new Date().toLocaleDateString('en-GB');
+            ctx.fillText(currentDate, canvas.width - 110, 185);
+        };
+
+        // Use the certificate template image
+        image.src = '/course/certificate/certify.png';
+    };
+
+    const handleDownload = () => {
+        const canvas = canvasRef.current;
+        if (!canvas || !selectedCourse) return;
+
+        const link = document.createElement('a');
+        link.download = `${selectedCourse.certificate?.certificateId || 'certificate'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    };
+
+    const getPaymentBadge = (course: Course) => {
         const { advance, advanceAmount, finalPayment, totalAmount } = course;
         const totalPaid = advanceAmount + finalPayment;
 
@@ -121,9 +227,9 @@ const Completed = () => {
 
                                     {completedData.length > 0 ? (
                                         <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full justify-items-center">
-                                            {completedData.map((course: any, index: any) => (
+                                            {completedData.map((course: Course, index: number) => (
                                                 <div
-                                                    key={index}
+                                                    key={course._id || index}
                                                     className="w-full max-w-lg h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform hover:shadow-lg"
                                                 >
                                                     {/* Course Information */}
@@ -222,18 +328,45 @@ const Completed = () => {
                                                             <DialogTrigger asChild>
                                                                 <Button
                                                                     className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                                                                    onClick={() => generateCertificate(course)}
                                                                 >
                                                                     Generate Certificate
                                                                 </Button>
                                                             </DialogTrigger>
-                                                            <DialogContent className='bg-white'>
-                                                                <h3 className="text-lg font-semibold text-gray-800">Certificate Details</h3>
-                                                                <div className='w-full flex flex-col gap-1'>
-                                                                    <div>Course Title: {course?.course_title}</div>
-                                                                    <div>User Name: {course?.name}</div>
-                                                                    <div>Starting Date: {course?.certificate?.enrolledDate}</div>
-                                                                    <div>Ending Date: {course?.certificate?.completionDate}</div>
-                                                                    <div>Certificate Id: {course?.certificate?.certificateId}</div>
+                                                            <DialogContent className='bg-white h-auto overflow-auto hide-scrollbar'>
+                                                                <h3 className="text-lg font-semibold text-gray-800 mb-4">Certificate of Achievement</h3>
+                                                                <div className='w-full flex flex-col gap-4'>
+                                                                    <div className='w-full h-auto flex items-center justify-center flex-col gap-4'>
+                                                                        <canvas
+                                                                            ref={canvasRef}
+                                                                            className='w-full hidden max-w-3xl h-full border-2 border-gray-200 rounded-lg shadow-lg'
+                                                                        />
+
+                                                                        {selectedCourse && (
+                                                                            <div className="text-center space-y-2">
+                                                                                <p className="text-sm text-gray-600">
+                                                                                    <strong>Student:</strong> {selectedCourse.name}
+                                                                                </p>
+                                                                                <p className="text-sm text-gray-600">
+                                                                                    <strong>Course:</strong> {selectedCourse.course_title}
+                                                                                </p>
+                                                                                <p className="text-sm text-gray-600">
+                                                                                    <strong>Certificate ID:</strong> {selectedCourse?.certificate?.certificateId}
+                                                                                </p>
+                                                                                <p className="text-sm text-gray-600">
+                                                                                    <strong>Completion Date:</strong> {selectedCourse?.certificate?.completionDate}
+                                                                                </p>
+                                                                            </div>
+                                                                        )}
+
+                                                                        <Button
+                                                                            variant='default'
+                                                                            className='mt-4 bg-green-600 hover:bg-green-700'
+                                                                            onClick={handleDownload}
+                                                                        >
+                                                                            Download Certificate
+                                                                        </Button>
+                                                                    </div>
                                                                 </div>
                                                             </DialogContent>
                                                         </Dialog>
