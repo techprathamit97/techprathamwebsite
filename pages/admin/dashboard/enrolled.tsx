@@ -26,12 +26,18 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+// Updated schema to match the requests page structure
 const verifyPaymentSchema = z.object({
     advance: z.boolean(),
     advanceAmount: z.number().min(0),
+    finalPayment: z.number().min(0),
     totalAmount: z.number().min(0),
     verifyPayment: z.boolean(),
     courseCompletion: z.boolean(),
+    // Certificate fields - made optional to match requests page
+    enrolledDate: z.string().optional(),
+    completionDate: z.string().optional(),
+    certificateId: z.string().optional(),
 });
 
 const Enrolled = () => {
@@ -73,9 +79,13 @@ const Enrolled = () => {
         defaultValues: {
             advance: false,
             advanceAmount: 0,
+            finalPayment: 0,
             totalAmount: 0,
             verifyPayment: false,
             courseCompletion: false,
+            enrolledDate: "",
+            completionDate: "",
+            certificateId: "",
         },
     });
 
@@ -87,12 +97,17 @@ const Enrolled = () => {
         form.reset({
             advance: enrollment.advance || false,
             advanceAmount: enrollment.advanceAmount || 0,
+            finalPayment: enrollment.finalPayment || 0,
             totalAmount: enrollment.totalAmount || 0,
             verifyPayment: enrollment.verifyPayment || false,
             courseCompletion: enrollment.courseCompletion || false,
+            enrolledDate: enrollment.certificate?.enrolledDate ? new Date(enrollment.certificate.enrolledDate).toISOString().split('T')[0] : "",
+            completionDate: enrollment.certificate?.completionDate ? new Date(enrollment.certificate.completionDate).toISOString().split('T')[0] : "",
+            certificateId: enrollment.certificate?.certificateId || "",
         });
     };
 
+    // Updated onSubmit function to properly structure the certificate data
     const onSubmit = async (values: z.infer<typeof verifyPaymentSchema>) => {
         if (!selectedEnrollment) return;
 
@@ -101,7 +116,18 @@ const Enrolled = () => {
             const updateData = {
                 email: selectedEnrollment.email,
                 course_link: selectedEnrollment.course_link,
-                ...values,
+                advance: values.advance,
+                advanceAmount: values.advanceAmount,
+                finalPayment: values.finalPayment,
+                totalAmount: values.totalAmount,
+                verifyPayment: values.verifyPayment,
+                courseCompletion: values.courseCompletion,
+                // Structure the certificate object properly like in requests.tsx
+                certificate: {
+                    enrolledDate: values.enrolledDate ? new Date(values.enrolledDate) : null,
+                    completionDate: values.completionDate ? new Date(values.completionDate) : null,
+                    certificateId: values.certificateId || null,
+                },
             };
 
             const res = await fetch('/api/course/verify', {
@@ -257,13 +283,33 @@ const Enrolled = () => {
                                                                         <span className="text-orange-600 font-bold">₹{enrollment.advanceAmount}</span>
                                                                     </div>
                                                                     <div className="flex justify-between">
+                                                                        <span className="font-medium">Final Payment:</span>
+                                                                        <span className="text-blue-600 font-bold">₹{enrollment.finalPayment || 0}</span>
+                                                                    </div>
+                                                                    <div className="flex justify-between">
                                                                         <span className="font-medium">Remaining:</span>
-                                                                        <span className="text-red-600 font-bold">₹{enrollment.totalAmount - enrollment.advanceAmount}</span>
+                                                                        <span className="text-red-600 font-bold">₹{enrollment.totalAmount - (enrollment.advanceAmount + (enrollment.finalPayment || 0))}</span>
                                                                     </div>
                                                                 </>
                                                             )}
                                                         </div>
                                                     </div>
+
+                                                    {/* Certificate Information */}
+                                                    {enrollment.certificate && (
+                                                        <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                                                            <h4 className="font-semibold text-gray-800 mb-2">Certificate Details</h4>
+                                                            <div className="space-y-1 text-sm">
+                                                                <div><span className="font-medium">Enrolled Date:</span> {new Date(enrollment.certificate.enrolledDate).toLocaleDateString('en-IN')}</div>
+                                                                {enrollment.certificate.completionDate && (
+                                                                    <div><span className="font-medium">Completion Date:</span> {new Date(enrollment.certificate.completionDate).toLocaleDateString('en-IN')}</div>
+                                                                )}
+                                                                {enrollment.certificate.certificateId && (
+                                                                    <div><span className="font-medium">Certificate ID:</span> {enrollment.certificate.certificateId}</div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )}
 
                                                     {/* Course Duration */}
                                                     <div className="flex justify-between items-center mb-4">
@@ -372,24 +418,51 @@ const Enrolled = () => {
                                                                                     />
                                                                                 </div>
 
-                                                                                <FormField
-                                                                                    control={form.control}
-                                                                                    name="totalAmount"
-                                                                                    render={({ field }) => (
-                                                                                        <FormItem>
-                                                                                            <FormLabel>Total Amount</FormLabel>
-                                                                                            <FormControl>
-                                                                                                <Input
-                                                                                                    type="number"
-                                                                                                    placeholder="0"
-                                                                                                    {...field}
-                                                                                                    onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                                                />
-                                                                                            </FormControl>
-                                                                                            <FormMessage />
-                                                                                        </FormItem>
-                                                                                    )}
-                                                                                />
+                                                                                <div className="grid grid-cols-2 gap-4">
+                                                                                    <FormField
+                                                                                        control={form.control}
+                                                                                        name="finalPayment"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Final Payment</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="number"
+                                                                                                        placeholder="0"
+                                                                                                        {...field}
+                                                                                                        onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormDescription>
+                                                                                                    Remaining payment amount after advance
+                                                                                                </FormDescription>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+
+                                                                                    <FormField
+                                                                                        control={form.control}
+                                                                                        name="totalAmount"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Total Amount</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="number"
+                                                                                                        placeholder="0"
+                                                                                                        {...field}
+                                                                                                        onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormDescription>
+                                                                                                    Total course fee amount
+                                                                                                </FormDescription>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+                                                                                </div>
 
                                                                                 <div className="grid grid-cols-2 gap-4">
                                                                                     <FormField
@@ -437,9 +510,76 @@ const Enrolled = () => {
                                                                                     />
                                                                                 </div>
 
+                                                                                {/* Certificate Information Fields */}
+                                                                                <div className="bg-yellow-50 p-4 rounded-lg">
+                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Certificate Information</h4>
+                                                                                    <div className="grid grid-cols-1 gap-4">
+                                                                                        <FormField
+                                                                                            control={form.control}
+                                                                                            name="enrolledDate"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Enrolled Date</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="date"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormDescription>
+                                                                                                        Date when the student enrolled in the course
+                                                                                                    </FormDescription>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <FormField
+                                                                                            control={form.control}
+                                                                                            name="completionDate"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Completion Date</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="date"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormDescription>
+                                                                                                        Date when the student completed the course
+                                                                                                    </FormDescription>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <FormField
+                                                                                            control={form.control}
+                                                                                            name="certificateId"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Certificate ID</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="text"
+                                                                                                            placeholder="Enter certificate ID"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormDescription>
+                                                                                                        Unique identifier for the certificate
+                                                                                                    </FormDescription>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+
                                                                                 <div className="flex gap-2 pt-4">
                                                                                     <Button type="submit" disabled={isSubmitting} className="flex-1">
-                                                                                        {isSubmitting ? 'Updating...' : 'Update Course Status'}
+                                                                                        {isSubmitting ? 'Finalizing...' : 'Finalize Course'}
                                                                                     </Button>
                                                                                 </div>
                                                                             </form>

@@ -29,9 +29,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const verifyPaymentSchema = z.object({
   advance: z.boolean(),
   advanceAmount: z.number().min(0),
+  finalPayment: z.number().min(0),
   totalAmount: z.number().min(0),
   verifyPayment: z.boolean(),
   courseCompletion: z.boolean(),
+  enrolledDate: z.string().optional(),
 });
 
 const Requests = () => {
@@ -71,9 +73,11 @@ const Requests = () => {
     defaultValues: {
       advance: false,
       advanceAmount: 0,
+      finalPayment: 0,
       totalAmount: 0,
       verifyPayment: false,
       courseCompletion: false,
+      enrolledDate: "",
     },
   });
 
@@ -85,9 +89,11 @@ const Requests = () => {
     form.reset({
       advance: request.advance || false,
       advanceAmount: request.advanceAmount || 0,
+      finalPayment: request.finalPayment || 0,
       totalAmount: request.totalAmount || 0,
       verifyPayment: request.verifyPayment || false,
       courseCompletion: request.courseCompletion || false,
+      enrolledDate: request.certificate?.enrolledDate ? new Date(request.certificate.enrolledDate).toISOString().split('T')[0] : "",
     });
   };
 
@@ -99,7 +105,19 @@ const Requests = () => {
       const updateData = {
         email: selectedRequest.email,
         course_link: selectedRequest.course_link,
-        ...values,
+        advance: values.advance,
+        advanceAmount: values.advanceAmount,
+        finalPayment: values.finalPayment,
+        totalAmount: values.totalAmount,
+        verifyPayment: values.verifyPayment,
+        courseCompletion: values.courseCompletion,
+        // Structure the certificate object properly
+        certificate: values.enrolledDate ? {
+          enrolledDate: new Date(values.enrolledDate),
+          // You might want to add completionDate and certificateId here as well
+          // completionDate: values.courseCompletion ? new Date() : null,
+          // certificateId: values.courseCompletion ? `CERT-${Date.now()}` : null,
+        } : null,
       };
 
       const res = await fetch('/api/course/verify', {
@@ -331,24 +349,51 @@ const Requests = () => {
                                           />
                                         </div>
 
-                                        <FormField
-                                          control={form.control}
-                                          name="totalAmount"
-                                          render={({ field }) => (
-                                            <FormItem>
-                                              <FormLabel>Total Amount</FormLabel>
-                                              <FormControl>
-                                                <Input
-                                                  type="number"
-                                                  placeholder="0"
-                                                  {...field}
-                                                  onChange={(e) => field.onChange(Number(e.target.value))}
-                                                />
-                                              </FormControl>
-                                              <FormMessage />
-                                            </FormItem>
-                                          )}
-                                        />
+                                        <div className="grid grid-cols-2 gap-4">
+                                          <FormField
+                                            control={form.control}
+                                            name="finalPayment"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Final Payment</FormLabel>
+                                                <FormControl>
+                                                  <Input
+                                                    type="number"
+                                                    placeholder="0"
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                  />
+                                                </FormControl>
+                                                <FormDescription>
+                                                  Remaining payment amount after advance
+                                                </FormDescription>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+
+                                          <FormField
+                                            control={form.control}
+                                            name="totalAmount"
+                                            render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Total Amount</FormLabel>
+                                                <FormControl>
+                                                  <Input
+                                                    type="number"
+                                                    placeholder="0"
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                  />
+                                                </FormControl>
+                                                <FormDescription>
+                                                  Total course fee amount
+                                                </FormDescription>
+                                                <FormMessage />
+                                              </FormItem>
+                                            )}
+                                          />
+                                        </div>
 
                                         <div className="grid grid-cols-2 gap-4">
                                           <FormField
@@ -395,6 +440,26 @@ const Requests = () => {
                                             )}
                                           />
                                         </div>
+
+                                        <FormField
+                                          control={form.control}
+                                          name="enrolledDate"
+                                          render={({ field }) => (
+                                            <FormItem>
+                                              <FormLabel>Enrolled Date</FormLabel>
+                                              <FormControl>
+                                                <Input
+                                                  type="date"
+                                                  {...field}
+                                                />
+                                              </FormControl>
+                                              <FormDescription>
+                                                Date when the student enrolled in the course
+                                              </FormDescription>
+                                              <FormMessage />
+                                            </FormItem>
+                                          )}
+                                        />
 
                                         <div className="flex gap-2 pt-4">
                                           <Button type="submit" disabled={isSubmitting} className="flex-1">

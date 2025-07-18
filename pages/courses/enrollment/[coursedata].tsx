@@ -250,9 +250,11 @@ const CourseEnrollPage: React.FC = () => {
         phone: data.phone,
         advance: false,
         advanceAmount: 0,
+        finalPayment: 0,
         totalAmount: 0,
         verifyPayment: false,
-        courseCompletion: false
+        courseCompletion: false,
+        certificate: null
       };
 
       const response = await fetch('/api/course/enrollment', {
