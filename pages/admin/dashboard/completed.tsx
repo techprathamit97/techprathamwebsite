@@ -9,6 +9,8 @@ import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
 const Completed = () => {
     const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
 
@@ -26,10 +28,22 @@ const Completed = () => {
             if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
 
             const data = await res.json();
-            // Filter only completed courses
-            const completedCourses = data.filter((course: { verifyPayment: boolean, courseCompletion: boolean }) =>
-                course.verifyPayment && course.courseCompletion
-            );
+            // Filter only completed courses with full payment
+            const completedCourses = data.filter((course: {
+                verifyPayment: boolean,
+                courseCompletion: boolean,
+                advance: boolean,
+                advanceAmount: number,
+                finalPayment: number,
+                totalAmount: number
+            }) => {
+                const isPaymentComplete = course.verifyPayment &&
+                    (course.advance ?
+                        (course.advanceAmount + course.finalPayment >= course.totalAmount) :
+                        course.finalPayment >= course.totalAmount || course.advanceAmount >= course.totalAmount
+                    );
+                return isPaymentComplete && course.courseCompletion;
+            });
             setCompletedData(completedCourses);
         } catch (error) {
             console.error("Failed to fetch completed data:", error);
@@ -47,27 +61,23 @@ const Completed = () => {
         }
     }, [authenticated]);
 
-    const getPaymentBadge = (advance: boolean, advanceAmount: number, totalAmount: number) => {
-        if (advance && advanceAmount > 0 && advanceAmount < totalAmount) {
+    const getPaymentBadge = (course: any) => {
+        const { advance, advanceAmount, finalPayment, totalAmount } = course;
+        const totalPaid = advanceAmount + finalPayment;
+
+        if (totalPaid >= totalAmount) {
             return (
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                    Partial Payment
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Fully Paid
                 </span>
             );
         }
+
         return (
-            <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Paid
+            <span className="px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                Partial Payment
             </span>
         );
-    };
-
-    const handleGenerateCertificate = (course: any) => {
-        // Dummy function for certificate generation
-        console.log('Generating certificate for:', course.course_title, 'for student:', course.name);
-        // Here you would typically implement certificate generation logic
-        // For now, it's just a placeholder
-        alert(`Certificate will be generated for ${course.name} for completing ${course.course_title}`);
     };
 
     useEffect(() => {
@@ -155,7 +165,7 @@ const Completed = () => {
                                                     <div className="bg-green-50 p-4 rounded-lg mb-4">
                                                         <div className="flex justify-between items-center mb-2">
                                                             <h4 className="font-semibold text-gray-800">Payment Status</h4>
-                                                            {getPaymentBadge(course.advance, course.advanceAmount, course.totalAmount)}
+                                                            {getPaymentBadge(course)}
                                                         </div>
                                                         <div className="space-y-1 text-sm">
                                                             <div className="flex justify-between">
@@ -163,16 +173,26 @@ const Completed = () => {
                                                                 <span className="text-green-600 font-bold">₹{course.totalAmount}</span>
                                                             </div>
                                                             {course.advance && course.advanceAmount > 0 && (
-                                                                <>
-                                                                    <div className="flex justify-between">
-                                                                        <span className="font-medium">Advance Paid:</span>
-                                                                        <span className="text-orange-600 font-bold">₹{course.advanceAmount}</span>
-                                                                    </div>
-                                                                    <div className="flex justify-between">
-                                                                        <span className="font-medium">Remaining:</span>
-                                                                        <span className="text-red-600 font-bold">₹{course.totalAmount - course.advanceAmount}</span>
-                                                                    </div>
-                                                                </>
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Advance Payment:</span>
+                                                                    <span className="text-blue-600 font-bold">₹{course.advanceAmount}</span>
+                                                                </div>
+                                                            )}
+                                                            {course.finalPayment > 0 && (
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Final Payment:</span>
+                                                                    <span className="text-green-600 font-bold">₹{course.finalPayment}</span>
+                                                                </div>
+                                                            )}
+                                                            <div className="flex justify-between border-t pt-1">
+                                                                <span className="font-medium">Total Paid:</span>
+                                                                <span className="text-green-700 font-bold">₹{course.advanceAmount + course.finalPayment}</span>
+                                                            </div>
+                                                            {(course.advanceAmount + course.finalPayment) < course.totalAmount && (
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Remaining:</span>
+                                                                    <span className="text-red-600 font-bold">₹{course.totalAmount - (course.advanceAmount + course.finalPayment)}</span>
+                                                                </div>
                                                             )}
                                                         </div>
                                                     </div>
@@ -198,12 +218,25 @@ const Completed = () => {
                                                                 View Course
                                                             </Button>
                                                         </Link>
-                                                        <Button
-                                                            onClick={() => handleGenerateCertificate(course)}
-                                                            className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
-                                                        >
-                                                            Generate Certificate
-                                                        </Button>
+                                                        <Dialog>
+                                                            <DialogTrigger asChild>
+                                                                <Button
+                                                                    className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-200"
+                                                                >
+                                                                    Generate Certificate
+                                                                </Button>
+                                                            </DialogTrigger>
+                                                            <DialogContent className='bg-white'>
+                                                                <h3 className="text-lg font-semibold text-gray-800">Certificate Details</h3>
+                                                                <div className='w-full flex flex-col gap-1'>
+                                                                    <div>Course Title: {course?.course_title}</div>
+                                                                    <div>User Name: {course?.name}</div>
+                                                                    <div>Starting Date: {course?.certificate?.enrolledDate}</div>
+                                                                    <div>Ending Date: {course?.certificate?.completionDate}</div>
+                                                                    <div>Certificate Id: {course?.certificate?.certificateId}</div>
+                                                                </div>
+                                                            </DialogContent>
+                                                        </Dialog>
                                                     </div>
 
                                                     {/* Timestamp */}
@@ -228,7 +261,7 @@ const Completed = () => {
                                                     </svg>
                                                 </div>
                                                 <h3 className="text-lg font-medium text-gray-300 mb-2">No completed courses</h3>
-                                                <p className="text-gray-400 mb-6">No courses have been completed yet.</p>
+                                                <p className="text-gray-400 mb-6">No courses have been completed yet with full payment.</p>
                                             </div>
                                         </div>
                                     )}
@@ -236,6 +269,7 @@ const Completed = () => {
                             )}
                         </div>
                     </div>
+
                 </div>
             )}
         </React.Fragment>
