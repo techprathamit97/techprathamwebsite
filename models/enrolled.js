@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const certificateSchema = new mongoose.Schema({
+  enrolledDate: { type: Date, required: true },
+  completionDate: { type: Date, required: true },
+  certificateId: { type: String, required: true },
+});
+
 const enrolledSchema = new mongoose.Schema(
   {
     course_link: { type: String, required: true },
@@ -13,13 +19,19 @@ const enrolledSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     advance: { type: Boolean, default: false },
     advanceAmount: { type: Number, default: 0 },
+    finalPayment: { type: Number, default: 0 },
     totalAmount: { type: Number, default: 0 },
     verifyPayment: { type: Boolean, default: false },
-    courseCompletion: { type: Boolean, default: false }
+    courseCompletion: { type: Boolean, default: false },
+    certificate: {
+      type: certificateSchema,
+      default: null,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.models.Enrolled || mongoose.model("Enrolled", enrolledSchema);
+export default mongoose.models.Enrolled ||
+  mongoose.model("Enrolled", enrolledSchema);
