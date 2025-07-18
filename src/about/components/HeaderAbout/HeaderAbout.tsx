@@ -18,7 +18,7 @@ const HeaderAbout = () => {
                     <br /><br />
                     Our mission is to bridge the gap between traditional learning and the evolving demands of the tech industry by offering innovative, industry relevant training programs. What sets us apart is our commitment to creating a learning environment that is not only accessible but also engaging and impactful. With flexible schedules, expert mentorship, and real world project experience, we ensure every student is equipped to achieve their career goals.
                 </div>
-                <Image src='/about/mission.png' alt='' width={400} height={300} className='w-full h-96 rounded-md shadow-md object-cover' />
+                <Image src='/about/mission.jpg' alt='' width={400} height={300} className='w-full h-96 rounded-md shadow-md object-cover' />
             </div>
 
         </div>

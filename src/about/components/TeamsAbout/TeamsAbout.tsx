@@ -15,7 +15,7 @@ const TeamsAbout = () => {
                         <Image src={item.image} alt={item.name} width={400} height={400} className='w-full h-64 object-cover transition-all rounded-lg duration-300 grayscale hover:grayscale-0' />
                         <div className='flex flex-col items-center justify-center my-3'>
                             <div className='font-semibold text-lg transition-all hover:underline cursor-pointer'>{item.name}</div>
-                            <div className='font-medium text-base text-[#CD4647]'>{item.position}</div>
+                            <div className='font-medium text-base text-[#CD4647] text-center'>{item.position}</div>
                         </div>
                     </div>
                 ))}
@@ -28,34 +28,52 @@ export default TeamsAbout
 
 const teams = [
     {
-        image: "/about/teams/bhagirath.png",
+        image: "/about/teams/bhagirath.jpg",
         name: "Bhagirath Tyagi",
-        position: "Head of Corporate Training",
+        position: "Director",
         link: "bhagirath-tyagi",
         about: [
             "ISO Nirvana 🌿"
         ]
     },
     {
-        image: "/about/teams/durgesh.png",
-        name: "Durgesh Lawaniya",
-        position: "Head of HR and Operations",
-        link: "durgesh-lawaniya",
-        about: [
-            "ISO Nirvana 🌿"
-        ]
-    },
-    {
-        image: "/about/teams/bharat.png",
-        name: "Bharat Sahai",
-        position: "Sr. IT Consultant",
+        image: "/about/teams/bharat.jpg",
+        name: "Bharat Bhagwan Sahai",
+        position: "Director & Head of Corporate Training",
         link: "bharat-sahai",
         about: [
             "ISO Nirvana 🌿"
         ]
     },
     {
-        image: "/about/teams/yuvraj.png",
+        image: "/about/teams/rani-kumari.jpg",
+        name: "Rani Kumari",
+        position: "Head of HR and Operations",
+        link: "rani-kumari",
+        about: [
+            "ISO Nirvana 🌿"
+        ]
+    },
+    {
+        image: "/about/teams/amrit.jpg",
+        name: "Amrit Kumar",
+        position: "Head of IT and Digital Marketing",
+        link: "amrit-kumar",
+        about: [
+            "ISO Nirvana 🌿"
+        ]
+    },
+    {
+        image: "/about/teams/durgesh.jpg",
+        name: "Durgesh Lawaniya",
+        position: "HEAD of CSR",
+        link: "durgesh-lawaniya",
+        about: [
+            "ISO Nirvana 🌿"
+        ]
+    },
+    {
+        image: "/about/teams/yuvraj.jpg",
         name: "Yuvraj Gaur",
         position: "Sales Manager",
         link: "yuvraj-gaur",
