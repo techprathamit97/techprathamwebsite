@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: { type: String, default: "user" },
       position: { type: String, default: "" },
+      studentId: { type: String, default: "" },
     },
     courses: {
       enrolled: [{ type: String, default: [] }],
