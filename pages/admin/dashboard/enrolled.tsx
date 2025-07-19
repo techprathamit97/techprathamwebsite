@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { UserContext } from '@/context/userContext';
 import SignOut from '@/src/account/common/SignOut';
@@ -17,8 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from '@/components/ui/label';
 
-// Updated schema to match the requests page structure
 const verifyPaymentSchema = z.object({
     advance: z.boolean(),
     advanceAmount: z.number().min(0),
@@ -26,10 +25,19 @@ const verifyPaymentSchema = z.object({
     totalAmount: z.number().min(0),
     verifyPayment: z.boolean(),
     courseCompletion: z.boolean(),
-    // Certificate fields - made optional to match requests page
     enrolledDate: z.string().optional(),
     completionDate: z.string().optional(),
     certificateId: z.string().optional(),
+});
+
+const invoiceSchema = z.object({
+    advanceAmount: z.number().min(0),
+    totalAmount: z.number().min(0),
+    enrolledDate: z.string().optional(),
+    feeType: z.string().optional(),
+    dueDate: z.string().optional(),
+    studentId: z.string().optional(),
+    receiptNo: z.string().optional(),
 });
 
 const Enrolled = () => {
@@ -38,6 +46,8 @@ const Enrolled = () => {
     const [enrolledData, setEnrolledData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedEnrollment, setSelectedEnrollment] = useState<any>(null);
+    const [selectedInvoiceEnrollment, setSelectedInvoiceEnrollment] = useState<any>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const fetchEnrolledData = async () => {
@@ -81,11 +91,79 @@ const Enrolled = () => {
         },
     });
 
+    const invoiceForm = useForm<z.infer<typeof invoiceSchema>>({
+        resolver: zodResolver(invoiceSchema),
+        defaultValues: {
+            advanceAmount: 0,
+            totalAmount: 0,
+            enrolledDate: "",
+            feeType: "",
+            dueDate: "",
+            studentId: "",
+            receiptNo: "",
+        },
+    });
+
     const watchAdvance = form.watch("advance");
+
+    const handleGenerateInvoice = (enrollment: any) => {
+        setSelectedInvoiceEnrollment(enrollment);
+        invoiceForm.reset({
+            advanceAmount: enrollment.advanceAmount || 0,
+            totalAmount: enrollment.totalAmount || 0,
+            enrolledDate: enrollment.certificate?.enrolledDate ? new Date(enrollment.certificate.enrolledDate).toISOString().split('T')[0] : "",
+            feeType: enrollment.feeType || (enrollment.advance ? "advance" : "full"),
+            dueDate: enrollment.dueDate || "",
+            studentId: enrollment.studentId || "",
+            receiptNo: enrollment.receiptNo || "",
+        });
+    };
+
+    const onInvoiceSubmit = async (values: z.infer<typeof invoiceSchema>) => {
+        if (!selectedInvoiceEnrollment) return;
+
+        setIsSubmitting(true);
+        try {
+            const invoiceData = {
+                email: selectedInvoiceEnrollment.email,
+                course_link: selectedInvoiceEnrollment.course_link,
+                advanceAmount: values.advanceAmount,
+                totalAmount: values.totalAmount,
+                feeType: values.feeType,
+                dueDate: values.dueDate,
+                studentId: values.studentId,
+                receiptNo: values.receiptNo,
+            };
+
+            const res = await fetch('/api/course/verify', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(invoiceData),
+            });
+
+            if (!res.ok) throw new Error(`Invoice generation failed with status ${res.status}`);
+
+            const result = await res.json();
+            console.log('Invoice generated successfully:', result);
+
+            // Refresh the enrolled data to reflect any changes
+            await fetchEnrolledData();
+
+            setSelectedInvoiceEnrollment(null);
+            invoiceForm.reset();
+
+        } catch (error) {
+            console.error('Failed to generate invoice:', error);
+            // You might want to add error handling UI here
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const handleFinalizeCourse = (enrollment: any) => {
         setSelectedEnrollment(enrollment);
-        // Pre-populate form with existing data
         form.reset({
             advance: enrollment.advance || false,
             advanceAmount: enrollment.advanceAmount || 0,
@@ -99,7 +177,6 @@ const Enrolled = () => {
         });
     };
 
-    // Updated onSubmit function to properly structure the certificate data
     const onSubmit = async (values: z.infer<typeof verifyPaymentSchema>) => {
         if (!selectedEnrollment) return;
 
@@ -114,7 +191,6 @@ const Enrolled = () => {
                 totalAmount: values.totalAmount,
                 verifyPayment: values.verifyPayment,
                 courseCompletion: values.courseCompletion,
-                // Structure the certificate object properly like in requests.tsx
                 certificate: {
                     enrolledDate: values.enrolledDate ? new Date(values.enrolledDate) : null,
                     completionDate: values.completionDate ? new Date(values.completionDate) : null,
@@ -135,10 +211,7 @@ const Enrolled = () => {
             const updatedEnrollment = await res.json();
             console.log('Course finalization updated:', updatedEnrollment);
 
-            // Refresh the enrolled data
             await fetchEnrolledData();
-
-            // Close dialog and reset form
             setSelectedEnrollment(null);
             form.reset();
 
@@ -160,6 +233,155 @@ const Enrolled = () => {
             form.setValue("advanceAmount", 0);
         }
     }, [watchAdvance, form]);
+
+    const generateInvoice = (enrollment: any) => {
+        setSelectedInvoiceEnrollment(enrollment);
+        setTimeout(() => {
+            drawInvoice(enrollment);
+        }, 100);
+    };
+
+    const drawInvoice = async (course: any) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        await document.fonts.ready;
+
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+
+        image.onload = () => {
+            const formatDate = (dateString: string | undefined) => {
+                if (!dateString) return 'N/A';
+                try {
+                    return new Date(dateString).toLocaleDateString('en-GB');
+                } catch (e) {
+                    console.error("Could not parse date:", dateString);
+                    return 'Invalid Date';
+                }
+            };
+
+            // Set canvas dimensions
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            // Clear canvas and draw background image
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0);
+
+            // Set font for name and course title
+            ctx.font = '12px "Poppins", sans-serif';
+            ctx.fillStyle = '#000';
+
+            // Student name (centered, red color)
+            const studentName = course.name || 'N/A';
+            ctx.fillText(studentName, 190, 288);
+            const email = course.email || 'N/A';
+            ctx.fillText(email, 198, 328);
+            const phoneNo = course.phone || 'N/A';
+            ctx.fillText(phoneNo, 250, 366);
+
+            ctx.font = '12px "Poppins", sans-serif';
+            ctx.fillStyle = '#000';
+            
+            // Course title
+            const receiptIdNo = course?.receiptNo || 'N/A';
+            ctx.fillText(receiptIdNo, 480, 288);
+            const courseTitle = course.course_title || 'N/A';
+            ctx.fillText(courseTitle, 456, 328);
+            const studentIdNo = course?.studentId || 'N/A';
+            ctx.fillText(studentIdNo, 470, 366);
+
+            // Date range
+            ctx.font = '12px "Poppins", sans-serif';
+            ctx.fillStyle = '#000';
+
+            // Current date
+            const currentDate = new Date().toLocaleDateString('en-GB');
+            ctx.fillText(currentDate, 735, 288);
+            const feeType = course?.feeType || 'N/A';
+            ctx.fillText(feeType, 773, 328);
+            const nextDueDate = course?.dueDate || 'N/A';
+            ctx.fillText(nextDueDate, 805, 366);
+
+            // Add payment information
+            ctx.font = '16px "Poppins", sans-serif';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'left';
+
+            // Total amount
+            const totalAmount = `${course.totalAmount || 0}`;
+            ctx.fillText(totalAmount, 805, 455);
+
+            // Advance amount if applicable
+            if (course.advance && course.advanceAmount > 0) {
+                const advanceAmount = `${course.advanceAmount}`;
+                ctx.fillText(advanceAmount, 805, 495);
+
+                const balanceAmount = `${(course.totalAmount || 0) - (course.advanceAmount || 0)}`;
+                ctx.fillText(balanceAmount, 805, 535);
+            }
+        };
+
+        image.onerror = () => {
+            console.error("Failed to load invoice template image");
+            // Fallback: create a simple invoice without background image
+            canvas.width = 800;
+            canvas.height = 600;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add border
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+
+            // Add title
+            ctx.font = 'bold 24px "Poppins", sans-serif';
+            ctx.fillStyle = '#000000';
+            ctx.textAlign = 'center';
+            ctx.fillText('COURSE INVOICE', canvas.width / 2, 50);
+
+            // Add content
+            ctx.font = '18px "Poppins", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Student: ${course.name}`, 50, 120);
+            ctx.fillText(`Course: ${course.course_title}`, 50, 150);
+            ctx.fillText(`Email: ${course.email}`, 50, 180);
+            ctx.fillText(`Phone: ${course.phone}`, 50, 210);
+            ctx.fillText(`Total Amount: ₹${course.totalAmount || 0}`, 50, 270);
+
+            if (course.advance && course.advanceAmount > 0) {
+                ctx.fillText(`Advance Paid: ₹${course.advanceAmount}`, 50, 300);
+                ctx.fillText(`Balance: ₹${(course.totalAmount || 0) - (course.advanceAmount || 0)}`, 50, 330);
+            }
+
+            ctx.fillText(`Date: ${new Date().toLocaleDateString('en-GB')}`, 50, 400);
+        };
+
+        // Use the certificate template image
+        image.src = '/course/certificate/invoice.png';
+    };
+
+    // Update the handleDownload function:
+    const handleDownload = () => {
+        const canvas = canvasRef.current;
+        if (!canvas || !selectedInvoiceEnrollment) return;
+
+        try {
+            const link = document.createElement('a');
+            const fileName = `invoice_${selectedInvoiceEnrollment?.name?.replace(/\s+/g, '_') || 'student'}_${Date.now()}.png`;
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } catch (error) {
+            console.error('Failed to download invoice:', error);
+            alert('Failed to download invoice. Please try again.');
+        }
+    };
 
     const getPaymentBadge = (advance: boolean, advanceAmount: number, totalAmount: number) => {
         if (advance && advanceAmount > 0 && advanceAmount < totalAmount) {
@@ -316,19 +538,269 @@ const Enrolled = () => {
 
                                                     {/* Action Button */}
                                                     <div className="flex gap-2">
-                                                        <Link href={`/courses/${enrollment.course_link}`} className="flex-1">
-                                                            <Button
-                                                                variant="outline"
-                                                                className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
-                                                            >
-                                                                View Course
-                                                            </Button>
-                                                        </Link>
+                                                        <Dialog>
+                                                            <DialogTrigger asChild>
+                                                                <Button
+                                                                    variant='outline'
+                                                                    onClick={() => handleGenerateInvoice(enrollment)}
+                                                                    className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
+                                                                >
+                                                                    Generate Invoice
+                                                                </Button>
+                                                            </DialogTrigger>
+                                                            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
+                                                                <DialogHeader>
+                                                                    <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
+                                                                </DialogHeader>
+
+                                                                {selectedInvoiceEnrollment && (
+                                                                    <>
+                                                                        {/* Course & Student Info Summary */}
+                                                                        <div className="grid grid-cols-2 gap-4 mb-4">
+                                                                            <div className="bg-gray-50 p-3 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
+                                                                                <div className="space-y-1 text-sm">
+                                                                                    <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
+                                                                                    <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
+                                                                                    <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="bg-gray-50 p-3 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
+                                                                                <div className="space-y-1 text-sm">
+                                                                                    <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
+                                                                                    <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
+                                                                                    <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <Form {...invoiceForm}>
+                                                                            <form onSubmit={invoiceForm.handleSubmit(onInvoiceSubmit)} className="space-y-4">
+
+                                                                                {/* Payment Details */}
+                                                                                <div className="bg-blue-50 p-4 rounded-lg">
+                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Payment Details</h4>
+                                                                                    <div className="grid grid-cols-2 gap-4">
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="totalAmount"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Total Course Fee</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="number"
+                                                                                                            placeholder="0"
+                                                                                                            {...field}
+                                                                                                            onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="feeType"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Fee Type</FormLabel>
+                                                                                                    <Select onValueChange={field.onChange} value={field.value}>
+                                                                                                        <FormControl>
+                                                                                                            <SelectTrigger>
+                                                                                                                <SelectValue placeholder="Select fee type" />
+                                                                                                            </SelectTrigger>
+                                                                                                        </FormControl>
+                                                                                                        <SelectContent>
+                                                                                                            <SelectItem value="full">Full Payment</SelectItem>
+                                                                                                            <SelectItem value="advance">Advance Payment</SelectItem>
+                                                                                                            <SelectItem value="installment">Installment</SelectItem>
+                                                                                                        </SelectContent>
+                                                                                                    </Select>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+                                                                                    </div>
+
+                                                                                    <div className="grid grid-cols-2 gap-4 mt-4">
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="advanceAmount"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Advance Amount</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="number"
+                                                                                                            placeholder="0"
+                                                                                                            {...field}
+                                                                                                            onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <div className="space-y-2">
+                                                                                            <Label className="block text-sm font-medium text-gray-700">
+                                                                                                Balance Due
+                                                                                            </Label>
+                                                                                            <div className="mt-1 relative rounded-md shadow-sm">
+                                                                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                                                                    <span className="text-gray-500 sm:text-sm">₹</span>
+                                                                                                </div>
+                                                                                                <Input
+                                                                                                    type="number"
+                                                                                                    value={(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}
+                                                                                                    readOnly
+                                                                                                    className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 cursor-not-allowed focus:outline-none"
+                                                                                                    placeholder="0.00"
+                                                                                                />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {/* Invoice Details */}
+                                                                                <div className="bg-green-50 p-4 rounded-lg">
+                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Invoice Details</h4>
+                                                                                    <div className="grid grid-cols-2 gap-4">
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="enrolledDate"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Enrolled Date</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="date"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="dueDate"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Next Due Date</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="text"
+                                                                                                            {...field}
+                                                                                                            placeholder='Due Date'
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+                                                                                    </div>
+
+                                                                                    <div className="grid grid-cols-2 gap-4 mt-4">
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="studentId"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Student ID</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="text"
+                                                                                                            placeholder="Student Id"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+
+                                                                                        <FormField
+                                                                                            control={invoiceForm.control}
+                                                                                            name="receiptNo"
+                                                                                            render={({ field }) => (
+                                                                                                <FormItem>
+                                                                                                    <FormLabel>Receipt Number</FormLabel>
+                                                                                                    <FormControl>
+                                                                                                        <Input
+                                                                                                            type="text"
+                                                                                                            placeholder="Enter receipt number"
+                                                                                                            {...field}
+                                                                                                        />
+                                                                                                    </FormControl>
+                                                                                                    <FormMessage />
+                                                                                                </FormItem>
+                                                                                            )}
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                {/* Summary Section */}
+                                                                                <div className="bg-yellow-50 p-4 rounded-lg">
+                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Invoice Summary</h4>
+                                                                                    <div className="space-y-2 text-sm">
+                                                                                        <div className="flex justify-between">
+                                                                                            <span>Course Fee:</span>
+                                                                                            <span className="font-medium">₹{invoiceForm.watch("totalAmount") || 0}</span>
+                                                                                        </div>
+                                                                                        <div className="flex justify-between">
+                                                                                            <span>Advance Paid:</span>
+                                                                                            <span className="font-medium text-green-600">₹{invoiceForm.watch("advanceAmount") || 0}</span>
+                                                                                        </div>
+                                                                                        <div className="flex justify-between">
+                                                                                            <span>Balance Due:</span>
+                                                                                            <span className="font-medium text-red-600">₹{(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}</span>
+                                                                                        </div>
+                                                                                        <hr className="my-2" />
+                                                                                        <div className="flex justify-between font-semibold">
+                                                                                            <span>Total Amount:</span>
+                                                                                            <span>₹{invoiceForm.watch("totalAmount") || 0}</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <canvas
+                                                                                    ref={canvasRef}
+                                                                                    className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
+                                                                                />
+
+                                                                                <div className="flex gap-2 pt-4">
+                                                                                    <Button
+                                                                                        type="button"
+                                                                                        onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                                                                        className="bg-blue-600 hover:bg-blue-700"
+                                                                                    >
+                                                                                        Generate Preview
+                                                                                    </Button>
+                                                                                    <Button
+                                                                                        type="button"
+                                                                                        onClick={handleDownload}
+                                                                                        className="bg-green-600 hover:bg-green-700"
+                                                                                        disabled={!canvasRef.current}
+                                                                                    >
+                                                                                        Download Invoice
+                                                                                    </Button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </Form>
+                                                                    </>
+                                                                )}
+                                                            </DialogContent>
+                                                        </Dialog>
                                                         <Dialog>
                                                             <DialogTrigger asChild>
                                                                 <Button
                                                                     onClick={() => handleFinalizeCourse(enrollment)}
-                                                                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
+                                                                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
                                                                 >
                                                                     Finalize Course
                                                                 </Button>
@@ -583,7 +1055,7 @@ const Enrolled = () => {
                                                     </div>
 
                                                     {/* Timestamp */}
-                                                    <div className="text-xs text-gray-400 mt-3 text-center">
+                                                    < div className="text-xs text-gray-400 mt-3 text-center" >
                                                         Enrolled on: {new Date(enrollment.createdAt).toLocaleDateString('en-IN', {
                                                             day: 'numeric',
                                                             month: 'short',
@@ -612,9 +1084,9 @@ const Enrolled = () => {
                             )}
                         </div>
                     </div>
-                </div>
+                </div >
             )}
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 

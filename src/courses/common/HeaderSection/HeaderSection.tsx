@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { ArrowTopRightIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { CircleCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -8,7 +8,12 @@ import './header.css';
 
 const HeaderSection = ({ course }: any) => {
     return (
-        <div className='flex flex-col items-center justify-center w-full h-auto headerImage text-white'>
+        <div className='flex flex-col items-center justify-center w-full h-auto headerImage text-white relative'>
+
+            <Link href={`/courses/enrollment/${course.link}`} className='absolute top-10 right-10 w-12 h-12 rounded-full border border-white grid place-content-center transition-all duration-300 hover:text-black hover:bg-white cursor-pointer'>
+                <ArrowTopRightIcon className='w-8 h-8' />
+            </Link>
+
             <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 items-center py-20">
                 <div className='w-full h-auto'>
                     <div className='flex flex-row gap-2 items-center justify-start mb-6'>

@@ -15,7 +15,7 @@ const EducatorHome = () => {
         {teams.map((item: any, index: any) => (
           <div key={index} className='flex flex-col'>
             <Image src={item.image} alt={item.name} width={400} height={400} className='w-full h-64 object-cover transition-all rounded-lg grayscale duration-300 hover:grayscale-0' />
-            <div className='flex flex-col items-center justify-center my-3'>
+            <div className='flex flex-col items-center text-center justify-center my-3'>
               <div className='font-semibold text-lg transition-all hover:underline cursor-pointer'>{item.name}</div>
               <div className='font-medium text-base text-[#CD4647]'>{item.position}</div>
             </div>
