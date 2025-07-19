@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { UserContext } from '@/context/userContext';
@@ -6,6 +6,8 @@ import SignOut from '@/src/account/common/SignOut';
 import UserLoader from '@/src/account/common/UserLoader';
 import UserSidebar from '@/src/account/common/UserSidebar';
 import UserTopBar from '@/src/account/common/UserTopBar';
+
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const UserCourses = () => {
   const { authenticated, loading, userData } = useContext(UserContext);
@@ -39,6 +41,151 @@ const UserCourses = () => {
       console.error('Error fetching enrolled courses:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // 2. Add these state variables after your existing useState declarations
+  const [selectedInvoiceEnrollment, setSelectedInvoiceEnrollment] = useState<any>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // 3. Add this invoice generation function
+  const generateInvoice = (enrollment: any) => {
+    setSelectedInvoiceEnrollment(enrollment);
+    setTimeout(() => {
+      drawInvoice(enrollment);
+    }, 100);
+  };
+
+  // 4. Add the drawInvoice function
+  const drawInvoice = async (course: any) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    await document.fonts.ready;
+
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+
+    image.onload = () => {
+      // Set canvas dimensions
+      canvas.width = image.width;
+      canvas.height = image.height;
+
+      // Clear canvas and draw background image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+
+      // Set font for name and course title
+      ctx.font = '12px "Poppins", sans-serif';
+      ctx.fillStyle = '#000';
+
+      // Student name (centered, red color)
+      const studentName = course.name || 'N/A';
+      ctx.fillText(studentName, 190, 288);
+      const email = course.email || 'N/A';
+      ctx.fillText(email, 198, 328);
+      const phoneNo = course.phone || 'N/A';
+      ctx.fillText(phoneNo, 250, 366);
+
+      ctx.font = '12px "Poppins", sans-serif';
+      ctx.fillStyle = '#000';
+
+      // Course title
+      const receiptIdNo = course?.receiptNo || 'N/A';
+      ctx.fillText(receiptIdNo, 480, 288);
+      const courseTitle = course.course_title || 'N/A';
+      ctx.fillText(courseTitle, 456, 328);
+      const studentIdNo = course?.studentId || 'N/A';
+      ctx.fillText(studentIdNo, 470, 366);
+
+      // Date range
+      ctx.font = '12px "Poppins", sans-serif';
+      ctx.fillStyle = '#000';
+
+      // Current date
+      const currentDate = new Date().toLocaleDateString('en-GB');
+      ctx.fillText(currentDate, 735, 288);
+      const feeType = course?.feeType || 'N/A';
+      ctx.fillText(feeType, 773, 328);
+      const nextDueDate = course?.dueDate || 'N/A';
+      ctx.fillText(nextDueDate, 805, 366);
+
+      // Add payment information
+      ctx.font = '16px "Poppins", sans-serif';
+      ctx.fillStyle = '#000';
+      ctx.textAlign = 'left';
+
+      // Total amount
+      const totalAmount = `${course.totalAmount || 0}`;
+      ctx.fillText(totalAmount, 805, 455);
+
+      // Advance amount if applicable
+      if (course.advance && course.advanceAmount > 0) {
+        const advanceAmount = `${course.advanceAmount}`;
+        ctx.fillText(advanceAmount, 805, 495);
+
+        const balanceAmount = `${(course.totalAmount || 0) - (course.advanceAmount || 0)}`;
+        ctx.fillText(balanceAmount, 805, 535);
+      }
+    };
+
+    image.onerror = () => {
+      console.error("Failed to load invoice template image");
+      // Fallback: create a simple invoice without background image
+      canvas.width = 800;
+      canvas.height = 600;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Add border
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+
+      // Add title
+      ctx.font = 'bold 24px "Poppins", sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.textAlign = 'center';
+      ctx.fillText('COURSE INVOICE', canvas.width / 2, 50);
+
+      // Add content
+      ctx.font = '18px "Poppins", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(`Student: ${course.name}`, 50, 120);
+      ctx.fillText(`Course: ${course.course_title}`, 50, 150);
+      ctx.fillText(`Email: ${course.email}`, 50, 180);
+      ctx.fillText(`Phone: ${course.phone}`, 50, 210);
+      ctx.fillText(`Total Amount: ₹${course.totalAmount || 0}`, 50, 270);
+
+      if (course.advance && course.advanceAmount > 0) {
+        ctx.fillText(`Advance Paid: ₹${course.advanceAmount}`, 50, 300);
+        ctx.fillText(`Balance: ₹${(course.totalAmount || 0) - (course.advanceAmount || 0)}`, 50, 330);
+      }
+
+      ctx.fillText(`Date: ${new Date().toLocaleDateString('en-GB')}`, 50, 400);
+    };
+
+    // Use the certificate template image
+    image.src = '/course/certificate/invoice.png';
+  };
+
+  // 5. Add the download handler function
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !selectedInvoiceEnrollment) return;
+
+    try {
+      const link = document.createElement('a');
+      const fileName = `invoice_${selectedInvoiceEnrollment?.name?.replace(/\s+/g, '_') || 'student'}_${Date.now()}.png`;
+      link.download = fileName;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('Failed to download invoice:', error);
+      alert('Failed to download invoice. Please try again.');
     }
   };
 
@@ -135,7 +282,7 @@ const UserCourses = () => {
                     </div>
 
                     {enrolledCourses.length > 0 ? (
-                      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center">
+                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-start">
                         {enrolledCourses.map((course: any, index: any) => (
                           <div
                             key={index}
@@ -169,17 +316,82 @@ const UserCourses = () => {
                             </div>
 
                             <div className="text-sm text-gray-600 mb-4">
-                              <span className="font-medium">Paid: ₹{course.totalAmount}</span>
+                              <span className="font-medium">Course Price: ₹{course.totalAmount}</span>
                             </div>
 
-                            <Link href={`/courses/${course.course_link}`} className="w-full">
-                              <Button
-                                variant="default"
-                                className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
-                              >
-                                {course.courseCompletion ? 'View Certificate' : 'Continue Learning'}
-                              </Button>
-                            </Link>
+                            <div className='w-full h-auto flex flex-row gap-2'>
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    onClick={() => setSelectedInvoiceEnrollment(course)}
+                                  >
+                                    Generate Invoice
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+                                  <DialogHeader>
+                                    <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
+                                  </DialogHeader>
+
+                                  {selectedInvoiceEnrollment && (
+                                    <>
+                                      {/* Course & Student Info Summary */}
+                                      <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                          <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
+                                          <div className="space-y-1 text-sm">
+                                            <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
+                                            <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
+                                            <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
+                                          </div>
+                                        </div>
+                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                          <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
+                                          <div className="space-y-1 text-sm">
+                                            <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
+                                            <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
+                                            <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <canvas
+                                        ref={canvasRef}
+                                        className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
+                                      />
+
+                                      <div className="flex gap-2 pt-4">
+                                        <Button
+                                          type="button"
+                                          onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+                                        >
+                                          Generate Invoice
+                                        </Button>
+                                        <Button
+                                          type="button"
+                                          onClick={handleDownload}
+                                          className="bg-green-600 hover:bg-green-700"
+                                          disabled={!canvasRef.current}
+                                        >
+                                          Download Invoice
+                                        </Button>
+                                      </div>
+                                    </>
+                                  )}
+                                </DialogContent>
+                              </Dialog>
+                              <Link href={`/courses/${course.course_link}`} className="w-full">
+                                <Button
+                                  variant="default"
+                                  className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
+                                >
+                                  {course.courseCompletion ? 'View Certificate' : 'Continue Learning'}
+                                </Button>
+                              </Link>
+                            </div>
+
                           </div>
                         ))}
                       </div>
