@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AvatarIcon, DashboardIcon, ExitIcon, GearIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { signOut } from 'next-auth/react';
+import { CircleCheckBig } from 'lucide-react';
 
 const UserSidebar = () => {
     return (
@@ -28,6 +29,11 @@ const UserSidebar = () => {
                 <Link href='/user/dashboard/courses' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
                     <LaptopIcon className='w-6 h-6' />
                     <div>Courses</div>
+                </Link>
+
+                <Link href='/user/dashboard/courses/completed' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+                    <CircleCheckBig className='w-6 h-6' />
+                    <div>Completed</div>
                 </Link>
 
                 <Link href='/user/dashboard/account' className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
