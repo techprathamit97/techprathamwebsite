@@ -239,6 +239,7 @@ const Enrolled = () => {
         setTimeout(() => {
             drawInvoice(enrollment);
         }, 100);
+        handleDownload();
     };
 
     const drawInvoice = async (course: any) => {
@@ -286,7 +287,7 @@ const Enrolled = () => {
 
             ctx.font = '12px "Poppins", sans-serif';
             ctx.fillStyle = '#000';
-            
+
             // Course title
             const receiptIdNo = course?.receiptNo || 'N/A';
             ctx.fillText(receiptIdNo, 480, 288);
@@ -779,17 +780,14 @@ const Enrolled = () => {
                                                                                         onClick={() => generateInvoice(selectedInvoiceEnrollment)}
                                                                                         className="bg-blue-600 hover:bg-blue-700"
                                                                                     >
-                                                                                        Generate Preview
-                                                                                    </Button>
-                                                                                    <Button
-                                                                                        type="button"
-                                                                                        onClick={handleDownload}
-                                                                                        className="bg-green-600 hover:bg-green-700"
-                                                                                        disabled={!canvasRef.current}
-                                                                                    >
                                                                                         Download Invoice
                                                                                     </Button>
                                                                                 </div>
+                                                                                <div>Note: if you're getting empty invoice, try to update the data first.</div>
+
+                                                                                <Button type="submit" disabled={isSubmitting} className="flex-1">
+                                                                                    {isSubmitting ? 'Updating...' : 'Update Data'}
+                                                                                </Button>
                                                                             </form>
                                                                         </Form>
                                                                     </>

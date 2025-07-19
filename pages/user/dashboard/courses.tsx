@@ -54,6 +54,7 @@ const UserCourses = () => {
     setTimeout(() => {
       drawInvoice(enrollment);
     }, 100);
+    handleDownload();
   };
 
   // 4. Add the drawInvoice function
@@ -366,14 +367,6 @@ const UserCourses = () => {
                                           type="button"
                                           onClick={() => generateInvoice(selectedInvoiceEnrollment)}
                                           className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
-                                        >
-                                          Generate Invoice
-                                        </Button>
-                                        <Button
-                                          type="button"
-                                          onClick={handleDownload}
-                                          className="bg-green-600 hover:bg-green-700"
-                                          disabled={!canvasRef.current}
                                         >
                                           Download Invoice
                                         </Button>
