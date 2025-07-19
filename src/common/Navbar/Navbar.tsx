@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Search } from 'lucide-react';
 import { UserContext } from '@/context/userContext';
 import { toast } from 'sonner';
+import { signOut } from 'next-auth/react';
 
 // Type definitions
 interface Course {
@@ -167,6 +168,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Link href='/auth/login' className='cursor-pointer hover:text-red-700 transition-colors'>Login</Link>
           )}
+          <div onClick={() => signOut()} className='cursor-pointer hover:text-red-700'>Sign Out</div>
         </nav>
       </div>
 

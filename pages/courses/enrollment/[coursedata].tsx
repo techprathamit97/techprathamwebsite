@@ -79,7 +79,7 @@ const CourseEnrollPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'userExists'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'userExists' | 'alreadyEnrolled'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [currentStep, setCurrentStep] = useState<FormStep>('registration');
   const [showPassword, setShowPassword] = useState(false);
@@ -211,7 +211,7 @@ const CourseEnrollPage: React.FC = () => {
         }
       } else {
         const errorData = await userResponse.json();
-        
+
         if (errorData.message && errorData.message.includes('already exists') || errorData.message.includes('already registered')) {
           setExistingUserEmail(data.email);
           setSubmitStatus('userExists');
@@ -265,12 +265,22 @@ const CourseEnrollPage: React.FC = () => {
         body: JSON.stringify(enrollmentData),
       });
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to submit enrollment');
+        // Handle duplicate enrollment (409 Conflict)
+        if (response.status === 409) {
+          setSubmitStatus('alreadyEnrolled');
+          setErrorMessage('You are already enrolled in this course.');
+          return;
+        }
+
+        // Handle other errors
+        throw new Error(responseData.message || 'Failed to submit enrollment');
       }
 
       setSubmitStatus('success');
+      router.push('/');
       enrollmentForm.reset();
     } catch (error) {
       setSubmitStatus('error');
@@ -366,7 +376,7 @@ const CourseEnrollPage: React.FC = () => {
 
       <Navbar />
 
-      <div className='w-full h-auto flex flex-col items-center justify-center md:pt-28 sm:pt-24 pt-10 courseBgGirl'>
+      <div className='w-full h-auto flex flex-col items-center justify-center md:pt-28 sm:pt-24 pt-10 bg-red-700'>
         <div className='md:w-10/12 w-11/12 h-auto flex flex-row items-end justify-between py-20'>
           {/* Course Title */}
           <div className="text-left mb-8 backdrop-blur-sm p-2">
@@ -478,6 +488,15 @@ const CourseEnrollPage: React.FC = () => {
                     <AlertCircle className="h-4 w-4 text-yellow-600" />
                     <AlertDescription className="text-yellow-800">
                       An account with the email <strong>{existingUserEmail}</strong> already exists. Please log in to continue with your enrollment.
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {submitStatus === 'alreadyEnrolled' && (
+                  <Alert className="border-yellow-200 bg-yellow-50">
+                    <AlertCircle className="h-4 w-4 text-yellow-600" />
+                    <AlertDescription className="text-yellow-800">
+                      You are already enrolled in this course. Please check your dashboard or contact support if you need assistance.
                     </AlertDescription>
                   </Alert>
                 )}
