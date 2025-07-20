@@ -1,6 +1,6 @@
 "use client";
-import React, { useContext, useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
 import SignOut from '@/src/account/common/SignOut';
 import UserLoader from '@/src/account/common/UserLoader';
@@ -9,13 +9,11 @@ import UserSidebar from '@/src/account/common/UserSidebar';
 
 const UserAccount = () => {
     const { data: session, status: sessionStatus } = useSession();
-    const {
-        loading,
-        authenticated,
-        userData,
-        currentTab,
-        setCurrentTab
-    } = useContext(UserContext);
+    const { loading, authenticated, userData, activeUserTab, setActiveUserTab } = useContext(UserContext);
+
+    useEffect(() => {
+        setActiveUserTab("dashboard");
+    }, [setActiveUserTab]);
 
     return (
         <React.Fragment>
@@ -24,34 +22,32 @@ const UserAccount = () => {
             ) : !authenticated ? (
                 <SignOut />
             ) : (
-                <div className="h-screen w-full fixed bg-[#121421]">
-                    <div className="grid grid-cols-5 h-full">
+                <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-                        <UserSidebar />
+                    <UserSidebar />
 
-                        <div className="col-span-4 w-full h-full overflow-y-auto p-8">
+                    <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
 
-                            <UserTopBar />
+                        <UserTopBar />
 
-                            <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
-                                <h2 className="text-xl font-semibold text-white mb-4">Dashboard</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-300 mb-2">Account ID</label>
-                                        <div className="bg-[#1a1d29] rounded-md p-3">
-                                            <p className="text-purple-200 font-mono text-sm break-all">
-                                                {userData._id || 'Not available'}
-                                            </p>
-                                        </div>
+                        <div className="w-full h-auto flex flex-col overflow-auto p-6">
+                            <h2 className="text-xl font-semibold text-white mb-4">Dashboard</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Account ID</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-purple-200 font-mono text-sm break-all">
+                                            {userData._id || 'Not available'}
+                                        </p>
                                     </div>
+                                </div>
 
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
-                                        <div className="bg-[#1a1d29] rounded-md p-3">
-                                            <p className="text-purple-200">
-                                                {session?.user?.email || 'Not available'}
-                                            </p>
-                                        </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
+                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                        <p className="text-purple-200">
+                                            {session?.user?.email || 'Not available'}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +55,7 @@ const UserAccount = () => {
                     </div>
                 </div>
             )}
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
