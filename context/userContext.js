@@ -10,8 +10,13 @@ export const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [currentTab, setCurrentTab] = useState("profile");
   const [userData, setUserData] = useState({});
+
+  // dashboard tabs
+  const [currentTab, setCurrentTab] = useState("profile");
+  const [activeUserTab, setActiveUserTab] = useState("");
+  const [userSideBar, setUserSideBar] = useState(false);
+  const [adminSideBar, setAdminSideBar] = useState(false);
 
   const { data: session } = useSession();
   const user = session?.user?.email || null;
@@ -86,6 +91,10 @@ export const UserProvider = ({ children }) => {
         isAdmin,
         checkAdminAccess,
         getUserRole,
+        activeUserTab,
+        setActiveUserTab,
+        userSideBar,
+        setUserSideBar,
       }}
     >
       {children}
