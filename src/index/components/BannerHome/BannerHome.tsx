@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronRightIcon, Tv } from 'lucide-react';
 import { RocketIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 const BannerHome = () => {
   return (
@@ -21,14 +22,16 @@ const BannerHome = () => {
             <span className='bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>upskill now?</span>
           </div>
           <div>Join techpratham - indias premier training institute for a future-ready career</div>
-          <div>
+          <Link href='#contact'>
             <Button variant='manual' className='flex items-center justify-center text-base font-normal rounded-full mt-2'>
               <span>Book Free Demo</span>
               <ChevronRightIcon />
             </Button>
-          </div>
+          </Link>
         </div>
-        <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='md:w-1/2 w-full h-80 transition-all rounded border-4 border-red-600 object-cover boxShadow' />
+        <div className='md:w-1/2 w-full h-auto transition-all rounded border-4 border-red-600 object-cover boxShadow'>
+          <iframe width="100%" height="320" src='https://www.youtube.com/embed/4_qbhsjIB10' title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="shadow-lg"></iframe>
+        </div>
       </div>
     </div>
   )

@@ -35,7 +35,7 @@ const ContactHome = () => {
   };
 
   return (
-    <div className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10 text-white bg-black'>
+    <div id='contact' className='w-full h-auto flex flex-col gap-6 items-center justify-center py-10 text-white bg-black'>
       <div className='md:w-10/12 w-11/12 h-auto flex lg:flex-row flex-col lg:items-start items-center justify-center gap-16 py-5'>
 
         <div className='lg:w-1/2 w-full h-full flex flex-col gap-3 items-start justify-center py-6'>
