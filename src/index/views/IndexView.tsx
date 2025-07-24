@@ -22,6 +22,7 @@ import { toast } from 'sonner';
 interface Course {
   id: string;
   title: string;
+  image: string;
   category: string;
   link: string;
   shortDesc: string;

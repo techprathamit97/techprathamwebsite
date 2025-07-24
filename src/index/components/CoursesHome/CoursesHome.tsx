@@ -1,11 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { ChevronRightIcon } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
 interface Course {
   id: string;
   title: string;
+  image: string;
   category: string;
   link: string;
   shortDesc: string;
@@ -68,12 +70,19 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
-          {selectedCourses.map((course, index) => (
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
+          {selectedCourses.slice(0, 3).map((course, index) => (
             <div
               key={`${course.id}-${index}`}
-              className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform hover:scale-105"
+              className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform"
             >
+              <Image
+                src={course?.image}
+                alt={course.title}
+                width={400}
+                height={200}
+                className="w-full h-48 object-cover rounded-md mb-4"
+              />
               <div className="flex justify-between items-start mb-3">
                 <div className="text-xl font-semibold text-gray-800 leading-tight">{course.title}</div>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>

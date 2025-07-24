@@ -21,6 +21,7 @@ const courseSchema = new mongoose.Schema(
     link: { type: String, required: true, unique: true },
     title: { type: String, required: true },
     shortDesc: { type: String, required: true },
+    image: { type: String, required: true },
     description: { type: String, required: true },
     rating: { type: String, required: true },
     duration: { type: String, required: true },
