@@ -6,28 +6,28 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className='w-full h-auto flex items-center justify-center bg-[#000] text-white'>
+    <div className='w-full h-auto flex items-center justify-center bg-[#212529] text-white'>
       <div className='md:w-10/12 w-11/12 flex flex-col py-10 gap-14'>
 
         <div className='w-full flex flex-col'>
           <div className='text-xl font-semibold mb-1'>Follow Us!</div>
           <Separator className='mb-4 w-80' />
           <div className='flex flex-row gap-3'>
-            <div className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
+            <Link href='https://www.facebook.com/profile.php?id=61573041693401' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
               <FaFacebook className='w-6 h-6' />
-            </div>
-            <div className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
+            </Link>
+            <Link href='https://www.linkedin.com/company/techpratham/' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
               <FaLinkedin className='w-6 h-6' />
-            </div>
-            <div className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
+            </Link>
+            <Link href='https://www.youtube.com/@TechPratham_official' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
               <FaYoutube className='w-6 h-6' />
-            </div>
-            <div className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
+            </Link>
+            <Link href='https://www.instagram.com/techprathamofficial/' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
               <FaInstagram className='w-6 h-6' />
-            </div>
-            <div className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
+            </Link>
+            <Link href='/' className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
               <FaTwitter className='w-6 h-6' />
-            </div>
+            </Link>
           </div>
         </div>
 

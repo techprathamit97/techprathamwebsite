@@ -151,7 +151,6 @@ const Navbar: React.FC = () => {
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors'>About Us</Link>
           <Link href='/training-certificate' className='cursor-pointer hover:text-red-700 transition-colors'>Training Certificate</Link>
           <Link href='/job-openings' className='cursor-pointer hover:text-red-700 transition-colors'>Job Openings</Link>
-          <Link href='/admission' className='cursor-pointer hover:text-red-700 transition-colors'>Admission</Link>
           <Link href='/reviews' className='cursor-pointer hover:text-red-700 transition-colors'>Reviews</Link>
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors'>Blogs</Link>
           <Link href='/payment' className='cursor-pointer hover:text-red-700 transition-colors'>Payment</Link>
@@ -177,7 +176,6 @@ const Navbar: React.FC = () => {
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>About Us</Link>
           <Link href='/training-certificate' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Training Certificate</Link>
           <Link href='/job-openings' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Job Openings</Link>
-          <Link href='/admission' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Admission</Link>
           <Link href='/reviews' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Reviews</Link>
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Blogs</Link>
           <Link href='/payment' className='cursor-pointer hover:text-red-700 transition-colors' onClick={handleNavToggle}>Payment</Link>

@@ -34,8 +34,8 @@ const BannerAbout = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-span-1'>
-                    <Image src='/home/banner/banner.jpg' alt='' width={400} height={400} className='w-full h-auto transition-all rounded object-cover border-4 border-red-500 boxShadow' />
+                <div className='col-span-1 w-full h-auto transition-all rounded border-4 border-red-600 object-cover boxShadow'>
+                    <iframe width="100%" height="320" src='https://www.youtube.com/embed/4_qbhsjIB10' title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen className="shadow-lg h-full"></iframe>
                 </div>
             </div>
         </div>
