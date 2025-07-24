@@ -8,7 +8,7 @@ const IntroSection = ({ course }: any) => {
                     <div className='text-center space-y-4'>
                         <div className='inline-flex items-center gap-3 bg-white px-6 py-2 rounded-full shadow-sm border border-gray-200'>
                             <div className='w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full'></div>
-                            <span className='text-sm font-medium text-gray-600 uppercase tracking-wider'>What is {course.title}?</span>
+                            <span className='text-base font-bold text-gray-800 uppercase tracking-wider'>What is {course.title}?</span>
                         </div>
                     </div>
                     <div className='w-full h-full text-base font-normal text-gray-600'>{course.description}</div>

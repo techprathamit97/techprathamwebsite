@@ -102,9 +102,9 @@ const HeaderSection = ({ course }: any) => {
                         </div>
                     </div>
 
-                    <div className='w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
-                        <Link href={course?.placement_report} className='w-auto'>
-                            <Button variant='manual' className='w-full'>PLACEMENT REPORT</Button>
+                    <div className='w-full h-auto flex flex-row gap-3'>
+                        <Link href={course?.assesment_link} className='w-auto'>
+                            <Button variant='manual' className='w-full'>SELF ASSESMENT</Button>
                         </Link>
                         <Link href={course?.curriculum} className='w-auto'>
                             <Button variant='outline' className='w-full'>DOWNLOAD CURRICULUM</Button>
