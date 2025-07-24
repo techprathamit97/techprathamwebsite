@@ -179,7 +179,7 @@ const CourseDataPage: React.FC = () => {
         <PlanSection />
         <CurriculumSection course={course} />
         <ProjectSection course={course} />
-        <AssesmentSection course={course} />
+        {/* <AssesmentSection course={course} /> */}
         <CertificateSection course={course} />
         <TestimonialSection course={course} />
         <FaqSection course={course} />
