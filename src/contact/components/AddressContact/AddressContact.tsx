@@ -106,6 +106,16 @@ const AddressContact = () => {
             </div>
             <div className='w-full h-auto flex flex-col items-center justify-center'>
                 <FormContact />
+                <div
+                    className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl mt-96'
+                    style={{
+                        backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
+                    }}
+                >
+                    <div className='row-span-1 w-64 h-64 flex flex-col p-4 rounded-lg bg-[#eee] relative'>
+                        <Image src='/course/hero.png' alt='' width={80} height={80} className='w-56 h-56' />
+                    </div>
+                </div>
             </div>
         </div>
     )

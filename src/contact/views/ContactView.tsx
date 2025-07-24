@@ -5,6 +5,8 @@ import { UserContext } from '@/context/userContext';
 import HeaderContact from '../components/HeaderContact/HeaderContact';
 import FormContact from '../components/FormContact/FormContact';
 import AddressContact from '../components/AddressContact/AddressContact';
+import BannerContact from '../components/BannerContact/BannerContact';
+import EmailContact from '../components/EmailContact/EmailContact';
 
 const ContactView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -19,6 +21,10 @@ const ContactView = () => {
       <HeaderContact />
 
       <AddressContact />
+
+      <BannerContact />
+
+      <EmailContact />
 
     </div>
   )
