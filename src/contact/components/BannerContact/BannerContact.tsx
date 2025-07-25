@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import { FaFacebook } from 'react-icons/fa';
 
@@ -12,30 +13,30 @@ const BannerContact = () => {
                     <div>Follow our social media channels for the latest updates, events, and exclusive content. Don’t miss out—join our community today!</div>
                 </div>
                 <div className='md:w-1/2 w-full h-full flex flex-row flex-wrap items-center justify-center'>
-                    <div className='w-full h-auto grid grid-cols-4 gap-8 place-items-center'>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                    <div className='w-auto h-auto grid grid-cols-4 gap-6 place-items-center'>
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/facebook.svg' alt='Facebook' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/instagram.svg' alt='Instagram' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/linkedin.svg' alt='LinkedIn' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/google.svg' alt='Google' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/whatsapp.svg' alt='WhatsApp' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/pinterest.svg' alt='Pinterest' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/youtube.svg' alt='YouTube' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-24 h-24 flex items-center justify-center bg-white text-black rounded'>
-                            <FaFacebook className='w-20 h-20' />
+                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                            <Image src='/support/socials/x.svg' alt='X (formerly Twitter)' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import { ArrowTopRightIcon, EnvelopeClosedIcon, ChatBubbleIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import React from 'react';
+import './EmailContact.css';
 
 const EmailContact = () => {
     const contactOptions = [
@@ -28,22 +29,17 @@ const EmailContact = () => {
     };
 
     return (
-        <div className='w-full h-auto flex flex-col items-center justify-center py-16 px-4 bg-gradient-to-br from-gray-50 to-white'>
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Get in Touch
-                </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Choose the best way to reach us. We're here to help and answer any questions you might have.
-                </p>
+        <div className='w-full h-auto flex flex-col items-center justify-center py-16 px-4 bg-white'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col items-start justify-center mb-8'>
+                <div className='text-2xl font-semibold border-b-2 border-b-[#C6151D] text-[#C6151D]'>Contact Us</div>
             </div>
 
-            <div className='max-w-6xl w-full h-auto flex flex-col md:flex-row items-stretch justify-center gap-6'>
+            <div className='md:w-10/12 w-11/12 h-auto flex flex-col md:flex-row items-stretch justify-center gap-6'>
                 {contactOptions.map((option, index) => (
                     <div
                         key={index}
                         onClick={() => handleEmailClick(option.email)}
-                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl shadow-sm bg-white text-black hover:shadow-lg hover:border-gray-300 transition-all duration-300 hover:-translate-y-1"
+                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl bg-white text-black hover:shadow-lg hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 cardShadow"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
@@ -65,12 +61,6 @@ const EmailContact = () => {
                         </div>
                     </div>
                 ))}
-            </div>
-
-            <div className="mt-12 text-center">
-                <p className="text-sm text-gray-500">
-                    We typically respond within 24 hours during business days
-                </p>
             </div>
         </div>
     );

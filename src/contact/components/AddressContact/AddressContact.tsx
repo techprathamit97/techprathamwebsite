@@ -113,7 +113,7 @@ const AddressContact = () => {
                     }}
                 >
                     <div className='row-span-1 w-64 h-64 flex flex-col p-4 rounded-lg bg-[#eee] relative'>
-                        <Image src='/course/hero.png' alt='' width={80} height={80} className='w-56 h-56' />
+                        <Image src='/support/qr-contact.svg' alt='' width={80} height={80} className='w-56 h-56' />
                     </div>
                 </div>
             </div>
