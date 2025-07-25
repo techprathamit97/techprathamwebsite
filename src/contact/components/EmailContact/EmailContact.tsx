@@ -1,6 +1,6 @@
 import { ArrowTopRightIcon, EnvelopeClosedIcon, ChatBubbleIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import React from 'react';
-import './EmailContact.css';
+import './emailContact.css';
 
 const EmailContact = () => {
     const contactOptions = [
