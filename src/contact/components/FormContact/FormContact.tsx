@@ -12,7 +12,7 @@ const FormContact = () => {
     const onSubmit = async (data: any) => {
         try {
             setSubmitting(true);
-            const response = await fetch('/email', {
+            const response = await fetch('/email/callback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
