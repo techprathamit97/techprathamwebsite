@@ -112,8 +112,9 @@ const AddressContact = () => {
                         backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
                     }}
                 >
-                    <div className='row-span-1 w-64 h-64 flex flex-col p-4 rounded-lg bg-[#eee] relative'>
-                        <Image src='/support/qr-contact.svg' alt='' width={80} height={80} className='w-56 h-56' />
+                    <div className='row-span-1 w-64 h-auto flex flex-col gap-3 p-4 rounded-lg bg-[#eee] relative'>
+                        <Image src='/support/qr-contact.svg' alt='' width={80} height={80} className='w-56 h-56 bg-white p-2' />
+                        <div className='px-4 py-1 rounded-full bg-white text-black font-medium shadow'>Post Your Feedback</div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronRightIcon, Tv } from 'lucide-react';
@@ -24,7 +23,7 @@ const BannerHome = () => {
           <div>Join techpratham - indias premier training institute for a future-ready career</div>
           <Link href='#contact'>
             <Button variant='manual' className='flex items-center justify-center text-base font-normal rounded-full mt-2'>
-              <span>Book Free Demo</span>
+              <span>Enquiry Now</span>
               <ChevronRightIcon />
             </Button>
           </Link>

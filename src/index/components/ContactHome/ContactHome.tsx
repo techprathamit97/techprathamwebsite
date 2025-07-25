@@ -13,7 +13,7 @@ const ContactHome = () => {
   const onSubmit = async (data: any) => {
     try {
       setSubmitting(true);
-      const response = await fetch('/email', {
+      const response = await fetch('/email/callback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,25 +76,34 @@ const ContactHome = () => {
 
         <div className='lg:w-1/2 md:w-9/12 w-full h-auto flex flex-col gap-5 items-center justify-center'>
           <div className='md:text-4xl text-2xl bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text md:font-bold font-semibold'>Request Call Back</div>
-          <form className='w-full flex flex-col md:gap-6 gap-4  md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
+          <form className='w-full flex flex-col md:gap-6 gap-4 md:p-10 p-6 rounded-md' onSubmit={handleSubmit(onSubmit)}>
 
-            <input {...register('fullName')} type="text" id='fullName' name='fullName' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Full Name' required />
+            <div className='w-full'>
+              <label htmlFor='fullName' className='block mb-1 text-sm font-medium text-gray-300'>Full Name</label>
+              <input {...register('fullName')} type="text" id='fullName' name='fullName' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Enter your full name' required />
+            </div>
 
-            <input {...register('email')} type="email" id='email' name='email' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Email Address' required />
+            <div className='w-full'>
+              <label htmlFor='email' className='block mb-1 text-sm font-medium text-gray-300'>Email Address</label>
+              <input {...register('email')} type="email" id='email' name='email' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Enter your email' required />
+            </div>
 
-            <input {...register('phone')} type="text" id='phone' name='phone' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Phone Number' required />
+            <div className='w-full'>
+              <label htmlFor='course' className='block mb-1 text-sm font-medium text-gray-300'>Course</label>
+              <input {...register('course')} type="text" id='course' name='course' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Enter your course' required />
+            </div>
 
-            <input {...register('country')} type="text" id='country' name='country' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Country' required />
+            <div className='w-full'>
+              <label htmlFor='phone' className='block mb-1 text-sm font-medium text-gray-300'>Phone Number</label>
+              <input {...register('phone')} type="text" id='phone' name='phone' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Enter your phone number' required />
+            </div>
 
-            <input {...register('state')} type="text" id='state' name='state' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='State' required />
+            <div className='w-full'>
+              <label htmlFor='message' className='block mb-1 text-sm font-medium text-gray-300'>Your Query/Message</label>
+              <textarea {...register('message')} id='message' name='message' className='w-full h-40 bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none resize-none' placeholder='Write your message here...' required />
+            </div>
 
-            <input {...register('city')} type="text" id='city' name='city' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='City' required />
-
-            <input {...register('course')} type="text" id='course' name='course' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Course' required />
-
-            <input {...register('branch')} type="text" id='branch' name='branch' className='w-full bg-zinc-900/90 border border-orange-500/40 p-2 indent-2 rounded-md outline-none' placeholder='Branch' required />
-
-            <Button variant='manual' type='submit' className='text-lg font-light' disabled={submitting}>{submitting ? 'Submitting...' : 'Submit'}</Button>
+            <Button variant='manual' type='submit' className='text-lg font-light' disabled={submitting}>{submitting ? 'Submitting...' : 'Book your free consultation'}</Button>
           </form>
           {submitSuccess && <p className="text-green-600">Form submitted successfully! We'll reach you soon!</p>}
         </div>
