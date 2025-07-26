@@ -11,7 +11,7 @@ const RecognitionHome = () => {
     <div className='w-full h-auto flex flex-col items-center justify-center py-20 gap-10 bg-[#f7f7f7] text-black'>
 
       <div className='w-full h-auto flex flex-col text-center gap-2'>
-        <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize">Industry Recognition</div>
+        <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-tl from-[#600A0E] to-[#C6151D] capitalize">Industry Recognition</div>
         <div className="md:text-lg text-base text-gray-600 max-w-2xl mx-auto">Elevate your career with prestigious credentials</div>
       </div>
 
@@ -38,7 +38,7 @@ const RecognitionHome = () => {
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='ISO Certificate' width={1440} height={500} className='w-full h-full object-cover' />
+                <iframe src='/home/recognition/iso-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
                 <div className='text-sm'>Certified in Quality Management System, ensuring consistent service and performance.</div>
               </div>
             </div>
@@ -81,11 +81,11 @@ const RecognitionHome = () => {
                 <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                   <Image src='/home/recognition/company.svg' alt='NASSCOM Logo' className='w-12' width={40} height={40} />
                 </div>
-                <div className='md:text-2xl text-xl font-semibold'>NASSCOM</div>
+                <div className='md:text-2xl text-xl font-semibold'>Income Tax</div>
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='NASSCOM Membership' width={1440} height={500} className='w-full h-full object-cover' />
+                <iframe src='/home/recognition/mca-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
                 <div className='text-sm'>Member of NASSCOM, promoting innovation and digital transformation in India.</div>
               </div>
             </div>
@@ -100,7 +100,7 @@ const RecognitionHome = () => {
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='MSME Certificate' width={1440} height={500} className='w-full h-full object-cover' />
+                <iframe src='/home/recognition/msme-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
                 <div className='text-sm'>Officially registered under the Ministry of MSME for small-scale industry benefits.</div>
               </div>
             </div>
@@ -123,7 +123,7 @@ const RecognitionHome = () => {
         )}
 
         <div className='mt-10'>
-          <Button className='flex items-center justify-center text-base font-normal rounded-full transition-all duration-300 bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-gradient-to-l text-white'>
+          <Button variant={'manual'} className='rounded-full'>
             <span>Book Free Demo</span>
             <ChevronRightIcon />
           </Button>

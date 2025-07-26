@@ -17,7 +17,7 @@ import { client } from '@/components/assets/client';
 const CertificationHome = () => {
   return (
     <div className='md:w-10/12 w-11/12 h-auto flex flex-col items-center justify-center md:gap-10 gap-6 py-10 mb-20 bg-[#f7f7f7] rounded-2xl shadowBorder overflow-hidden'>
-      <div className="w-11/12 md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#CD4647] to-[#7F3B40] capitalize md:mt-4 mb-0 text-center">ERP Partners</div>
+      <div className="w-11/12 md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-tl from-[#600A0E] to-[#C6151D] capitalize md:mt-4 mb-0 text-center">ERP Partners</div>
       <Swiper
         effect={'coverflow'}
         grabCursor={true}

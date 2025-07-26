@@ -1,5 +1,5 @@
 import React from 'react';
-import { teams } from './teams';
+import { teams } from '../../../../components/assets/teams';
 import Image from 'next/image';
 
 const EducatorHome = () => {
