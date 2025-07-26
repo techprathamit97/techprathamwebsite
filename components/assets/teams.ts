@@ -53,4 +53,13 @@ export const teams = [
             "ISO Nirvana 🌿"
         ]
     },
+    {
+        image: "/about/teams/saloni.jpg",
+        name: "Saloni Goswami",
+        position: "HR & Operations Executive",
+        link: "saloni-goswami",
+        about: [
+            "ISO Nirvana 🌿"
+        ]
+    },
 ];

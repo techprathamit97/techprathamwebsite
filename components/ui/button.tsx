@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         manual:
-          "transition-all duration-300 bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-gradient-to-l text-white shadow",
+          "transition-all duration-800 bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white hover:bg-gradient-to-tr shadow",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
