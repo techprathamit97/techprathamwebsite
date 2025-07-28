@@ -5,21 +5,21 @@ import './emailContact.css';
 const EmailContact = () => {
     const contactOptions = [
         {
-            title: "General Inquiries",
+            title: "General Information",
             description: "Get in touch with our team for general questions, partnerships, or collaboration opportunities.",
-            email: "hello@company.com",
+            email: "info@techpratham.com",
             icon: <EnvelopeClosedIcon className="w-5 h-5 text-blue-600" />
         },
         {
-            title: "Customer Support",
-            description: "Need help with our products or services? Our support team is here to assist you.",
-            email: "support@company.com",
+            title: "Human Resources",
+            description: "Career opportunities, job applications, and HR-related inquiries.",
+            email: "hr@techpratham.com",
             icon: <ChatBubbleIcon className="w-5 h-5 text-green-600" />
         },
         {
-            title: "Technical Help",
-            description: "Experiencing technical issues? Our technical team will help resolve your problems quickly.",
-            email: "tech@company.com",
+            title: "Accounts & Billing",
+            description: "Questions about invoices, payments, billing, and financial matters.",
+            email: "accounts@techpratham.com",
             icon: <QuestionMarkCircledIcon className="w-5 h-5 text-purple-600" />
         }
     ];
@@ -39,7 +39,7 @@ const EmailContact = () => {
                     <div
                         key={index}
                         onClick={() => handleEmailClick(option.email)}
-                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl bg-white text-black hover:shadow-lg hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 cardShadow"
+                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl bg-white text-black hover:shadow-lg hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 cardShadow flex flex-col"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
@@ -51,7 +51,7 @@ const EmailContact = () => {
                             <ArrowTopRightIcon className="w-5 h-5 text-gray-400 group-hover:text-gray-600 group-hover:transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                         </div>
 
-                        <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-4 min-h-[3rem]">
+                        <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-4 min-h-[3rem] flex-grow">
                             {option.description}
                         </p>
 

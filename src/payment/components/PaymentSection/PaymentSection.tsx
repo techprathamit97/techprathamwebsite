@@ -1,3 +1,4 @@
+import Loader from '@/components/common/Loader/Loader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React, { useState } from 'react';
@@ -20,7 +21,7 @@ const FormContact = () => {
             });
             if (response.ok) {
                 setSubmitSuccess(true);
-                console.log(data);
+                window.location.href = 'https://payu.in/pay/E5AEF5CAEF5E85E7E367B9673CE3C477';
                 reset();
             } else {
                 console.error('Failed to submit form');
@@ -31,6 +32,8 @@ const FormContact = () => {
             setSubmitting(false);
         }
     };
+
+    {submitting && <Loader />}
 
     return (
         <div
@@ -95,7 +98,7 @@ const FormContact = () => {
                     </div>
                 </div>
 
-                <Button type='submit' variant={'manual'} className='h-10 text-base flex items-center justify-center' disabled={submitting}>
+                <Button type='submit' variant={'manual'} className='h-10 mt-4 text-base flex items-center justify-center' disabled={submitting}>
                     {submitting ? 'Submitting...' : 'Send'}
                 </Button>
                 {submitSuccess && <p className="text-green-600">Form submitted successfully! We'll reach you soon!</p>}
