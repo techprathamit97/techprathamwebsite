@@ -1,6 +1,6 @@
 .headerImage {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.641), rgba(0, 0, 0, 0.69)),
-    url("/course/course-banner.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.652), rgba(0, 0, 0, 0.247)),
+    url("/course/course-banner.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
