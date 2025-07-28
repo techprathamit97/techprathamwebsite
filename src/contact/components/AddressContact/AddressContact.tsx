@@ -2,6 +2,7 @@ import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import FormContact from '../FormContact/FormContact';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const AddressContact = () => {
     return (
@@ -24,20 +25,20 @@ const AddressContact = () => {
                             <div>info@techpratham.com</div>
                         </div>
                         <div className='w-full flex flex-row justify-end gap-3 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
+                            <Link href='https://wa.me/8882178896' className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
-                            </div>
-                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
+                            </Link>
+                            <Link href='https://g.page/r/CX1XMlbVUiyaEBM/review' className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
                                     <span>Location Here</span>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -55,20 +56,20 @@ const AddressContact = () => {
                             <div>+91-8882178896, info@techpratham.com</div>
                         </div>
                         <div className='w-full flex flex-row justify-end gap-3 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
+                            <Link href='https://wa.me/8882178896' className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
-                            </div>
-                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
+                            </Link>
+                            <Link href='https://g.page/r/CX1XMlbVUiyaEBM/review' className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
                                     <span>Location Here</span>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -86,20 +87,20 @@ const AddressContact = () => {
                             <div>info@techpratham.com</div>
                         </div>
                         <div className='w-full flex flex-row justify-end gap-3 mt-4'>
-                            <div className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
+                            <Link href='https://wa.me/8882178896' className='w-auto flex flex-row gap-2 items-center justify-center bg-white p-1 rounded-md'>
                                 <Image src='/support/whatsapp.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <div>Whatsapp</div>
                                     <div>Click to Chat</div>
                                 </div>
-                            </div>
-                            <div className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
+                            </Link>
+                            <Link href='https://g.page/r/CX1XMlbVUiyaEBM/review' className='w-auto flex flex-row gap-2 bg-white p-1 rounded-md'>
                                 <Image src='/support/google-maps.png' alt='' width={40} height={40} />
                                 <div className='w-auto flex flex-col text-sm'>
                                     <span>Check Live</span>
                                     <span>Location Here</span>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

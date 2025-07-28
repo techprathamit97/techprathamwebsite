@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaFacebook } from 'react-icons/fa';
 
@@ -14,27 +15,27 @@ const BannerContact = () => {
                 </div>
                 <div className='md:w-1/2 w-full h-full flex flex-row flex-wrap items-center justify-center'>
                     <div className='w-auto h-auto grid grid-cols-4 gap-6 place-items-center'>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        <Link href='https://www.facebook.com/profile.php?id=61573041693401' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/facebook.svg' alt='Facebook' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        </Link>
+                        <Link href='https://www.instagram.com/techprathamofficial/' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/instagram.svg' alt='Instagram' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        </Link>
+                        <Link href='https://www.linkedin.com/company/techpratham/' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/linkedin.svg' alt='LinkedIn' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        </Link>
+                        <Link href='https://share.google/53IFpTK4qCyDXY8y7' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/google.svg' alt='Google' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        </Link>
+                        <Link href='https://wa.me/8882178896' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/whatsapp.svg' alt='WhatsApp' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
+                        </Link>
                         <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/pinterest.svg' alt='Pinterest' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
-                        <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
+                        <Link href='https://www.youtube.com/@TechPratham_official' target="_blank" className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/youtube.svg' alt='YouTube' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
-                        </div>
+                        </Link>
                         <div className='w-16 h-16 flex items-center justify-center bg-white rounded transition-all hover:transform hover:scale-110 duration-300 group'>
                             <Image src='/support/socials/x.svg' alt='X (formerly Twitter)' width={46} height={46} className='transition-all duration-300 group-hover:rotate-12' />
                         </div>
