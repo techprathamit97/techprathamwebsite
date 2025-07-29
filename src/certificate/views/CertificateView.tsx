@@ -3,6 +3,7 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/userContext';
 import CertificateHeader from '../components/CertificateHeader/CertificateHeader';
+import TrainingSection from '@/src/training/components/TrainingSection/TrainingSection';
 
 const CertificateView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -15,6 +16,8 @@ const CertificateView = () => {
     <div className='w-full h-auto flex flex-col items-center justify-center'>
 
       <CertificateHeader />
+
+      <TrainingSection />
 
     </div>
   )
