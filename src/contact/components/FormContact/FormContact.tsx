@@ -35,7 +35,7 @@ const FormContact = () => {
 
     return (
         <div
-            className='p-[3px] shadow-lg flex items-center justify-center w-[500px] min-w-[500px] h-auto rounded-xl absolute top-40'
+            className='p-[3px] shadow-lg flex items-center justify-center w-full h-auto rounded-xl'
             style={{
                 backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
             }}

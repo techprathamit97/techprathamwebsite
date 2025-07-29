@@ -7,7 +7,7 @@ import Link from 'next/link';
 const AddressContact = () => {
     return (
         <div className='w-10/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 place-content-center'>
-            <div className='w-full h-auto flex flex-col gap-5 py-16 z-10 text-left'>
+            <div className='col-span-1 w-full h-auto flex flex-col gap-5 py-16 z-10 text-left'>
                 <div className='w-full h-auto flex flex-col items-start justify-center'>
                     <div className='text-2xl font-semibold border-b-2 border-b-[#C6151D] text-[#C6151D]'>Reach us</div>
                 </div>
@@ -105,10 +105,13 @@ const AddressContact = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-full h-auto flex flex-col items-center justify-center'>
+            <div className='col-span-1 w-full h-auto py-16 flex flex-col gap-5 items-center justify-center'>
+                <div className='w-full h-auto flex flex-col items-start justify-center'>
+                    <div className='text-2xl font-semibold border-b-2 border-b-[#C6151D] text-[#C6151D]'>Request Callback</div>
+                </div>
                 <FormContact />
                 <div
-                    className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl mt-96'
+                    className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl mt-10'
                     style={{
                         backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
                     }}
