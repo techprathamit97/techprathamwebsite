@@ -38,44 +38,12 @@ const RecognitionHome = () => {
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <iframe src='/home/recognition/iso-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
+                <Image src='/home/recognition/iso-certification.svg' alt='ISO Certificate' width={1440} height={500} className='w-full h-full object-cover' />
                 <div className='text-sm'>Certified in Quality Management System, ensuring consistent service and performance.</div>
               </div>
             </div>
 
             {/* Certification 2 */}
-            <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
-              <div className='w-full flex flex-row items-center uppercase gap-2'>
-                <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
-                  <Image src='/home/recognition/company.svg' alt='AWS Logo' className='w-12' width={40} height={40} />
-                </div>
-                <div className='md:text-2xl text-xl font-semibold'>AWS Certified</div>
-              </div>
-              <Separator className='h-[0.5px] my-4' />
-              <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='AWS Certificate' width={1440} height={500} className='w-full h-full object-cover' />
-                <div className='text-sm'>Recognized as an AWS Certified Cloud Practitioner, showcasing cloud expertise.</div>
-              </div>
-            </div>
-
-            {/* Certification 3 */}
-            <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
-              <div className='w-full flex flex-row items-center uppercase gap-2'>
-                <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
-                  <Image src='/home/recognition/company.svg' alt='Google Logo' className='w-12' width={40} height={40} />
-                </div>
-                <div className='md:text-2xl text-xl font-semibold'>Google Analytics</div>
-              </div>
-              <Separator className='h-[0.5px] my-4' />
-              <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='Google Analytics Certificate' width={1440} height={500} className='w-full h-full object-cover' />
-                <div className='text-sm'>Demonstrates proficiency in data analysis and web tracking using Google Analytics.</div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {/* Affiliation 1 */}
             <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
               <div className='w-full flex flex-row items-center uppercase gap-2'>
                 <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
@@ -85,12 +53,12 @@ const RecognitionHome = () => {
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <iframe src='/home/recognition/mca-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
+                <Image src='/home/recognition/mca-certification.svg' alt='MCA Certificate' width={1440} height={500} className='w-full h-full object-cover' />
                 <div className='text-sm'>Member of NASSCOM, promoting innovation and digital transformation in India.</div>
               </div>
             </div>
 
-            {/* Affiliation 2 */}
+            {/* Certification 3 */}
             <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
               <div className='w-full flex flex-row items-center uppercase gap-2'>
                 <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
@@ -100,8 +68,40 @@ const RecognitionHome = () => {
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <iframe src='/home/recognition/msme-certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH' className='w-full h-64' title='ISO Certificate'></iframe>
+                <Image src='/home/recognition/msme-certification.svg' alt='MCA Certificate' width={1440} height={500} className='w-full h-full object-cover' />
                 <div className='text-sm'>Officially registered under the Ministry of MSME for small-scale industry benefits.</div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+            {/* Affiliation 1 */}
+            <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
+              <div className='w-full flex flex-row items-center uppercase gap-2'>
+                <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
+                  <Image src='/home/recognition/company.svg' alt='ISO Logo' className='w-12' width={40} height={40} />
+                </div>
+                <div className='md:text-2xl text-xl font-semibold'>ISO 9001:2015</div>
+              </div>
+              <Separator className='h-[0.5px] my-4' />
+              <div className='h-auto flex flex-col gap-3'>
+                <Image src='/home/recognition/iso-certification.svg' alt='ISO Certificate' width={1440} height={500} className='w-full h-full object-cover' />
+                <div className='text-sm'>Certified in Quality Management System, ensuring consistent service and performance.</div>
+              </div>
+            </div>
+
+            {/* Affiliation 2 */}
+            <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
+              <div className='w-full flex flex-row items-center uppercase gap-2'>
+                <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
+                  <Image src='/home/recognition/company.svg' alt='NASSCOM Logo' className='w-12' width={40} height={40} />
+                </div>
+                <div className='md:text-2xl text-xl font-semibold'>Income Tax</div>
+              </div>
+              <Separator className='h-[0.5px] my-4' />
+              <div className='h-auto flex flex-col gap-3'>
+                <Image src='/home/recognition/mca-certification.svg' alt='MCA Certificate' width={1440} height={500} className='w-full h-full object-cover' />
+                <div className='text-sm'>Member of NASSCOM, promoting innovation and digital transformation in India.</div>
               </div>
             </div>
 
@@ -109,14 +109,14 @@ const RecognitionHome = () => {
             <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
               <div className='w-full flex flex-row items-center uppercase gap-2'>
                 <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
-                  <Image src='/home/recognition/company.svg' alt='Startup India' className='w-12' width={40} height={40} />
+                  <Image src='/home/recognition/company.svg' alt='MSME Logo' className='w-12' width={40} height={40} />
                 </div>
-                <div className='md:text-2xl text-xl font-semibold'>Startup India</div>
+                <div className='md:text-2xl text-xl font-semibold'>MSME India</div>
               </div>
               <Separator className='h-[0.5px] my-4' />
               <div className='h-auto flex flex-col gap-3'>
-                <Image src='/home/certificate.png' alt='Startup India' width={1440} height={500} className='w-full h-full object-cover' />
-                <div className='text-sm'>Recognized under the Startup India initiative, fostering entrepreneurship and innovation.</div>
+                <Image src='/home/recognition/msme-certification.svg' alt='MCA Certificate' width={1440} height={500} className='w-full h-full object-cover' />
+                <div className='text-sm'>Officially registered under the Ministry of MSME for small-scale industry benefits.</div>
               </div>
             </div>
           </div>
