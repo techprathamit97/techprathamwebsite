@@ -5,24 +5,16 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+
+import { CldImage, CldUploadWidget } from 'next-cloudinary';
+import { FaUpload } from 'react-icons/fa';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import { useRouter } from 'next/router';
 
 // Zod Schema
 const curriculumSchema = z.object({
@@ -44,6 +36,7 @@ const projectSchema = z.object({
 const courseSchema = z.object({
     title: z.string().min(1, "Title is required"),
     shortDesc: z.string().min(1, "Short description is required"),
+    image: z.string(),
     description: z.string().min(1, "Description is required"),
     rating: z.string().min(1, "Rating is required"),
     duration: z.string().min(1, "Duration is required"),
@@ -175,13 +168,17 @@ const CurriculumTopicItem = ({ form, index, canRemove, onRemove }: {
 
 const CourseTab = () => {
     const [newSkill, setNewSkill] = useState('');
+    const [publicId, setPublicId] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const router = useRouter();
 
     const form = useForm<CourseFormData>({
         resolver: zodResolver(courseSchema),
         defaultValues: {
             title: '',
             shortDesc: '',
+            image: '',
             description: '',
             rating: '',
             duration: '',
@@ -199,6 +196,20 @@ const CourseTab = () => {
             project_data: [{ title: '', objective: '' }],
         }
     });
+
+    const { setValue, reset } = form;
+    useEffect(() => {
+        if (publicId) {
+            setValue("image", publicId);
+        }
+    }, [publicId, setValue]);
+
+    const getProfileImageUrl = () => {
+        if (publicId) {
+            return publicId;
+        }
+        return '/home/members/avatar.png';
+    };
 
     const {
         fields: curriculumFields,
@@ -272,21 +283,17 @@ const CourseTab = () => {
                 const result = await response.json();
 
                 console.log('Course created successfully:', result);
-                alert(`Course created successfully! Course ID: ${result._id}`);
+                toast.success(`Course created successfully! Course ID: ${result._id}`);
 
                 form.reset();
-                // router.push('/courses');
-
+                router.push('/admin/dashboard/courses');
             } else {
                 const errorResult = await response.json();
-                console.error('API Error:', errorResult);
-                alert(`Error: ${errorResult.message || 'Failed to create course'}`);
+                toast.error(`Error: ${errorResult.message || 'Failed to create course'}`);
             }
 
         } catch (error) {
-            // Handle network errors
-            console.error('Network Error:', error);
-            alert('Network error occurred. Please try again.');
+            toast.error('Network error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -339,6 +346,30 @@ const CourseTab = () => {
                                         </FormItem>
                                     )}
                                 />
+                            </div>
+
+                            <div className='min-w-64 flex flex-col gap-4'>
+                                {publicId ? (
+                                    <CldImage src={publicId} alt="Profile image" width={384} height={384} className='w-80 h-80 object-cover border-4 border-white shadow' />
+                                ) : (
+                                    <Image src={getProfileImageUrl()} alt='profile' width={384} height={384} priority={true} className='w-80 h-80 object-cover border-4 border-white shadow' />
+                                )}
+                                <CldUploadWidget
+                                    uploadPreset="techpratham"
+                                    onSuccess={(result: any) => {
+                                        if (result.event === 'success' && result.info?.secure_url) {
+                                            setPublicId(result.info.secure_url);
+                                        }
+                                    }}
+                                >
+                                    {({ open }) => {
+                                        return (
+                                            <Button type="button" onClick={() => open()} className='w-full max-w-80'>
+                                                <FaUpload className="mr-2" /> Upload an Image
+                                            </Button>
+                                        );
+                                    }}
+                                </CldUploadWidget>
                             </div>
 
                             <FormField
