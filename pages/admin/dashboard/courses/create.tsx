@@ -5,15 +5,15 @@ import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 const CreateCourse = () => {
     return (
-        <div className="h-screen w-full fixed bg-[#121421]">
-            <div className="grid grid-cols-5 h-full">
+        <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-                <AdminSidebar />
+            <AdminSidebar />
 
-                <div className="col-span-4 w-full h-full overflow-y-auto p-8">
+            <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
 
-                    <AdminTopBar />
+                <AdminTopBar />
 
+                <div className='w-full h-full p-6 overflow-auto'>
                     <CourseTab />
                 </div>
             </div>

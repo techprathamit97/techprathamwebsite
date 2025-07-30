@@ -61,7 +61,6 @@ const Enrolled = () => {
             if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
 
             const data = await res.json();
-            // Filter only verified enrollments that are not completed
             const verifiedEnrollments = data.filter((enrollment: { verifyPayment: boolean, courseCompletion: boolean }) =>
                 enrollment.verifyPayment && !enrollment.courseCompletion
             );
@@ -148,7 +147,6 @@ const Enrolled = () => {
             const result = await res.json();
             console.log('Invoice generated successfully:', result);
 
-            // Refresh the enrolled data to reflect any changes
             await fetchEnrolledData();
 
             setSelectedInvoiceEnrollment(null);
@@ -156,7 +154,6 @@ const Enrolled = () => {
 
         } catch (error) {
             console.error('Failed to generate invoice:', error);
-            // You might want to add error handling UI here
         } finally {
             setIsSubmitting(false);
         }
@@ -410,457 +407,224 @@ const Enrolled = () => {
             ) : (!authenticated || !isAdmin) ? (
                 <SignOut />
             ) : (
-                <div className="h-screen w-full fixed bg-[#121421]">
-                    <div className="grid grid-cols-5 h-full">
+                <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-                        <AdminSidebar />
+                    <AdminSidebar />
 
-                        <div className="col-span-4 w-full h-full overflow-y-auto p-8">
+                    <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
 
-                            <AdminTopBar />
+                        <AdminTopBar />
 
-                            {isLoading ? (
-                                <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                                    <div className="text-center">
-                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                                        <p className="text-gray-600">Loading enrolled courses...</p>
-                                    </div>
+                        {isLoading ? (
+                            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                                <div className="text-center">
+                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                                    <p className="text-gray-600">Loading enrolled courses...</p>
                                 </div>
-                            ) : (
-                                <div className="bg-[#242935] shadow-sm rounded-lg p-6 mb-6">
-                                    <div className='w-full h-auto flex flex-row items-center justify-between'>
-                                        <h2 className="text-xl font-semibold text-white mb-4">Enrolled Courses</h2>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-blue-400 text-sm">In Progress Courses</span>
-                                            <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                                {enrolledData.length}
-                                            </div>
+                            </div>
+                        ) : (
+                            <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+                                <div className='w-full h-auto flex flex-row items-center justify-between'>
+                                    <h2 className="text-xl font-semibold text-white mb-4">Enrolled Courses</h2>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-blue-400 text-sm">In Progress Courses</span>
+                                        <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                            {enrolledData.length}
                                         </div>
                                     </div>
+                                </div>
 
-                                    {enrolledData.length > 0 ? (
-                                        <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full justify-items-center">
-                                            {enrolledData.map((enrollment: any, index: any) => (
-                                                <div
-                                                    key={index}
-                                                    className="w-full max-w-lg h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform hover:shadow-lg"
-                                                >
-                                                    {/* Course Information */}
-                                                    <div className="flex justify-between items-start mb-3">
-                                                        <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">
-                                                            {enrollment.course_title}
-                                                        </div>
-                                                        <div className="flex flex-col gap-1">
-                                                            <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
-                                                                {enrollment.level}
-                                                            </span>
-                                                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                                In Progress
-                                                            </span>
-                                                        </div>
+                                {enrolledData.length > 0 ? (
+                                    <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full justify-items-center">
+                                        {enrolledData.map((enrollment: any, index: any) => (
+                                            <div
+                                                key={index}
+                                                className="w-full max-w-lg h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform hover:shadow-lg"
+                                            >
+                                                {/* Course Information */}
+                                                <div className="flex justify-between items-start mb-3">
+                                                    <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">
+                                                        {enrollment.course_title}
                                                     </div>
-
-                                                    <div className="mb-3">
-                                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                                            {enrollment.category}
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
+                                                            {enrollment.level}
+                                                        </span>
+                                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                            In Progress
                                                         </span>
                                                     </div>
+                                                </div>
 
-                                                    <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
-                                                        {enrollment.course_desc}
+                                                <div className="mb-3">
+                                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                        {enrollment.category}
+                                                    </span>
+                                                </div>
+
+                                                <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
+                                                    {enrollment.course_desc}
+                                                </div>
+
+                                                {/* Student Information */}
+                                                <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                                    <h4 className="font-semibold text-gray-800 mb-2">Student Details</h4>
+                                                    <div className="space-y-1 text-sm">
+                                                        <div><span className="font-medium">Name:</span> {enrollment.name}</div>
+                                                        <div><span className="font-medium">Email:</span> {enrollment.email}</div>
+                                                        <div><span className="font-medium">Phone:</span> {enrollment.phone}</div>
                                                     </div>
+                                                </div>
 
-                                                    {/* Student Information */}
-                                                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                                                        <h4 className="font-semibold text-gray-800 mb-2">Student Details</h4>
-                                                        <div className="space-y-1 text-sm">
-                                                            <div><span className="font-medium">Name:</span> {enrollment.name}</div>
-                                                            <div><span className="font-medium">Email:</span> {enrollment.email}</div>
-                                                            <div><span className="font-medium">Phone:</span> {enrollment.phone}</div>
-                                                        </div>
+                                                {/* Payment Information */}
+                                                <div className="bg-green-50 p-4 rounded-lg mb-4">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <h4 className="font-semibold text-gray-800">Payment Status</h4>
+                                                        {getPaymentBadge(enrollment.advance, enrollment.advanceAmount, enrollment.totalAmount)}
                                                     </div>
-
-                                                    {/* Payment Information */}
-                                                    <div className="bg-green-50 p-4 rounded-lg mb-4">
-                                                        <div className="flex justify-between items-center mb-2">
-                                                            <h4 className="font-semibold text-gray-800">Payment Status</h4>
-                                                            {getPaymentBadge(enrollment.advance, enrollment.advanceAmount, enrollment.totalAmount)}
+                                                    <div className="space-y-1 text-sm">
+                                                        <div className="flex justify-between">
+                                                            <span className="font-medium">Total Amount:</span>
+                                                            <span className="text-green-600 font-bold">₹{enrollment.totalAmount}</span>
                                                         </div>
+                                                        {enrollment.advance && enrollment.advanceAmount > 0 && (
+                                                            <>
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Advance Paid:</span>
+                                                                    <span className="text-orange-600 font-bold">₹{enrollment.advanceAmount}</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Final Payment:</span>
+                                                                    <span className="text-blue-600 font-bold">₹{enrollment.finalPayment || 0}</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="font-medium">Remaining:</span>
+                                                                    <span className="text-red-600 font-bold">₹{enrollment.totalAmount - (enrollment.advanceAmount + (enrollment.finalPayment || 0))}</span>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Certificate Information */}
+                                                {enrollment.certificate && (
+                                                    <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                                                        <h4 className="font-semibold text-gray-800 mb-2">Certificate Details</h4>
                                                         <div className="space-y-1 text-sm">
-                                                            <div className="flex justify-between">
-                                                                <span className="font-medium">Total Amount:</span>
-                                                                <span className="text-green-600 font-bold">₹{enrollment.totalAmount}</span>
-                                                            </div>
-                                                            {enrollment.advance && enrollment.advanceAmount > 0 && (
-                                                                <>
-                                                                    <div className="flex justify-between">
-                                                                        <span className="font-medium">Advance Paid:</span>
-                                                                        <span className="text-orange-600 font-bold">₹{enrollment.advanceAmount}</span>
-                                                                    </div>
-                                                                    <div className="flex justify-between">
-                                                                        <span className="font-medium">Final Payment:</span>
-                                                                        <span className="text-blue-600 font-bold">₹{enrollment.finalPayment || 0}</span>
-                                                                    </div>
-                                                                    <div className="flex justify-between">
-                                                                        <span className="font-medium">Remaining:</span>
-                                                                        <span className="text-red-600 font-bold">₹{enrollment.totalAmount - (enrollment.advanceAmount + (enrollment.finalPayment || 0))}</span>
-                                                                    </div>
-                                                                </>
+                                                            <div><span className="font-medium">Enrolled Date:</span> {new Date(enrollment.certificate.enrolledDate).toLocaleDateString('en-IN')}</div>
+                                                            {enrollment.certificate.completionDate && (
+                                                                <div><span className="font-medium">Completion Date:</span> {new Date(enrollment.certificate.completionDate).toLocaleDateString('en-IN')}</div>
+                                                            )}
+                                                            {enrollment.certificate.certificateId && (
+                                                                <div><span className="font-medium">Certificate ID:</span> {enrollment.certificate.certificateId}</div>
                                                             )}
                                                         </div>
                                                     </div>
+                                                )}
 
-                                                    {/* Certificate Information */}
-                                                    {enrollment.certificate && (
-                                                        <div className="bg-yellow-50 p-4 rounded-lg mb-4">
-                                                            <h4 className="font-semibold text-gray-800 mb-2">Certificate Details</h4>
-                                                            <div className="space-y-1 text-sm">
-                                                                <div><span className="font-medium">Enrolled Date:</span> {new Date(enrollment.certificate.enrolledDate).toLocaleDateString('en-IN')}</div>
-                                                                {enrollment.certificate.completionDate && (
-                                                                    <div><span className="font-medium">Completion Date:</span> {new Date(enrollment.certificate.completionDate).toLocaleDateString('en-IN')}</div>
-                                                                )}
-                                                                {enrollment.certificate.certificateId && (
-                                                                    <div><span className="font-medium">Certificate ID:</span> {enrollment.certificate.certificateId}</div>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    )}
-
-                                                    {/* Course Duration */}
-                                                    <div className="flex justify-between items-center mb-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-green-500">✓</span>
-                                                            <span className="text-green-600 font-medium text-sm">Payment Verified</span>
-                                                        </div>
-                                                        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                                                            Duration: {enrollment.duration}
-                                                        </div>
+                                                {/* Course Duration */}
+                                                <div className="flex justify-between items-center mb-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-green-500">✓</span>
+                                                        <span className="text-green-600 font-medium text-sm">Payment Verified</span>
                                                     </div>
+                                                    <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                                                        Duration: {enrollment.duration}
+                                                    </div>
+                                                </div>
 
-                                                    {/* Action Button */}
-                                                    <div className="flex gap-2">
-                                                        <Dialog>
-                                                            <DialogTrigger asChild>
-                                                                <Button
-                                                                    variant='outline'
-                                                                    onClick={() => handleGenerateInvoice(enrollment)}
-                                                                    className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
-                                                                >
-                                                                    Generate Invoice
-                                                                </Button>
-                                                            </DialogTrigger>
-                                                            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
-                                                                <DialogHeader>
-                                                                    <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
-                                                                </DialogHeader>
+                                                {/* Action Button */}
+                                                <div className="flex gap-2">
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <Button
+                                                                variant='outline'
+                                                                onClick={() => handleGenerateInvoice(enrollment)}
+                                                                className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
+                                                            >
+                                                                Generate Invoice
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
+                                                            <DialogHeader>
+                                                                <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
+                                                            </DialogHeader>
 
-                                                                {selectedInvoiceEnrollment && (
-                                                                    <>
-                                                                        {/* Course & Student Info Summary */}
-                                                                        <div className="grid grid-cols-2 gap-4 mb-4">
-                                                                            <div className="bg-gray-50 p-3 rounded-lg">
-                                                                                <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
-                                                                                <div className="space-y-1 text-sm">
-                                                                                    <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
-                                                                                    <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
-                                                                                    <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="bg-gray-50 p-3 rounded-lg">
-                                                                                <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
-                                                                                <div className="space-y-1 text-sm">
-                                                                                    <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
-                                                                                    <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
-                                                                                    <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
-                                                                                </div>
+                                                            {selectedInvoiceEnrollment && (
+                                                                <>
+                                                                    {/* Course & Student Info Summary */}
+                                                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                                                            <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
+                                                                            <div className="space-y-1 text-sm">
+                                                                                <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
+                                                                                <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
+                                                                                <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
                                                                             </div>
                                                                         </div>
-
-                                                                        <Form {...invoiceForm}>
-                                                                            <form onSubmit={invoiceForm.handleSubmit(onInvoiceSubmit)} className="space-y-4">
-
-                                                                                {/* Payment Details */}
-                                                                                <div className="bg-blue-50 p-4 rounded-lg">
-                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Payment Details</h4>
-                                                                                    <div className="grid grid-cols-2 gap-4">
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="totalAmount"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Total Course Fee</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="number"
-                                                                                                            placeholder="0"
-                                                                                                            {...field}
-                                                                                                            onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="feeType"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Fee Type</FormLabel>
-                                                                                                    <Select onValueChange={field.onChange} value={field.value}>
-                                                                                                        <FormControl>
-                                                                                                            <SelectTrigger>
-                                                                                                                <SelectValue placeholder="Select fee type" />
-                                                                                                            </SelectTrigger>
-                                                                                                        </FormControl>
-                                                                                                        <SelectContent>
-                                                                                                            <SelectItem value="full">Full Payment</SelectItem>
-                                                                                                            <SelectItem value="advance">Advance Payment</SelectItem>
-                                                                                                            <SelectItem value="installment">Installment</SelectItem>
-                                                                                                        </SelectContent>
-                                                                                                    </Select>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-                                                                                    </div>
-
-                                                                                    <div className="grid grid-cols-2 gap-4 mt-4">
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="advanceAmount"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Advance Amount</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="number"
-                                                                                                            placeholder="0"
-                                                                                                            {...field}
-                                                                                                            onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <div className="space-y-2">
-                                                                                            <Label className="block text-sm font-medium text-gray-700">
-                                                                                                Balance Due
-                                                                                            </Label>
-                                                                                            <div className="mt-1 relative rounded-md shadow-sm">
-                                                                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                                                                    <span className="text-gray-500 sm:text-sm">₹</span>
-                                                                                                </div>
-                                                                                                <Input
-                                                                                                    type="number"
-                                                                                                    value={(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}
-                                                                                                    readOnly
-                                                                                                    className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 cursor-not-allowed focus:outline-none"
-                                                                                                    placeholder="0.00"
-                                                                                                />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                {/* Invoice Details */}
-                                                                                <div className="bg-green-50 p-4 rounded-lg">
-                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Invoice Details</h4>
-                                                                                    <div className="grid grid-cols-2 gap-4">
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="enrolledDate"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Enrolled Date</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="date"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="dueDate"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Next Due Date</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="text"
-                                                                                                            {...field}
-                                                                                                            placeholder='Due Date'
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-                                                                                    </div>
-
-                                                                                    <div className="grid grid-cols-2 gap-4 mt-4">
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="studentId"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Student ID</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="text"
-                                                                                                            placeholder="Student Id"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <FormField
-                                                                                            control={invoiceForm.control}
-                                                                                            name="receiptNo"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Receipt Number</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="text"
-                                                                                                            placeholder="Enter receipt number"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                {/* Summary Section */}
-                                                                                <div className="bg-yellow-50 p-4 rounded-lg">
-                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Invoice Summary</h4>
-                                                                                    <div className="space-y-2 text-sm">
-                                                                                        <div className="flex justify-between">
-                                                                                            <span>Course Fee:</span>
-                                                                                            <span className="font-medium">₹{invoiceForm.watch("totalAmount") || 0}</span>
-                                                                                        </div>
-                                                                                        <div className="flex justify-between">
-                                                                                            <span>Advance Paid:</span>
-                                                                                            <span className="font-medium text-green-600">₹{invoiceForm.watch("advanceAmount") || 0}</span>
-                                                                                        </div>
-                                                                                        <div className="flex justify-between">
-                                                                                            <span>Balance Due:</span>
-                                                                                            <span className="font-medium text-red-600">₹{(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}</span>
-                                                                                        </div>
-                                                                                        <hr className="my-2" />
-                                                                                        <div className="flex justify-between font-semibold">
-                                                                                            <span>Total Amount:</span>
-                                                                                            <span>₹{invoiceForm.watch("totalAmount") || 0}</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <canvas
-                                                                                    ref={canvasRef}
-                                                                                    className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
-                                                                                />
-
-                                                                                <div className="flex gap-2 pt-4">
-                                                                                    <Button
-                                                                                        type="button"
-                                                                                        onClick={() => generateInvoice(selectedInvoiceEnrollment)}
-                                                                                        className="bg-blue-600 hover:bg-blue-700"
-                                                                                    >
-                                                                                        Download Invoice
-                                                                                    </Button>
-                                                                                </div>
-                                                                                <div>Note: if you're getting empty invoice, try to update the data first.</div>
-
-                                                                                <Button type="submit" disabled={isSubmitting} className="flex-1">
-                                                                                    {isSubmitting ? 'Updating...' : 'Update Data'}
-                                                                                </Button>
-                                                                            </form>
-                                                                        </Form>
-                                                                    </>
-                                                                )}
-                                                            </DialogContent>
-                                                        </Dialog>
-                                                        <Dialog>
-                                                            <DialogTrigger asChild>
-                                                                <Button
-                                                                    onClick={() => handleFinalizeCourse(enrollment)}
-                                                                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
-                                                                >
-                                                                    Finalize Course
-                                                                </Button>
-                                                            </DialogTrigger>
-                                                            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
-                                                                <DialogHeader>
-                                                                    <DialogTitle>Finalize Course - {selectedEnrollment?.course_title}</DialogTitle>
-                                                                </DialogHeader>
-
-                                                                {selectedEnrollment && (
-                                                                    <>
-                                                                        {/* Course Details */}
-                                                                        <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                                                                            <h4 className="font-semibold text-gray-800 mb-2">Course Details</h4>
-                                                                            <div className="space-y-2 text-sm">
-                                                                                <div><span className="font-medium">Title:</span> {selectedEnrollment.course_title}</div>
-                                                                                <div><span className="font-medium">Description:</span> {selectedEnrollment.course_desc}</div>
-                                                                                <div><span className="font-medium">Duration:</span> {selectedEnrollment.duration}</div>
-                                                                                <div><span className="font-medium">Level:</span> {selectedEnrollment.level}</div>
-                                                                                <div><span className="font-medium">Category:</span> {selectedEnrollment.category}</div>
-                                                                                <div><span className="font-medium">Course Link:</span> {selectedEnrollment.course_link}</div>
+                                                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                                                            <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
+                                                                            <div className="space-y-1 text-sm">
+                                                                                <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
+                                                                                <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
+                                                                                <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
 
-                                                                        {/* Student Details */}
-                                                                        <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                                                                            <h4 className="font-semibold text-gray-800 mb-2">Student Details</h4>
-                                                                            <div className="space-y-2 text-sm">
-                                                                                <div><span className="font-medium">Name:</span> {selectedEnrollment.name}</div>
-                                                                                <div><span className="font-medium">Email:</span> {selectedEnrollment.email}</div>
-                                                                                <div><span className="font-medium">Phone:</span> {selectedEnrollment.phone}</div>
-                                                                            </div>
-                                                                        </div>
+                                                                    <Form {...invoiceForm}>
+                                                                        <form onSubmit={invoiceForm.handleSubmit(onInvoiceSubmit)} className="space-y-4">
 
-                                                                        {/* Course Finalization Form */}
-                                                                        <Form {...form}>
-                                                                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                                                            {/* Payment Details */}
+                                                                            <div className="bg-blue-50 p-4 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-3">Payment Details</h4>
                                                                                 <div className="grid grid-cols-2 gap-4">
                                                                                     <FormField
-                                                                                        control={form.control}
-                                                                                        name="advance"
+                                                                                        control={invoiceForm.control}
+                                                                                        name="totalAmount"
                                                                                         render={({ field }) => (
                                                                                             <FormItem>
-                                                                                                <FormLabel>Advance Payment</FormLabel>
-                                                                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
-                                                                                                    <FormControl>
-                                                                                                        <SelectTrigger>
-                                                                                                            <SelectValue placeholder="Select advance payment" />
-                                                                                                        </SelectTrigger>
-                                                                                                    </FormControl>
-                                                                                                    <SelectContent>
-                                                                                                        <SelectItem value="true">Yes</SelectItem>
-                                                                                                        <SelectItem value="false">No</SelectItem>
-                                                                                                    </SelectContent>
-                                                                                                </Select>
+                                                                                                <FormLabel>Total Course Fee</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="number"
+                                                                                                        placeholder="0"
+                                                                                                        {...field}
+                                                                                                        onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                    />
+                                                                                                </FormControl>
                                                                                                 <FormMessage />
                                                                                             </FormItem>
                                                                                         )}
                                                                                     />
 
                                                                                     <FormField
-                                                                                        control={form.control}
+                                                                                        control={invoiceForm.control}
+                                                                                        name="feeType"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Fee Type</FormLabel>
+                                                                                                <Select onValueChange={field.onChange} value={field.value}>
+                                                                                                    <FormControl>
+                                                                                                        <SelectTrigger>
+                                                                                                            <SelectValue placeholder="Select fee type" />
+                                                                                                        </SelectTrigger>
+                                                                                                    </FormControl>
+                                                                                                    <SelectContent>
+                                                                                                        <SelectItem value="full">Full Payment</SelectItem>
+                                                                                                        <SelectItem value="advance">Advance Payment</SelectItem>
+                                                                                                        <SelectItem value="installment">Installment</SelectItem>
+                                                                                                    </SelectContent>
+                                                                                                </Select>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+                                                                                </div>
+
+                                                                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                                                                    <FormField
+                                                                                        control={invoiceForm.control}
                                                                                         name="advanceAmount"
                                                                                         render={({ field }) => (
                                                                                             <FormItem>
@@ -869,7 +633,6 @@ const Enrolled = () => {
                                                                                                     <Input
                                                                                                         type="number"
                                                                                                         placeholder="0"
-                                                                                                        disabled={!watchAdvance}
                                                                                                         {...field}
                                                                                                         onChange={(e) => field.onChange(Number(e.target.value))}
                                                                                                     />
@@ -878,211 +641,443 @@ const Enrolled = () => {
                                                                                             </FormItem>
                                                                                         )}
                                                                                     />
-                                                                                </div>
 
-                                                                                <div className="grid grid-cols-2 gap-4">
-                                                                                    <FormField
-                                                                                        control={form.control}
-                                                                                        name="finalPayment"
-                                                                                        render={({ field }) => (
-                                                                                            <FormItem>
-                                                                                                <FormLabel>Final Payment</FormLabel>
-                                                                                                <FormControl>
-                                                                                                    <Input
-                                                                                                        type="number"
-                                                                                                        placeholder="0"
-                                                                                                        {...field}
-                                                                                                        onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                                                    />
-                                                                                                </FormControl>
-                                                                                                <FormDescription>
-                                                                                                    Remaining payment amount after advance
-                                                                                                </FormDescription>
-                                                                                                <FormMessage />
-                                                                                            </FormItem>
-                                                                                        )}
-                                                                                    />
-
-                                                                                    <FormField
-                                                                                        control={form.control}
-                                                                                        name="totalAmount"
-                                                                                        render={({ field }) => (
-                                                                                            <FormItem>
-                                                                                                <FormLabel>Total Amount</FormLabel>
-                                                                                                <FormControl>
-                                                                                                    <Input
-                                                                                                        type="number"
-                                                                                                        placeholder="0"
-                                                                                                        {...field}
-                                                                                                        onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                                                    />
-                                                                                                </FormControl>
-                                                                                                <FormDescription>
-                                                                                                    Total course fee amount
-                                                                                                </FormDescription>
-                                                                                                <FormMessage />
-                                                                                            </FormItem>
-                                                                                        )}
-                                                                                    />
-                                                                                </div>
-
-                                                                                <div className="grid grid-cols-2 gap-4">
-                                                                                    <FormField
-                                                                                        control={form.control}
-                                                                                        name="verifyPayment"
-                                                                                        render={({ field }) => (
-                                                                                            <FormItem>
-                                                                                                <FormLabel>Verify Payment</FormLabel>
-                                                                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
-                                                                                                    <FormControl>
-                                                                                                        <SelectTrigger>
-                                                                                                            <SelectValue placeholder="Select verification status" />
-                                                                                                        </SelectTrigger>
-                                                                                                    </FormControl>
-                                                                                                    <SelectContent>
-                                                                                                        <SelectItem value="true">Verified</SelectItem>
-                                                                                                        <SelectItem value="false">Not Verified</SelectItem>
-                                                                                                    </SelectContent>
-                                                                                                </Select>
-                                                                                                <FormMessage />
-                                                                                            </FormItem>
-                                                                                        )}
-                                                                                    />
-
-                                                                                    <FormField
-                                                                                        control={form.control}
-                                                                                        name="courseCompletion"
-                                                                                        render={({ field }) => (
-                                                                                            <FormItem>
-                                                                                                <FormLabel>Course Completion</FormLabel>
-                                                                                                <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
-                                                                                                    <FormControl>
-                                                                                                        <SelectTrigger>
-                                                                                                            <SelectValue placeholder="Select completion status" />
-                                                                                                        </SelectTrigger>
-                                                                                                    </FormControl>
-                                                                                                    <SelectContent>
-                                                                                                        <SelectItem value="true">Completed</SelectItem>
-                                                                                                        <SelectItem value="false">Not Completed</SelectItem>
-                                                                                                    </SelectContent>
-                                                                                                </Select>
-                                                                                                <FormMessage />
-                                                                                            </FormItem>
-                                                                                        )}
-                                                                                    />
-                                                                                </div>
-
-                                                                                {/* Certificate Information Fields */}
-                                                                                <div className="bg-yellow-50 p-4 rounded-lg">
-                                                                                    <h4 className="font-semibold text-gray-800 mb-3">Certificate Information</h4>
-                                                                                    <div className="grid grid-cols-1 gap-4">
-                                                                                        <FormField
-                                                                                            control={form.control}
-                                                                                            name="enrolledDate"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Enrolled Date</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="date"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormDescription>
-                                                                                                        Date when the student enrolled in the course
-                                                                                                    </FormDescription>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <FormField
-                                                                                            control={form.control}
-                                                                                            name="completionDate"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Completion Date</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="date"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormDescription>
-                                                                                                        Date when the student completed the course
-                                                                                                    </FormDescription>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
-
-                                                                                        <FormField
-                                                                                            control={form.control}
-                                                                                            name="certificateId"
-                                                                                            render={({ field }) => (
-                                                                                                <FormItem>
-                                                                                                    <FormLabel>Certificate ID</FormLabel>
-                                                                                                    <FormControl>
-                                                                                                        <Input
-                                                                                                            type="text"
-                                                                                                            placeholder="Enter certificate ID"
-                                                                                                            {...field}
-                                                                                                        />
-                                                                                                    </FormControl>
-                                                                                                    <FormDescription>
-                                                                                                        Unique identifier for the certificate
-                                                                                                    </FormDescription>
-                                                                                                    <FormMessage />
-                                                                                                </FormItem>
-                                                                                            )}
-                                                                                        />
+                                                                                    <div className="space-y-2">
+                                                                                        <Label className="block text-sm font-medium text-gray-700">
+                                                                                            Balance Due
+                                                                                        </Label>
+                                                                                        <div className="mt-1 relative rounded-md shadow-sm">
+                                                                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                                                                <span className="text-gray-500 sm:text-sm">₹</span>
+                                                                                            </div>
+                                                                                            <Input
+                                                                                                type="number"
+                                                                                                value={(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}
+                                                                                                readOnly
+                                                                                                className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700 cursor-not-allowed focus:outline-none"
+                                                                                                placeholder="0.00"
+                                                                                            />
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
 
-                                                                                <div className="flex gap-2 pt-4">
-                                                                                    <Button type="submit" disabled={isSubmitting} className="flex-1">
-                                                                                        {isSubmitting ? 'Finalizing...' : 'Finalize Course'}
-                                                                                    </Button>
+                                                                            {/* Invoice Details */}
+                                                                            <div className="bg-green-50 p-4 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-3">Invoice Details</h4>
+                                                                                <div className="grid grid-cols-2 gap-4">
+                                                                                    <FormField
+                                                                                        control={invoiceForm.control}
+                                                                                        name="enrolledDate"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Enrolled Date</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="date"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+
+                                                                                    <FormField
+                                                                                        control={invoiceForm.control}
+                                                                                        name="dueDate"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Next Due Date</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="text"
+                                                                                                        {...field}
+                                                                                                        placeholder='Due Date'
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
                                                                                 </div>
-                                                                            </form>
-                                                                        </Form>
-                                                                    </>
-                                                                )}
-                                                            </DialogContent>
-                                                        </Dialog>
-                                                    </div>
 
-                                                    {/* Timestamp */}
-                                                    < div className="text-xs text-gray-400 mt-3 text-center" >
-                                                        Enrolled on: {new Date(enrollment.createdAt).toLocaleDateString('en-IN', {
-                                                            day: 'numeric',
-                                                            month: 'short',
-                                                            year: 'numeric',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit'
-                                                        })}
-                                                    </div>
+                                                                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                                                                    <FormField
+                                                                                        control={invoiceForm.control}
+                                                                                        name="studentId"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Student ID</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="text"
+                                                                                                        placeholder="Student Id"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+
+                                                                                    <FormField
+                                                                                        control={invoiceForm.control}
+                                                                                        name="receiptNo"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Receipt Number</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="text"
+                                                                                                        placeholder="Enter receipt number"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+
+                                                                            {/* Summary Section */}
+                                                                            <div className="bg-yellow-50 p-4 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-3">Invoice Summary</h4>
+                                                                                <div className="space-y-2 text-sm">
+                                                                                    <div className="flex justify-between">
+                                                                                        <span>Course Fee:</span>
+                                                                                        <span className="font-medium">₹{invoiceForm.watch("totalAmount") || 0}</span>
+                                                                                    </div>
+                                                                                    <div className="flex justify-between">
+                                                                                        <span>Advance Paid:</span>
+                                                                                        <span className="font-medium text-green-600">₹{invoiceForm.watch("advanceAmount") || 0}</span>
+                                                                                    </div>
+                                                                                    <div className="flex justify-between">
+                                                                                        <span>Balance Due:</span>
+                                                                                        <span className="font-medium text-red-600">₹{(invoiceForm.watch("totalAmount") || 0) - (invoiceForm.watch("advanceAmount") || 0)}</span>
+                                                                                    </div>
+                                                                                    <hr className="my-2" />
+                                                                                    <div className="flex justify-between font-semibold">
+                                                                                        <span>Total Amount:</span>
+                                                                                        <span>₹{invoiceForm.watch("totalAmount") || 0}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <canvas
+                                                                                ref={canvasRef}
+                                                                                className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
+                                                                            />
+
+                                                                            <div className="flex gap-2 pt-4">
+                                                                                <Button
+                                                                                    type="button"
+                                                                                    onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                                                                    className="bg-blue-600 hover:bg-blue-700"
+                                                                                >
+                                                                                    Download Invoice
+                                                                                </Button>
+                                                                            </div>
+                                                                            <div>Note: if you're getting empty invoice, try to update the data first.</div>
+
+                                                                            <Button type="submit" disabled={isSubmitting} className="flex-1">
+                                                                                {isSubmitting ? 'Updating...' : 'Update Data'}
+                                                                            </Button>
+                                                                        </form>
+                                                                    </Form>
+                                                                </>
+                                                            )}
+                                                        </DialogContent>
+                                                    </Dialog>
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <Button
+                                                                onClick={() => handleFinalizeCourse(enrollment)}
+                                                                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
+                                                            >
+                                                                Finalize Course
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white hide-scrollbar">
+                                                            <DialogHeader>
+                                                                <DialogTitle>Finalize Course - {selectedEnrollment?.course_title}</DialogTitle>
+                                                            </DialogHeader>
+
+                                                            {selectedEnrollment && (
+                                                                <>
+                                                                    {/* Course Details */}
+                                                                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                                                        <h4 className="font-semibold text-gray-800 mb-2">Course Details</h4>
+                                                                        <div className="space-y-2 text-sm">
+                                                                            <div><span className="font-medium">Title:</span> {selectedEnrollment.course_title}</div>
+                                                                            <div><span className="font-medium">Description:</span> {selectedEnrollment.course_desc}</div>
+                                                                            <div><span className="font-medium">Duration:</span> {selectedEnrollment.duration}</div>
+                                                                            <div><span className="font-medium">Level:</span> {selectedEnrollment.level}</div>
+                                                                            <div><span className="font-medium">Category:</span> {selectedEnrollment.category}</div>
+                                                                            <div><span className="font-medium">Course Link:</span> {selectedEnrollment.course_link}</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {/* Student Details */}
+                                                                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                                                        <h4 className="font-semibold text-gray-800 mb-2">Student Details</h4>
+                                                                        <div className="space-y-2 text-sm">
+                                                                            <div><span className="font-medium">Name:</span> {selectedEnrollment.name}</div>
+                                                                            <div><span className="font-medium">Email:</span> {selectedEnrollment.email}</div>
+                                                                            <div><span className="font-medium">Phone:</span> {selectedEnrollment.phone}</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {/* Course Finalization Form */}
+                                                                    <Form {...form}>
+                                                                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                                                            <div className="grid grid-cols-2 gap-4">
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="advance"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Advance Payment</FormLabel>
+                                                                                            <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                                                                <FormControl>
+                                                                                                    <SelectTrigger>
+                                                                                                        <SelectValue placeholder="Select advance payment" />
+                                                                                                    </SelectTrigger>
+                                                                                                </FormControl>
+                                                                                                <SelectContent>
+                                                                                                    <SelectItem value="true">Yes</SelectItem>
+                                                                                                    <SelectItem value="false">No</SelectItem>
+                                                                                                </SelectContent>
+                                                                                            </Select>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="advanceAmount"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Advance Amount</FormLabel>
+                                                                                            <FormControl>
+                                                                                                <Input
+                                                                                                    type="number"
+                                                                                                    placeholder="0"
+                                                                                                    disabled={!watchAdvance}
+                                                                                                    {...field}
+                                                                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                />
+                                                                                            </FormControl>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+                                                                            </div>
+
+                                                                            <div className="grid grid-cols-2 gap-4">
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="finalPayment"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Final Payment</FormLabel>
+                                                                                            <FormControl>
+                                                                                                <Input
+                                                                                                    type="number"
+                                                                                                    placeholder="0"
+                                                                                                    {...field}
+                                                                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                />
+                                                                                            </FormControl>
+                                                                                            <FormDescription>
+                                                                                                Remaining payment amount after advance
+                                                                                            </FormDescription>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="totalAmount"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Total Amount</FormLabel>
+                                                                                            <FormControl>
+                                                                                                <Input
+                                                                                                    type="number"
+                                                                                                    placeholder="0"
+                                                                                                    {...field}
+                                                                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                                                                />
+                                                                                            </FormControl>
+                                                                                            <FormDescription>
+                                                                                                Total course fee amount
+                                                                                            </FormDescription>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+                                                                            </div>
+
+                                                                            <div className="grid grid-cols-2 gap-4">
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="verifyPayment"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Verify Payment</FormLabel>
+                                                                                            <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                                                                <FormControl>
+                                                                                                    <SelectTrigger>
+                                                                                                        <SelectValue placeholder="Select verification status" />
+                                                                                                    </SelectTrigger>
+                                                                                                </FormControl>
+                                                                                                <SelectContent>
+                                                                                                    <SelectItem value="true">Verified</SelectItem>
+                                                                                                    <SelectItem value="false">Not Verified</SelectItem>
+                                                                                                </SelectContent>
+                                                                                            </Select>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+
+                                                                                <FormField
+                                                                                    control={form.control}
+                                                                                    name="courseCompletion"
+                                                                                    render={({ field }) => (
+                                                                                        <FormItem>
+                                                                                            <FormLabel>Course Completion</FormLabel>
+                                                                                            <Select onValueChange={(value) => field.onChange(value === "true")} value={field.value.toString()}>
+                                                                                                <FormControl>
+                                                                                                    <SelectTrigger>
+                                                                                                        <SelectValue placeholder="Select completion status" />
+                                                                                                    </SelectTrigger>
+                                                                                                </FormControl>
+                                                                                                <SelectContent>
+                                                                                                    <SelectItem value="true">Completed</SelectItem>
+                                                                                                    <SelectItem value="false">Not Completed</SelectItem>
+                                                                                                </SelectContent>
+                                                                                            </Select>
+                                                                                            <FormMessage />
+                                                                                        </FormItem>
+                                                                                    )}
+                                                                                />
+                                                                            </div>
+
+                                                                            {/* Certificate Information Fields */}
+                                                                            <div className="bg-yellow-50 p-4 rounded-lg">
+                                                                                <h4 className="font-semibold text-gray-800 mb-3">Certificate Information</h4>
+                                                                                <div className="grid grid-cols-1 gap-4">
+                                                                                    <FormField
+                                                                                        control={form.control}
+                                                                                        name="enrolledDate"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Enrolled Date</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="date"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormDescription>
+                                                                                                    Date when the student enrolled in the course
+                                                                                                </FormDescription>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+
+                                                                                    <FormField
+                                                                                        control={form.control}
+                                                                                        name="completionDate"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Completion Date</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="date"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormDescription>
+                                                                                                    Date when the student completed the course
+                                                                                                </FormDescription>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+
+                                                                                    <FormField
+                                                                                        control={form.control}
+                                                                                        name="certificateId"
+                                                                                        render={({ field }) => (
+                                                                                            <FormItem>
+                                                                                                <FormLabel>Certificate ID</FormLabel>
+                                                                                                <FormControl>
+                                                                                                    <Input
+                                                                                                        type="text"
+                                                                                                        placeholder="Enter certificate ID"
+                                                                                                        {...field}
+                                                                                                    />
+                                                                                                </FormControl>
+                                                                                                <FormDescription>
+                                                                                                    Unique identifier for the certificate
+                                                                                                </FormDescription>
+                                                                                                <FormMessage />
+                                                                                            </FormItem>
+                                                                                        )}
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="flex gap-2 pt-4">
+                                                                                <Button type="submit" disabled={isSubmitting} className="flex-1">
+                                                                                    {isSubmitting ? 'Finalizing...' : 'Finalize Course'}
+                                                                                </Button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </Form>
+                                                                </>
+                                                            )}
+                                                        </DialogContent>
+                                                    </Dialog>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="flex flex-col items-center justify-center py-16">
-                                            <div className="text-center">
-                                                <div className="mb-4">
-                                                    <svg className="w-20 h-20 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                                    </svg>
+
+                                                {/* Timestamp */}
+                                                < div className="text-xs text-gray-400 mt-3 text-center" >
+                                                    Enrolled on: {new Date(enrollment.createdAt).toLocaleDateString('en-IN', {
+                                                        day: 'numeric',
+                                                        month: 'short',
+                                                        year: 'numeric',
+                                                        hour: '2-digit',
+                                                        minute: '2-digit'
+                                                    })}
                                                 </div>
-                                                <h3 className="text-lg font-medium text-gray-300 mb-2">No enrolled courses</h3>
-                                                <p className="text-gray-400 mb-6">No students have enrolled in courses that are currently in progress.</p>
                                             </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center py-16">
+                                        <div className="text-center">
+                                            <div className="mb-4">
+                                                <svg className="w-20 h-20 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                </svg>
+                                            </div>
+                                            <h3 className="text-lg font-medium text-gray-300 mb-2">No enrolled courses</h3>
+                                            <p className="text-gray-400 mb-6">No students have enrolled in courses that are currently in progress.</p>
                                         </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
-                </div >
+                </div>
             )}
         </React.Fragment >
     )
