@@ -22,51 +22,51 @@ const AdminSidebar = () => {
 
                 <div className='w-full h-full flex-1 flex flex-col gap-2'>
 
-                    <Link href='/admin/dashboard/profile' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'profile' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/profile' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'profile' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <AvatarIcon className='w-6 h-6' />
                         <div>Profile</div>
                     </Link>
 
-                    <Link href='/admin/dashboard' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'dashboard' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'dashboard' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <DashboardIcon className='w-6 h-6' />
                         <div>Dashboard</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/courses' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'courses' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/courses' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'courses' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <LaptopIcon className='w-6 h-6' />
                         <div>Courses</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/requests' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'requests' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/requests' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'requests' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <BellIcon className='w-6 h-6' />
                         <div>Requests</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/enrolled' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'enrolled' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/enrolled' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'enrolled' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <ArchiveIcon className='w-6 h-6' />
                         <div>Enrolled</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/completed' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'completed' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/completed' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'completed' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <CircleCheckBigIcon className='w-6 h-6' />
                         <div>Completed</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/account' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'account' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/account' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'account' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <AvatarIcon className='w-6 h-6' />
                         <div>Account</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/system' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'system' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/admin/dashboard/system' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'system' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <GearIcon className='w-6 h-6' />
                         <div>System</div>
                     </Link>
                 </div>
             </div>
 
-            <div onClick={() => signOut()} className='text-[#BDBDBD] text-xl font-medium flex flex-row gap-2 items-center justify-start mb-6 cursor-pointer'>
+            <div className={`text-[#606060] w-full border-t border-white flex flex-row gap-3 items-center justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 hover:bg-[#373738] hover:text-white`} onClick={() => signOut()}>
                 <ExitIcon className='w-6 h-6' />
-                <div>Sign Out</div>
+                <div>Logout</div>
             </div>
 
         </div >

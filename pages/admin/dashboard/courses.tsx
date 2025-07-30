@@ -6,6 +6,7 @@ import SignOut from '@/src/account/common/SignOut';
 import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
+import { Badge } from '@/components/ui/badge';
 
 const courses = () => {
   const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
@@ -61,14 +62,14 @@ const courses = () => {
             <AdminTopBar />
 
             {isLoading ? (
-              <div className="min-h-screen flex items-center justify-center bg-gray-50">
+              <div className="min-h-screen flex items-center justify-center bg-black">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                   <p className="text-gray-600">Loading course data...</p>
                 </div>
               </div>
             ) : (
-              <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+              <div className="bg-black p-6 overflow-y-auto">
                 <div className='w-full h-auto flex flex-row items-center justify-between'>
                   <h2 className="text-xl font-semibold text-white mb-4">All Courses</h2>
                   <Link href='/admin/dashboard/courses/create' className=''>
@@ -79,19 +80,20 @@ const courses = () => {
                   {courseData.map((course: any, index: any) => (
                     <div
                       key={index}
-                      className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform"
+                      className="w-full max-w-sm h-auto flex flex-col p-6 shadow-md transition-all duration-300 bg-[#1a1a1a] text-white hover:transform"
                     >
                       <div className="flex justify-between items-start mb-3">
-                        <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.title}</div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap`}>
-                          {course.level}
-                        </span>
+                        <div className="text-xl font-semibold text-white leading-tight flex-1 pr-2">{course.title}</div>
+
                       </div>
 
-                      <div className="mb-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium`}>
+                      <div className="mb-3 w-full flex flex-row justify-between items-center">
+                        <Badge variant='secondary'>
                           {course.category}
-                        </span>
+                        </Badge>
+                        <Badge variant='secondary'>
+                          {course.level}
+                        </Badge>
                       </div>
 
                       <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.shortDesc}</div>
@@ -101,17 +103,17 @@ const courses = () => {
                           <span className="text-yellow-500">★</span>
                           <span className="text-yellow-600 font-medium">{course.rating}</span>
                         </div>
-                        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        <Badge variant='secondary'>
                           {course.duration}
-                        </div>
+                        </Badge>
                       </div>
 
                       <Link href={`/courses/${course.link}`} className="w-full">
                         <Button
                           variant="default"
-                          className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
+                          className="w-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] transition-all duration-200"
                         >
-                          Enroll Now
+                          Explore Course
                         </Button>
                       </Link>
                     </div>
