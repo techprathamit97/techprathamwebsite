@@ -24,16 +24,16 @@ const AdminAccount = () => {
 
                     <AdminSidebar />
 
-                    <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
+                    <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
 
                         <AdminTopBar />
 
-                        <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+                        <div className="bg-black p-6">
                             <h2 className="text-xl font-semibold text-white mb-4">Dashboard</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">Account ID</label>
-                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                    <div className="bg-[#1a1a1a] rounded-md px-3 py-2">
                                         <p className="text-purple-200 font-mono text-sm break-all">
                                             {userData._id || 'Not available'}
                                         </p>
@@ -42,7 +42,7 @@ const AdminAccount = () => {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
-                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                    <div className="bg-[#1a1a1a] rounded-md px-3 py-2">
                                         <p className="text-purple-200">
                                             {userData?.email || 'Not available'}
                                         </p>
