@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { signOut } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
 
 import { BellIcon, CaretDownIcon, Cross1Icon, GearIcon, HamburgerMenuIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';

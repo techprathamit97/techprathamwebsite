@@ -50,7 +50,7 @@ const CompletedCourse = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setActiveUserTab("course");
+        setActiveUserTab("completed");
     }, [setActiveUserTab]);
 
     useEffect(() => {
