@@ -10,6 +10,7 @@ import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from '@/components/ui/badge';
 
 interface Certificate {
     certificateId: string;
@@ -225,31 +226,24 @@ const Completed = () => {
                                 </div>
 
                                 {completedData.length > 0 ? (
-                                    <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full justify-items-center">
+                                    <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full">
                                         {completedData.map((course: Course, index: number) => (
-                                            <div
-                                                key={course._id || index}
-                                                className="w-full max-w-lg h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform hover:shadow-lg"
-                                            >
-                                                {/* Course Information */}
-                                                <div className="flex justify-between items-start mb-3">
-                                                    <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">
-                                                        {course.course_title}
-                                                    </div>
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
-                                                            {course.level}
-                                                        </span>
-                                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                            Completed
-                                                        </span>
-                                                    </div>
+                                            <div key={index} className="w-full max-w-lg h-auto flex flex-col p-6 transition-all duration-300 bg-[#1a1a1a]">
+
+                                                <div className="text-xl font-semibold text-white leading-tight flex-1 pr-2">
+                                                    {course.course_title}
                                                 </div>
 
-                                                <div className="mb-3">
-                                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                <div className="my-3 flex flex-row gap-2">
+                                                    <Badge variant={'secondary'}>
                                                         {course.category}
-                                                    </span>
+                                                    </Badge>
+                                                    <Badge variant={'secondary'}>
+                                                        {course.level}
+                                                    </Badge>
+                                                    <Badge variant={'secondary'}>
+                                                        Completed
+                                                    </Badge>
                                                 </div>
 
                                                 <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
@@ -317,7 +311,7 @@ const Completed = () => {
                                                 <div className="flex gap-2">
                                                     <Link href={`/courses/${course.course_link}`} className="flex-1">
                                                         <Button
-                                                            variant="outline"
+                                                            variant="manual"
                                                             className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
                                                         >
                                                             View Course
