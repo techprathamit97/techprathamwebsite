@@ -174,19 +174,19 @@ const Requests = () => {
 
           <AdminSidebar />
 
-          <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
+          <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
 
             <AdminTopBar />
 
             {isLoading ? (
-              <div className="min-h-screen flex items-center justify-center bg-gray-50">
+              <div className="min-h-screen flex items-center justify-center bg-black">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                   <p className="text-gray-600">Loading request data...</p>
                 </div>
               </div>
             ) : (
-              <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+              <div className="bg-black p-6">
                 <div className='w-full h-auto flex flex-row items-center justify-between'>
                   <h2 className="text-xl font-semibold text-white mb-4">Course Enrollment Requests</h2>
                   <div className="flex items-center gap-2">

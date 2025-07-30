@@ -17,6 +17,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 
 const verifyPaymentSchema = z.object({
     advance: z.boolean(),
@@ -411,19 +412,19 @@ const Enrolled = () => {
 
                     <AdminSidebar />
 
-                    <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
+                    <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
 
                         <AdminTopBar />
 
                         {isLoading ? (
-                            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                            <div className="min-h-screen flex items-center justify-center bg-black">
                                 <div className="text-center">
                                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                                     <p className="text-gray-600">Loading enrolled courses...</p>
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+                            <div className="bg-black p-6 overflow-y-auto">
                                 <div className='w-full h-auto flex flex-row items-center justify-between'>
                                     <h2 className="text-xl font-semibold text-white mb-4">Enrolled Courses</h2>
                                     <div className="flex items-center gap-2">
@@ -435,31 +436,24 @@ const Enrolled = () => {
                                 </div>
 
                                 {enrolledData.length > 0 ? (
-                                    <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full justify-items-center">
+                                    <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full">
                                         {enrolledData.map((enrollment: any, index: any) => (
-                                            <div
-                                                key={index}
-                                                className="w-full max-w-lg h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform hover:shadow-lg"
-                                            >
-                                                {/* Course Information */}
-                                                <div className="flex justify-between items-start mb-3">
-                                                    <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">
-                                                        {enrollment.course_title}
-                                                    </div>
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
-                                                            {enrollment.level}
-                                                        </span>
-                                                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                            In Progress
-                                                        </span>
-                                                    </div>
+                                            <div key={index} className="w-full max-w-lg h-auto flex flex-col p-6 transition-all duration-300 bg-[#1a1a1a]">
+
+                                                <div className="text-xl font-semibold text-white leading-tight flex-1 pr-2">
+                                                    {enrollment.course_title}
                                                 </div>
 
-                                                <div className="mb-3">
-                                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                <div className="my-3 flex flex-row gap-2">
+                                                    <Badge variant={'secondary'}>
                                                         {enrollment.category}
-                                                    </span>
+                                                    </Badge>
+                                                    <Badge variant={'secondary'}>
+                                                        {enrollment.level}
+                                                    </Badge>
+                                                    <Badge variant={'secondary'}>
+                                                        In Progress
+                                                    </Badge>
                                                 </div>
 
                                                 <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
@@ -538,7 +532,7 @@ const Enrolled = () => {
                                                     <Dialog>
                                                         <DialogTrigger asChild>
                                                             <Button
-                                                                variant='outline'
+                                                                variant='manual'
                                                                 onClick={() => handleGenerateInvoice(enrollment)}
                                                                 className="w-full border-gray-300 hover:bg-gray-50 transition-all duration-200"
                                                             >

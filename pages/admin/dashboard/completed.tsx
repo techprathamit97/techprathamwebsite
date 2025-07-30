@@ -206,14 +206,14 @@ const Completed = () => {
                         <AdminTopBar />
 
                         {isLoading ? (
-                            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                            <div className="min-h-screen flex items-center justify-center bg-black">
                                 <div className="text-center">
                                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                                     <p className="text-gray-600">Loading completed courses...</p>
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-[#242935] shadow-sm rounded-lg p-6 m-6">
+                            <div className="bg-black p-6 overflow-y-auto">
                                 <div className='w-full h-auto flex flex-row items-center justify-between'>
                                     <h2 className="text-xl font-semibold text-white mb-4">Completed Courses</h2>
                                     <div className="flex items-center gap-2">
