@@ -35,7 +35,7 @@ const UserAccount = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-300 mb-2">Account ID</label>
-                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                    <div className="bg-[#1a1a1a] rounded-md px-3 py-2 h-10 flex items-center">
                                         <p className="text-purple-200 font-mono text-sm break-all">
                                             {userData._id || 'Not available'}
                                         </p>
@@ -43,8 +43,8 @@ const UserAccount = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Session Email</label>
-                                    <div className="bg-[#1a1d29] rounded-md p-3">
+                                    <label className="block text-sm font-normal text-gray-300 mb-2">Session Email</label>
+                                    <div className="bg-[#1a1a1a] rounded-md px-3 py-2 h-10 flex items-center">
                                         <p className="text-purple-200">
                                             {session?.user?.email || 'Not available'}
                                         </p>

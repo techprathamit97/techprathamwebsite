@@ -22,27 +22,27 @@ const UserSidebar = () => {
 
                 <div className='w-full h-full flex-1 flex flex-col gap-2'>
 
-                    <Link href='/user/dashboard' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'dashboard' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/user/dashboard' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'dashboard' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <DashboardIcon className='w-6 h-6' />
                         <div>Dashboard</div>
                     </Link>
 
-                    <Link href='/user/dashboard/profile' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'profile' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/user/dashboard/profile' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'profile' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <AvatarIcon className='w-6 h-6' />
                         <div>Profile</div>
                     </Link>
 
-                    <Link href='/user/dashboard/courses' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'course' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/user/dashboard/courses' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'course' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <LaptopIcon className='w-6 h-6' />
                         <div>Courses</div>
                     </Link>
 
-                    <Link href='/user/dashboard/courses/completed' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'completed' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/user/dashboard/courses/completed' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'completed' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <CircleCheckBig className='w-6 h-6' />
                         <div>Completed</div>
                     </Link>
 
-                    <Link href='/user/dashboard/feedback' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'feedback' && 'bg-[#2D2D2E] hover:bg-[#3A3A3B] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                    <Link href='/user/dashboard/feedback' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${activeUserTab === 'feedback' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <EnvelopeClosedIcon className='w-6 h-auto' />
                         <span>Feedback</span>
                     </Link>
