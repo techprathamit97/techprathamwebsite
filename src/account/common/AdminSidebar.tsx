@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArchiveIcon, AvatarIcon, DashboardIcon, ExitIcon, GearIcon, LaptopIcon } from '@radix-ui/react-icons';
+import { ArchiveIcon, AvatarIcon, DashboardIcon, ExitIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { signOut } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
 import { BellIcon, CircleCheckBigIcon } from 'lucide-react';
+import { TbArticle } from 'react-icons/tb';
 
 const AdminSidebar = () => {
     const { currentTab, adminSideBar } = useContext(UserContext);
@@ -57,9 +58,9 @@ const AdminSidebar = () => {
                         <div>Account</div>
                     </Link>
 
-                    <Link href='/admin/dashboard/system' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'system' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
-                        <GearIcon className='w-6 h-6' />
-                        <div>System</div>
+                    <Link href='/admin/dashboard/articles' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'articles' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                        <TbArticle className='w-6 h-6' />
+                        <div>Articles</div>
                     </Link>
                 </div>
             </div>

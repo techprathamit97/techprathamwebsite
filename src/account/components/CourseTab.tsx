@@ -208,7 +208,7 @@ const CourseTab = () => {
         if (publicId) {
             return publicId;
         }
-        return '/home/members/avatar.png';
+        return '/course/course-banner.png';
     };
 
     const {
