@@ -26,7 +26,6 @@ const BlogsPage: NextPage = (props) => (
         <meta name="twitter:image" content="/navbar/techpratham.svg" />
       </Head>
 
-
       <BlogsView />
     </BlogsController>
   </div>
