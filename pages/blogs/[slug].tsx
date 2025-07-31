@@ -7,10 +7,12 @@ import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
 import Navbar from '@/src/common/Navbar/Navbar';
 import Footer from '@/src/common/Footer/Footer';
+import { CldImage } from 'next-cloudinary';
 
 interface ArticleData {
     slug: string;
     title: string;
+    image: string;
     description: string;
     postedBy: string;
     content: string;
@@ -202,6 +204,8 @@ const ArticlePage: React.FC = () => {
 
                                 {/* Article Header */}
                                 <div className="bg-white rounded-lg p-6 shadow-sm border mb-6">
+                                    <CldImage src={articleData.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover mb-10 border-4 border-white shadow' />
+
                                     <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                                         {articleData.title}
                                     </h1>

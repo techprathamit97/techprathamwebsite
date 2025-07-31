@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
+import { CldImage } from 'next-cloudinary';
 
 interface Article {
     slug: string;
     title: string;
+    image: string;
     description: string;
     postedBy: string;
     content: string;
@@ -82,7 +84,7 @@ const BlogSection: React.FC = () => {
 
     return (
         <div className='md:w-10/12 w-full flex flex-col items-start justify-start gap-1 py-10'>
-            <div className='w-full flex flex-col items-start justify-center gap-6'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6'>
                 {loading ? (
                     <>
                         <LoadingSkeleton />
@@ -94,11 +96,7 @@ const BlogSection: React.FC = () => {
                 ) : articles?.length > 0 ? (
                     articles.map((item: Article, index: number) => (
                         <div key={index} className="w-full h-auto bg-white p-4 rounded border shadow">
-                            <div>
-                                <Badge className='rounded shadow-none px-4 font-medium tracking-wider uppercase text-sm'>
-                                    Article
-                                </Badge>
-                            </div>
+                            <CldImage src={item.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover border-4 border-white shadow' />
                             <div className='text-xl font-semibold mt-2'>{item.title}</div>
                             <div className='text-sm text-gray-600'>
                                 {new Date(item.createdAt).toLocaleString('en-US', {
