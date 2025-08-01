@@ -91,26 +91,26 @@ const Footer = () => {
           <div className='flex flex-col gap-1'>
             <div className='text-base uppercase font-normal'>Company</div>
             <div className='flex flex-col capitalize text-sm font-light gap-1'>
-              <div>About Us</div>
-              <div>Courses</div>
-              <div>Contact Us</div>
-              <div>Careers</div>
-              <div>Corporate Training</div>
-              <div>FAQ's</div>
-              <div>Privacy Policy</div>
-              <div>Terms & Conditions</div>
-              <div>Refund/Cancellation Policy</div>
+              <Link href="/about">About Us</Link>
+              <Link href="/courses">Courses</Link>
+              <Link href="/contact-us">Contact Us</Link>
+              <Link href="/job-openings">Careers</Link>
+              <Link href="/corporate-training">Corporate Training</Link>
+              <Link href="/">FAQ's</Link>
+              <Link href="/privacy-policy">Privacy Policy</Link>
+              <Link href="/terms-and-conditions">Terms & Conditions</Link>
+              <Link href="/refund-cancellation-policy">Refund/Cancellation Policy</Link>
             </div>
           </div>
           <div className='flex flex-col gap-1'>
             <div className='text-base uppercase font-normal'>Student Zone</div>
             <div className='flex flex-col capitalize text-sm font-light gap-1'>
-              <div>Job Openings</div>
-              <div>Training Certificate</div>
-              <div>Reviews</div>
-              <div>Admission</div>
-              <div>Placement</div>
-              <div>Payment</div>
+              <Link href='/job-openings'>Job Openings</Link>
+              <Link href='/training-certificate'>Training Certificate</Link>
+              <Link href='/reviews'>Reviews</Link>
+              <Link href='/admission'>Admission</Link>
+              <Link href='/'>Placement</Link>
+              <Link href='/payment'>Payment</Link>
               <div>24/7 Technical Support</div>
             </div>
           </div>

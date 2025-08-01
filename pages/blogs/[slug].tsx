@@ -191,11 +191,11 @@ const ArticlePage: React.FC = () => {
                         <div className='flex flex-col w-full h-full pt-10'>
                             <div className="hidden md:block mb-4">
                                 <Link
-                                    href="/articles"
+                                    href="/blogs"
                                     className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
                                 >
                                     <ArrowLeft size={16} />
-                                    Back to Articles
+                                    Back to Blogs
                                 </Link>
                             </div>
                             <div className="flex w-full md:flex-row flex-col gap-6 h-full items-start justify-between">
