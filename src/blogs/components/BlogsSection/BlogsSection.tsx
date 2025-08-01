@@ -84,7 +84,7 @@ const BlogSection: React.FC = () => {
 
     return (
         <div className='md:w-10/12 w-full flex flex-col items-start justify-start gap-1 py-10'>
-            <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6'>
+            <div className='w-full grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6'>
                 {loading ? (
                     <>
                         <LoadingSkeleton />
@@ -95,32 +95,34 @@ const BlogSection: React.FC = () => {
                     <ErrorState />
                 ) : articles?.length > 0 ? (
                     articles.map((item: Article, index: number) => (
-                        <div key={index} className="w-full h-auto bg-white p-4 rounded border shadow">
-                            <CldImage src={item.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover border-4 border-white shadow' />
-                            <div className='text-xl font-semibold mt-2'>{item.title}</div>
-                            <div className='text-sm text-gray-600'>
-                                {new Date(item.createdAt).toLocaleString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                })}
-                            </div>
-                            <Separator className='h-[0.5px] my-2' />
-                            <div className='flex flex-row justify-between items-center w-full mt-8'>
-                                <div className='flex flex-col gap-2 w-full'>
-                                    <div className='text-sm font-medium capitalize text-gray-500 mb-2'>
-                                        Posted By: <br />
-                                        <span className='text-gray-900 text-base font-semibold'>
-                                            {item.postedBy}
-                                        </span>
-                                    </div>
-                                    <div className='flex flex-row w-full justify-between'>
-                                        <Link
-                                            href={`/blogs/${item.slug}`}
-                                            className='bg-[#1a1a1a] transition-all hover:bg-[#292929] text-white rounded-sm px-3 h-8 font-normal flex items-center justify-center'
-                                        >
-                                            Details
-                                        </Link>
+                        <div key={index} className="w-full h-auto bg-white rounded border shadow">
+                            <CldImage src={item.image} alt="Profile image" width={384} height={384} className='w-full h-64 object-cover' />
+                            <div className='p-4 flex flex-col gap-2'>
+                                <div className='text-lg font-semibold'>{item.title}</div>
+                                <div className='text-sm text-gray-600'>
+                                    {new Date(item.createdAt).toLocaleString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </div>
+                                <Separator className='h-[0.5px] my-2' />
+                                <div className='flex flex-row justify-between items-center w-full mt-4'>
+                                    <div className='flex flex-row items-center justify-between w-full'>
+                                        <div className='text-sm font-medium capitalize text-gray-500 mb-2'>
+                                            Posted By: <br />
+                                            <span className='text-gray-900 text-base font-semibold'>
+                                                {item.postedBy}
+                                            </span>
+                                        </div>
+                                        <div className='flex flex-row w-auto'>
+                                            <Link
+                                                href={`/blogs/${item.slug}`}
+                                                className='bg-[#1a1a1a] transition-all hover:bg-[#292929] text-white rounded-sm px-3 h-8 font-normal flex items-center justify-center'
+                                            >
+                                                Details
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

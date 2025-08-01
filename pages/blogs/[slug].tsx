@@ -188,85 +188,86 @@ const ArticlePage: React.FC = () => {
                     ) : error ? (
                         <ErrorState />
                     ) : articleData ? (
-                        <div className="flex w-full md:flex-row flex-col gap-6 h-auto">
-                            {/* Main Content */}
-                            <div className="flex flex-col md:w-10/12 w-full h-full">
-                                {/* Back button for desktop */}
-                                <div className="hidden md:block mb-4">
-                                    <Link
-                                        href="/articles"
-                                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
-                                    >
-                                        <ArrowLeft size={16} />
-                                        Back to Articles
-                                    </Link>
-                                </div>
+                        <div className='flex flex-col w-full h-full pt-10'>
+                            <div className="hidden md:block mb-4">
+                                <Link
+                                    href="/articles"
+                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
+                                >
+                                    <ArrowLeft size={16} />
+                                    Back to Articles
+                                </Link>
+                            </div>
+                            <div className="flex w-full md:flex-row flex-col gap-6 h-full items-start justify-between">
+                                <div className="flex flex-col md:w-9/12 w-full h-full">
 
-                                {/* Article Header */}
-                                <div className="bg-white rounded-lg p-6 shadow-sm border mb-6">
-                                    <CldImage src={articleData.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover mb-10 border-4 border-white shadow' />
+                                    <div className="bg-white rounded-lg shadow-sm border mb-6 overflow-hidden">
+                                        <CldImage src={articleData.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover rounded-t-lg' />
 
-                                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                                        {articleData.title}
-                                    </h1>
+                                        <div className="p-6 w-full h-auto flex flex-col">
+                                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                                                {articleData.title}
+                                            </h1>
 
-                                    {articleData.description && (
-                                        <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-                                            {articleData.description}
-                                        </p>
-                                    )}
+                                            {articleData.description && (
+                                                <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+                                                    {articleData.description}
+                                                </p>
+                                            )}
 
-                                    {/* Article Meta */}
-                                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar size={16} />
-                                            <span>
-                                                {new Date(articleData.createdAt).toLocaleString('en-US', {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric'
-                                                })}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <User size={16} />
-                                            <span>By {articleData.postedBy}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Article Content */}
-                                <div className="bg-white rounded-lg p-6 shadow-sm border">
-                                    <div
-                                        className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900"
-                                        dangerouslySetInnerHTML={{ __html: articleData.content }}
-                                    />
-                                </div>
-
-                                {/* Article Footer */}
-                                <div className="bg-white rounded-lg p-6 shadow-sm border mt-6">
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex justify-between items-center">
-                                            <div className="text-sm text-gray-600">
-                                                <span className="font-medium">Written by:</span>
-                                                <div className="text-gray-900 text-base font-semibold mt-1">
-                                                    {articleData.postedBy}
+                                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                                                <div className="flex items-center gap-2">
+                                                    <div className='w-6 h-6 bg-black text-white rounded-full grid place-content-center'>
+                                                        <Calendar size={16} className='w-4 h-4' />
+                                                    </div>
+                                                    <span>
+                                                        {new Date(articleData.createdAt).toLocaleString('en-US', {
+                                                            year: 'numeric',
+                                                            month: 'long',
+                                                            day: 'numeric'
+                                                        })}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <div className='w-6 h-6 bg-black text-white rounded-full grid place-content-center'>
+                                                        <User size={16} className='w-4 h-4' />
+                                                    </div>
+                                                    <span>By {articleData.postedBy}</span>
                                                 </div>
                                             </div>
-                                            <Link
-                                                href="/blogs"
-                                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
-                                            >
-                                                More Articles
-                                            </Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-white rounded-lg p-6 shadow-sm border">
+                                        <div
+                                            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900"
+                                            dangerouslySetInnerHTML={{ __html: articleData.content }}
+                                        />
+                                    </div>
+
+                                    <div className="bg-white rounded-lg p-6 shadow-sm border mt-6">
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex justify-between items-center">
+                                                <div className="text-sm text-gray-600">
+                                                    <span className="font-medium">Written by:</span>
+                                                    <div className="text-gray-900 text-base font-semibold mt-1">
+                                                        {articleData.postedBy}
+                                                    </div>
+                                                </div>
+                                                <Link
+                                                    href="/blogs"
+                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+                                                >
+                                                    More Articles
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Sidebar */}
-                            <div className="md:w-2/12 w-full">
-                                here content
+                                <div className="md:w-3/12 w-full h-auto border border-[#dddedd] shadow bg-white text-black rounded-lg p-4">
+                                    here advertisement and links can be placed
+                                </div>
                             </div>
                         </div>
                     ) : (
