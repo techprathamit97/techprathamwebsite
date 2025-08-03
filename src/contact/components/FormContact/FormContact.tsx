@@ -47,24 +47,28 @@ const FormContact = () => {
                     <div className='font-bold text-2xl'>Request a call for our executive.</div>
                 </div>
 
-                <div className='w-full'>
-                    <label htmlFor='fullName' className='block mb-1 text-sm font-medium text-gray-700'>Full Name</label>
-                    <Input {...register('fullName')} type='text' id='fullName' name='fullName' className='w-full p-2 indent-2 outline-none' placeholder='Enter your full name' required />
+                <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div className='w-full'>
+                        <label htmlFor='fullName' className='block mb-1 text-sm font-medium text-gray-700'>Full Name</label>
+                        <Input {...register('fullName')} type='text' id='fullName' name='fullName' className='w-full p-2 indent-2 outline-none' placeholder='Enter your full name' required />
+                    </div>
+
+                    <div className='w-full'>
+                        <label htmlFor='email' className='block mb-1 text-sm font-medium text-gray-700'>Email Address</label>
+                        <Input {...register('email')} type='email' id='email' name='email' className='w-full p-2 indent-2 outline-none' placeholder='Enter your email' required />
+                    </div>
                 </div>
 
-                <div className='w-full'>
-                    <label htmlFor='email' className='block mb-1 text-sm font-medium text-gray-700'>Email Address</label>
-                    <Input {...register('email')} type='email' id='email' name='email' className='w-full p-2 indent-2 outline-none' placeholder='Enter your email' required />
-                </div>
+                <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div className='w-full'>
+                        <label htmlFor='course' className='block mb-1 text-sm font-medium text-gray-700'>Course</label>
+                        <Input {...register('course')} type='text' id='course' name='course' className='w-full p-2 indent-2 outline-none' placeholder='Enter your course' required />
+                    </div>
 
-                <div className='w-full'>
-                    <label htmlFor='course' className='block mb-1 text-sm font-medium text-gray-700'>Course</label>
-                    <Input {...register('course')} type='text' id='course' name='course' className='w-full p-2 indent-2 outline-none' placeholder='Enter your course' required />
-                </div>
-
-                <div className='w-full'>
-                    <label htmlFor='phone' className='block mb-1 text-sm font-medium text-gray-700'>Phone Number</label>
-                    <Input {...register('phone')} type='text' id='phone' name='phone' className='w-full p-2 indent-2 outline-none' placeholder='Enter your phone number' required />
+                    <div className='w-full'>
+                        <label htmlFor='phone' className='block mb-1 text-sm font-medium text-gray-700'>Phone Number</label>
+                        <Input {...register('phone')} type='text' id='phone' name='phone' className='w-full p-2 indent-2 outline-none' placeholder='Enter your phone number' required />
+                    </div>
                 </div>
 
                 <div className='w-full'>
