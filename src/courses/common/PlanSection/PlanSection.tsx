@@ -10,7 +10,7 @@ const PlanSection = () => {
                 <div className="relative grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
                     {training_data?.map((item: any, index: any) => (
                         <div className="w-full py-4 px-5 cursor-pointer border rounded shadow-sm bg-white text-black" key={index}>
-                            <Image src={item.icons} alt='' width={40} height={40} className='w-12 mb-3' />
+                            <Image src={item.icons} alt='' width={40} height={40} className='w-16 mb-3' />
                             <h3 className="text-base md:text-lg font-medium text-gray-900 tracking-tight">
                                 {item.que}
                             </h3>
