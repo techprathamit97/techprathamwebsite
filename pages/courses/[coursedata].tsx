@@ -15,6 +15,8 @@ import ProjectSection from '@/src/courses/common/ProjectSection/ProjectSection';
 import AssesmentSection from '@/src/courses/common/AssesmentSection/AssesmentSection';
 import CertificateSection from '@/src/courses/common/CertificateSection/CertificateSection';
 import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
+import ToolTip from '@/components/common/ToolTip/ToolTip';
 
 interface Curriculum {
   que: string;
@@ -50,7 +52,7 @@ interface Course {
 const CourseDataPage: React.FC = () => {
   const router = useRouter();
   const { coursedata } = router.query;
-  
+
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -66,7 +68,7 @@ const CourseDataPage: React.FC = () => {
 
       try {
         const response = await fetch(`/api/course/link?link=${encodeURIComponent(coursedata)}`);
-        
+
         if (!response.ok) {
           if (response.status === 404) {
             setError('Course not found');
@@ -174,6 +176,8 @@ const CourseDataPage: React.FC = () => {
       <Navbar />
 
       <div className='w-full h-auto flex flex-col items-center justify-center md:pt-28 sm:pt-24 pt-10'>
+        <ReachForm />
+        <ToolTip />
         <HeaderSection course={course} />
         <IntroSection course={course} />
         <PlanSection />

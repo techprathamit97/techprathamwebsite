@@ -7,6 +7,8 @@ import FormContact from '../components/FormContact/FormContact';
 import AddressContact from '../components/AddressContact/AddressContact';
 import BannerContact from '../components/BannerContact/BannerContact';
 import EmailContact from '../components/EmailContact/EmailContact';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
+import ToolTip from '@/components/common/ToolTip/ToolTip';
 
 const ContactView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -17,6 +19,10 @@ const ContactView = () => {
 
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center relative'>
+
+      <ReachForm />
+
+      <ToolTip />
 
       <HeaderContact />
 

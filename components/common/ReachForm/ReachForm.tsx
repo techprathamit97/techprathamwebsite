@@ -42,8 +42,7 @@ const ReachForm = () => {
                 <div>Reach Out to Us</div>
                 <ChevronDownIcon className={`w-6 h-6 transition-transform duration-700 ease-in-out ${isOpen ? '' : 'rotate-180'}`} />
             </div>
-            
-            <div className={`bg-white text-black flex flex-col items-center justify-center gap-4 capitalize transition-all duration-700 ease-in-out overflow-hidden ${
+            <div className={`bg-white text-black flex flex-col items-center justify-center gap-4 capitalize transition-all duration-700 ease-in-out overflow-hidden shadow ${
                 isOpen ? 'max-h-[600px] opacity-100 py-2 px-4 translate-y-0' : 'max-h-0 opacity-0 py-0 px-4 -translate-y-4'
             }`}>
                 <div className='flex flex-row items-center justify-start gap-2'>

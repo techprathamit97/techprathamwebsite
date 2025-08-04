@@ -18,6 +18,8 @@ import BlogsHome from '../components/BlogsHome/BlogsHome';
 import ContactHome from '../components/ContactHome/ContactHome';
 import HeroHome from '../components/HeroHome/HeroHome';
 import { toast } from 'sonner';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
+import ToolTip from '@/components/common/ToolTip/ToolTip';
 
 interface Course {
   id: string;
@@ -81,6 +83,10 @@ const IndexView = () => {
 
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center relative'>
+
+      <ReachForm />
+
+      <ToolTip />
 
       <HeroHome />
 

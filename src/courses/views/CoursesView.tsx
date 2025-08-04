@@ -5,19 +5,21 @@ import { UserContext } from '@/context/userContext';
 import HeaderCourse from '../components/HeaderCourse/HeaderCourse';
 import MainCourse from '../components/MainCourse/MainCourse';
 import { toast } from 'sonner';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
+import ToolTip from '@/components/common/ToolTip/ToolTip';
 
 const CoursesView = () => {
   const { setActiveTab } = useContext(UserContext);
   const [course, setCourse] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect(() => {
     const fetchCourseData = async () => {
       setIsLoading(true);
       try {
         const res = await fetch(`/api/course/fetch`);
         if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
-        
+
         const data = await res.json();
         setCourse(data);
       } catch (error: any) {
@@ -27,7 +29,7 @@ const CoursesView = () => {
         setIsLoading(false);
       }
     };
-    
+
     fetchCourseData();
   }, []);
 
@@ -37,6 +39,10 @@ const CoursesView = () => {
 
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
+
+      <ReachForm />
+
+      <ToolTip />
 
       <HeaderCourse />
 

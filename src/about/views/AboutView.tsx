@@ -7,6 +7,8 @@ import MissionAbout from '../components/MissionAbout/MissionAbout';
 import SpecialityAbout from '../components/SpecialityAbout/SpecialityAbout';
 import BannerAbout from '../components/BannerAbout/BannerAbout';
 import TeamsAbout from '../components/TeamsAbout/TeamsAbout';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
+import ToolTip from '@/components/common/ToolTip/ToolTip';
 
 const AboutView = () => {
   const { setActiveTab } = useContext(UserContext);
@@ -17,6 +19,10 @@ const AboutView = () => {
 
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center'>
+
+      <ReachForm />
+
+      <ToolTip />
 
       <HeaderAbout />
 
