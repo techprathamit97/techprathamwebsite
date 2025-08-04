@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { PhoneIcon } from 'lucide-react';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 

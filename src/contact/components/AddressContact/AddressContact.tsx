@@ -105,10 +105,7 @@ const AddressContact = () => {
                     </div>
                 </div>
             </div>
-            <div className='col-span-1 w-full h-auto py-16 flex flex-col gap-5 items-center justify-center'>
-                <div className='w-full h-auto flex flex-col items-start justify-center'>
-                    <div className='text-2xl font-semibold border-b-2 border-b-[#C6151D] text-[#C6151D]'>Request Callback</div>
-                </div>
+            <div className='col-span-1 w-full h-auto py-16 flex flex-col gap-5 items-center justify-center -mt-40'>
                 <FormContact />
                 <div
                     className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl mt-10'
