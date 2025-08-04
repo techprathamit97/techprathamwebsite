@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { UserProvider } from '@/context/userContext';
 import ToolTip from '@/components/common/ToolTip/ToolTip';
+import ReachForm from '@/components/common/ReachForm/ReachForm';
 
 export const metadata: Metadata = {
     title: "India's No.1 Best IT Training Institute in India | Corporate Learning",
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <SessionProvider session={pageProps.session}>
             <UserProvider>
                 <Component {...pageProps} />
+                <ReachForm />
                 <ToolTip />
             </UserProvider>
         </SessionProvider>
