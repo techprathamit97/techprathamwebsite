@@ -149,13 +149,11 @@ const Navbar: React.FC = () => {
       <div className={`w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white border-b border-b-gray-100 z-20`}>
         <nav className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors'>About Us</Link>
-          <Link href='/training-certificate' className='cursor-pointer hover:text-red-700 transition-colors'>Training Certificate</Link>
           <Link href='/job-openings' className='cursor-pointer hover:text-red-700 transition-colors'>Job Openings</Link>
           <Link href='/reviews' className='cursor-pointer hover:text-red-700 transition-colors'>Reviews</Link>
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors'>Blogs</Link>
           <Link href='/payment' className='cursor-pointer hover:text-red-700 transition-colors'>Payment</Link>
           <Link href='/contact-us' className='cursor-pointer hover:text-red-700 transition-colors'>Contact Us</Link>
-          <Link href='https://completedads.in/' target='_blank' className='cursor-pointer hover:text-red-700 transition-colors'>Student Zone</Link>
           {loading ? (
             <span className='cursor-pointer opacity-50'>Loading...</span>
           ) : authenticated ? (
@@ -167,7 +165,9 @@ const Navbar: React.FC = () => {
           ) : (
             <Link href='/auth/login' className='cursor-pointer hover:text-red-700 transition-colors'>Login</Link>
           )}
-          <div onClick={() => signOut()} className='cursor-pointer hover:text-red-700'>Sign Out</div>
+          {authenticated && (
+            <div onClick={() => signOut()} className='cursor-pointer hover:text-red-700'>Sign Out</div>
+          )}
         </nav>
       </div>
 

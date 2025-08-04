@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ToolTip = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,18 +17,18 @@ const ToolTip = () => {
             </div>
             {isOpen && (
                 <div className='w-auto flex flex-col gap-2 bottom-28 left-10 fixed z-[100]'>
-                    <div className='w-full flex flex-row gap-2 items-center justify-center relative'>
+                    <Link href='https://wa.me/8882178896' className='w-full flex flex-row gap-2 items-center justify-center relative'>
                         <div className='w-16 h-16 rounded-full bg-white text-black shadow border border-[#dddedd] p-2'>
                             <Image src='/home/contact/whatsapp.png' alt='' width={50} height={50} className='w-full h-full object-cover' />
                         </div>
                         <p className='bg-black text-white px-2 py-1 rounded absolute left-20 w-auto text-nowrap'>Chat with us</p>
-                    </div>
-                    <div className='w-full flex flex-row gap-2 items-center justify-center relative'>
+                    </Link>
+                    <Link href='https://wa.me/8882178896' className='w-full flex flex-row gap-2 items-center justify-center relative'>
                         <div className='w-16 h-16 rounded-full bg-white text-black shadow border border-[#dddedd] p-2'>
                             <Image src='/home/contact/call-us.png' alt='' width={50} height={50} className='w-full h-full object-cover' />
                         </div>
                         <p className='bg-black text-white px-2 py-1 rounded absolute left-20 w-auto text-nowrap'>Call us now</p>
-                    </div>
+                    </Link>
                 </div>
             )}
         </div>
