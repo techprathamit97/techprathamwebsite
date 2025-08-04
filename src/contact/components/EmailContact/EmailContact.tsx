@@ -8,19 +8,19 @@ const EmailContact = () => {
             title: "General Information",
             description: "Get in touch with our team for general questions, partnerships, or collaboration opportunities.",
             email: "info@techpratham.com",
-            icon: <EnvelopeClosedIcon className="w-5 h-5 text-blue-600" />
+            icon: <EnvelopeClosedIcon className="w-5 h-5 text-[#C6151D]" />
         },
         {
             title: "Human Resources",
             description: "Career opportunities, job applications, and HR-related inquiries.",
             email: "hr@techpratham.com",
-            icon: <ChatBubbleIcon className="w-5 h-5 text-green-600" />
+            icon: <ChatBubbleIcon className="w-5 h-5 text-[#C6151D]" />
         },
         {
             title: "Accounts & Billing",
             description: "Questions about invoices, payments, billing, and financial matters.",
             email: "accounts@techpratham.com",
-            icon: <QuestionMarkCircledIcon className="w-5 h-5 text-purple-600" />
+            icon: <QuestionMarkCircledIcon className="w-5 h-5 text-[#C6151D]" />
         }
     ];
 
@@ -39,7 +39,7 @@ const EmailContact = () => {
                     <div
                         key={index}
                         onClick={() => handleEmailClick(option.email)}
-                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl bg-white text-black hover:shadow-lg hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 cardShadow flex flex-col"
+                        className="flex-1 group py-8 px-6 cursor-pointer border border-gray-200 rounded-xl bg-white text-black hover:border-gray-300 transition-all duration-300 flex flex-col"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
@@ -55,8 +55,8 @@ const EmailContact = () => {
                             {option.description}
                         </p>
 
-                        <div className="flex items-center gap-2 text-sm font-medium text-blue-600 group-hover:text-blue-700">
-                            <EnvelopeClosedIcon className="w-4 h-4" />
+                        <div className="flex items-center gap-2 text-base font-medium text-[#C6151D]">
+                            <EnvelopeClosedIcon className="w-5 h-5" />
                             <span>{option.email}</span>
                         </div>
                     </div>

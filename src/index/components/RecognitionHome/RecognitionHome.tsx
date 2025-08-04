@@ -10,7 +10,6 @@ const RecognitionHome = () => {
 
       <div className='w-full h-auto flex flex-col text-center gap-2'>
         <div className="md:text-3xl text-2xl md:font-semibold font-medium text-transparent bg-clip-text bg-gradient-to-tl from-[#600A0E] to-[#C6151D] capitalize">Government Recognition</div>
-        <div className="md:text-lg text-base text-gray-600 max-w-2xl mx-auto">Elevate your career with prestigious credentials</div>
       </div>
 
       <div className='w-10/12 h-auto flex flex-col items-center justify-center'>
@@ -69,8 +68,8 @@ const RecognitionHome = () => {
         </div>
 
         <div className='mt-10'>
-          <Button variant={'manual'} className='rounded-full pl-6'>
-            <span>Enquiry Now</span>
+          <Button variant={'manual'} className='rounded-full pl-6 capitalize'>
+            <span>Book your free consultation</span>
             <ChevronRightIcon />
           </Button>
         </div>

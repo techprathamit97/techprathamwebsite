@@ -107,15 +107,10 @@ const AddressContact = () => {
             </div>
             <div className='col-span-1 w-full h-auto py-16 flex flex-col gap-5 items-center justify-center -mt-40'>
                 <FormContact />
-                <div
-                    className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl mt-10'
-                    style={{
-                        backgroundImage: 'linear-gradient(to top left, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff3399)'
-                    }}
-                >
-                    <div className='row-span-1 w-64 h-auto flex flex-col gap-3 p-4 rounded-lg bg-[#eee] relative'>
+                <div className='p-[3px] shadow flex items-center justify-center w-auto h-auto rounded-xl bg-gradient-to-tl from-[#600A0E] to-[#C6151D] mt-4'>
+                    <div className='row-span-1 w-64 h-auto flex flex-col gap-3 p-4 rounded-lg relative'>
                         <Image src='/support/qr-contact.svg' alt='' width={80} height={80} className='w-56 h-56 bg-white p-2' />
-                        <div className='px-4 py-1 rounded-full bg-white text-black font-medium shadow'>Post Your Feedback</div>
+                        <div className='px-4 py-1 rounded-full bg-white text-black font-medium shadow text-center'>Post Your Feedback</div>
                     </div>
                 </div>
             </div>

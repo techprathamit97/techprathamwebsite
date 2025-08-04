@@ -1,17 +1,11 @@
+import Image from 'next/image';
 import React from 'react';
 
 const PaymentHeader = () => {
     return (
-        <div className='w-full h-auto flex flex-col items-center justify-center gap-6 lg:pt-40 md:pt-24 sm:pt-24 pt-10 pb-10 bg-gradient-to-tl from-[#600a0e] to-[#C6151D] text-white'>
-            <div className='px-4 py-1 rounded border-2 border-white text-white uppercase font-semibold'>
-                Payment
-            </div>
-            <div className='w-11/12 text-center lg:text-5xl md:text-4xl sm:text-3xl text-xl font-bold'>
-                Online Fee Payment
-            </div>
-            <div className='md:w-9/12 w-11/12 text-center text-base md:text-lg'>
-                Secure, Safe & Saral
-            </div>
+        <div className='mt-24 w-full h-auto flex items-center justify-center relative'>
+            <Image src='/header/payment.png' alt='' width={1920} height={1080} className='w-full h-96 object-cover' />
+            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:text-6xl text-2xl font-semibold text-white text-center'>Payment</div>
         </div>
 
     )

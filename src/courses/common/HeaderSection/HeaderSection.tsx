@@ -14,7 +14,7 @@ const HeaderSection = ({ course }: any) => {
                 <ArrowTopRightIcon className='w-8 h-8' />
             </Link>
 
-            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 items-center py-20">
+            <div className="md:w-10/12 w-11/12 h-auto grid md:grid-cols-2 grid-cols-1 gap-10 items-center py-16">
                 <div className='w-full h-auto'>
                     <div className='flex flex-row gap-2 items-center justify-start mb-6'>
                         <span>Courses</span>
