@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Plus, Trash2, Star } from 'lucide-react';
 import { z } from 'zod';
@@ -15,6 +15,11 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import AdminLoader from '@/src/account/common/AdminLoader';
+import SignOut from '@/src/account/common/SignOut';
+import AdminSidebar from '@/src/account/common/AdminSidebar';
+import AdminTopBar from '@/src/account/common/AdminTopBar';
+import { UserContext } from '@/context/userContext';
 
 // Zod Schema
 const curriculumSchema = z.object({
@@ -176,6 +181,7 @@ const UpdateCoursePage = () => {
   const [courseId, setCourseId] = useState<string>("");
   const router = useRouter();
   const { course: courseLink } = router.query;
+  const { authenticated, isAdmin } = useContext(UserContext);
 
   const form = useForm<CourseFormData>({
     resolver: zodResolver(courseSchema),
@@ -215,7 +221,7 @@ const UpdateCoursePage = () => {
 
       try {
         const response = await fetch(`/api/course/link?link=${encodeURIComponent(courseLink)}`);
-        
+
         if (!response.ok) {
           if (response.status === 404) {
             setError('Course not found');
@@ -245,15 +251,15 @@ const UpdateCoursePage = () => {
           link: courseData.link || '',
           videoLink: courseData.videoLink || '',
           assesment_link: courseData.assesment_link || '',
-          curriculum_data: courseData.curriculum_data && courseData.curriculum_data.length > 0 
-            ? courseData.curriculum_data 
+          curriculum_data: courseData.curriculum_data && courseData.curriculum_data.length > 0
+            ? courseData.curriculum_data
             : [{ que: '', ans: '', topics: [] }],
           skills_data: courseData.skills_data || [],
-          faqs_data: courseData.faqs_data && courseData.faqs_data.length > 0 
-            ? courseData.faqs_data 
+          faqs_data: courseData.faqs_data && courseData.faqs_data.length > 0
+            ? courseData.faqs_data
             : [{ que: '', ans: '' }],
-          project_data: courseData.project_data && courseData.project_data.length > 0 
-            ? courseData.project_data 
+          project_data: courseData.project_data && courseData.project_data.length > 0
+            ? courseData.project_data
             : [{ title: '', objective: '' }],
         });
 
@@ -341,7 +347,7 @@ const UpdateCoursePage = () => {
     setIsSubmitting(true);
     try {
       console.log('Updating form data:', data);
-      
+
       const response = await fetch(`/api/course/update/${courseId}`, {
         method: 'PUT',
         headers: {
@@ -410,470 +416,490 @@ const UpdateCoursePage = () => {
 
   return (
     <>
-      <Head>
-        <title>Update Course - {form.watch('title')} | TechPratham Admin</title>
-      </Head>
-      <div className="container mx-auto px-4 py-8">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl">Update Course</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Basic Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Course Title *</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Enter the title of your course" />
-                        </FormControl>
-                        <FormDescription>
-                          Enter the title of your course
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+      <React.Fragment>
+        {loading ? (
+          <AdminLoader />
+        ) : (!authenticated || !isAdmin) ? (
+          <SignOut />
+        ) : (
+          <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-                  <FormField
-                    control={form.control}
-                    name="category"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Category *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            <AdminSidebar />
+
+            <div className='bg-[#000] flex flex-col w-full h-full md:relative fixed'>
+
+              <AdminTopBar />
+
+              <div className='w-full h-full p-6 overflow-auto'>
+                <Head>
+                  <title>Update Course - {form.watch('title')} | TechPratham Admin</title>
+                </Head>
+                <div className="container mx-auto">
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-2xl">Update Course</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                          {/* Basic Information */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="title"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Course Title *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} placeholder="Enter the title of your course" />
+                                  </FormControl>
+                                  <FormDescription>
+                                    Enter the title of your course
+                                  </FormDescription>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="category"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Category *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          {/* Image Upload */}
+                          <div>
+                            {publicId ? (
+                              <CldImage
+                                width="400"
+                                height="300"
+                                src={publicId}
+                                sizes="100vw"
+                                alt="Course Image"
+                              />
+                            ) : (
+                              <Image
+                                src={getProfileImageUrl()}
+                                alt="Course Image"
+                                width={400}
+                                height={300}
+                                className="rounded-lg"
+                              />
+                            )}
+
+                            <CldUploadWidget
+                              uploadPreset="course_images"
+                              onSuccess={(result: any) => {
+                                if (result.event === 'success' && result.info?.secure_url) {
+                                  setPublicId(result.info.secure_url);
+                                }
+                              }}
+                            >
+                              {({ open }) => {
+                                return (
+                                  <Button type="button" onClick={() => open()} className='w-full max-w-80'>
+                                    <FaUpload className="mr-2" />
+                                    Upload an Image
+                                  </Button>
+                                );
+                              }}
+                            </CldUploadWidget>
+                          </div>
+
+                          <FormField
+                            control={form.control}
+                            name="shortDesc"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Short Description *</FormLabel>
+                                <FormControl>
+                                  <Textarea {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Detailed Description *</FormLabel>
+                                <FormControl>
+                                  <Textarea className='h-40' {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          {/* Course Details */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="duration"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Duration *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="level"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Level *</FormLabel>
+                                  <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select level" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Beginner">Beginner</SelectItem>
+                                      <SelectItem value="Intermediate">Intermediate</SelectItem>
+                                      <SelectItem value="Advanced">Advanced</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="rating"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Rating *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          {/* Additional Required Fields */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="curriculum"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Curriculum Link *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="interview"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Interview Link *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          <FormField
+                            control={form.control}
+                            name="placement_report"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Placement Report *</FormLabel>
+                                <FormControl>
+                                  <Textarea {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          {/* Links */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="link"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Course Link *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="videoLink"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Video Link *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="assesment_link"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Assessment Link *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Skills Section */}
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Skills You'll Learn</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex gap-2 mb-4">
+                            <Input
+                              value={newSkill}
+                              onChange={(e) => setNewSkill(e.target.value)}
+                              placeholder="Add a skill"
+                              onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())}
+                            />
+                            <Button type="button" onClick={addSkill} variant="outline">
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          {skills.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {skills.map((skill, index) => (
+                                <div key={index} className="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded">
+                                  <span>{skill}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeSkill(index)}
+                                    className="text-red-500 hover:text-red-700"
+                                  >
+                                    <Trash2 className="h-3 w-3" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+
+                      {/* Curriculum Section */}
+                      <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle>Curriculum Details</CardTitle>
+                          <Button
+                            type="button"
+                            onClick={() => appendCurriculum({ que: '', ans: '', topics: [] })}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add Topic
+                          </Button>
+                        </CardHeader>
+                        <CardContent>
+                          {curriculumFields.map((field, index) => (
+                            <CurriculumTopicItem
+                              key={field.id}
+                              form={form}
+                              index={index}
+                              canRemove={curriculumFields.length > 1}
+                              onRemove={() => removeCurriculum(index)}
+                            />
+                          ))}
+                        </CardContent>
+                      </Card>
+
+                      {/* FAQs Section */}
+                      <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle>Frequently Asked Questions</CardTitle>
+                          <Button
+                            type="button"
+                            onClick={() => appendFaq({ que: '', ans: '' })}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add FAQ
+                          </Button>
+                        </CardHeader>
+                        <CardContent>
+                          {faqFields.map((field, index) => (
+                            <Card key={field.id} className="mb-4">
+                              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">FAQ {index + 1}</CardTitle>
+                                {faqFields.length > 1 && (
+                                  <Button
+                                    type="button"
+                                    onClick={() => removeFaq(index)}
+                                    variant="destructive"
+                                    size="sm"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </CardHeader>
+                              <CardContent>
+                                <FormField
+                                  control={form.control}
+                                  name={`faqs_data.${index}.que`}
+                                  render={({ field }) => (
+                                    <FormItem className="mb-4">
+                                      <FormLabel>Question</FormLabel>
+                                      <FormControl>
+                                        <Input {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+
+                                <FormField
+                                  control={form.control}
+                                  name={`faqs_data.${index}.ans`}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Answer</FormLabel>
+                                      <FormControl>
+                                        <Textarea {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </CardContent>
+                      </Card>
+
+                      {/* Project Section */}
+                      <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle>Projects</CardTitle>
+                          <Button
+                            type="button"
+                            onClick={() => appendProject({ title: '', objective: '' })}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add Project
+                          </Button>
+                        </CardHeader>
+                        <CardContent>
+                          {projectFields.map((field, index) => (
+                            <Card key={field.id} className="mb-4">
+                              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">Project {index + 1}</CardTitle>
+                                {projectFields.length > 1 && (
+                                  <Button
+                                    type="button"
+                                    onClick={() => removeProject(index)}
+                                    variant="destructive"
+                                    size="sm"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </CardHeader>
+                              <CardContent>
+                                <FormField
+                                  control={form.control}
+                                  name={`project_data.${index}.title`}
+                                  render={({ field }) => (
+                                    <FormItem className="mb-4">
+                                      <FormLabel>Title</FormLabel>
+                                      <FormControl>
+                                        <Input {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+
+                                <FormField
+                                  control={form.control}
+                                  name={`project_data.${index}.objective`}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Objective</FormLabel>
+                                      <FormControl>
+                                        <Textarea {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </CardContent>
+                      </Card>
+
+                      {/* Submit Button */}
+                      <Card>
+                        <CardContent className="pt-6">
+                          <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting ? 'Updating Course...' : 'Update Course'}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </form>
+                  </Form>
                 </div>
-
-                {/* Image Upload */}
-                <div>
-                  {publicId ? (
-                    <CldImage
-                      width="400"
-                      height="300"
-                      src={publicId}
-                      sizes="100vw"
-                      alt="Course Image"
-                    />
-                  ) : (
-                    <Image
-                      src={getProfileImageUrl()}
-                      alt="Course Image"
-                      width={400}
-                      height={300}
-                      className="rounded-lg"
-                    />
-                  )}
-
-                  <CldUploadWidget
-                    uploadPreset="course_images"
-                    onSuccess={(result: any) => {
-                      if (result.event === 'success' && result.info?.secure_url) {
-                        setPublicId(result.info.secure_url);
-                      }
-                    }}
-                  >
-                    {({ open }) => {
-                      return (
-                        <Button type="button" onClick={() => open()} className='w-full max-w-80'>
-                          <FaUpload className="mr-2" />
-                          Upload an Image
-                        </Button>
-                      );
-                    }}
-                  </CldUploadWidget>
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="shortDesc"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Short Description *</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Detailed Description *</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Course Details */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="duration"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Duration *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="level"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Level *</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select level" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="Beginner">Beginner</SelectItem>
-                            <SelectItem value="Intermediate">Intermediate</SelectItem>
-                            <SelectItem value="Advanced">Advanced</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="rating"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Rating *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* Additional Required Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="curriculum"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Curriculum Link *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="interview"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Interview Link *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="placement_report"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Placement Report *</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Links */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="link"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Course Link *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="videoLink"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Video Link *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="assesment_link"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Assessment Link *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Skills Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Skills You'll Learn</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2 mb-4">
-                  <Input
-                    value={newSkill}
-                    onChange={(e) => setNewSkill(e.target.value)}
-                    placeholder="Add a skill"
-                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())}
-                  />
-                  <Button type="button" onClick={addSkill} variant="outline">
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
-                {skills.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill, index) => (
-                      <div key={index} className="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded">
-                        <span>{skill}</span>
-                        <button
-                          type="button"
-                          onClick={() => removeSkill(index)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Curriculum Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle>Curriculum Details</CardTitle>
-                <Button
-                  type="button"
-                  onClick={() => appendCurriculum({ que: '', ans: '', topics: [] })}
-                  variant="outline"
-                  size="sm"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Topic
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {curriculumFields.map((field, index) => (
-                  <CurriculumTopicItem
-                    key={field.id}
-                    form={form}
-                    index={index}
-                    canRemove={curriculumFields.length > 1}
-                    onRemove={() => removeCurriculum(index)}
-                  />
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* FAQs Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle>Frequently Asked Questions</CardTitle>
-                <Button
-                  type="button"
-                  onClick={() => appendFaq({ que: '', ans: '' })}
-                  variant="outline"
-                  size="sm"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add FAQ
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {faqFields.map((field, index) => (
-                  <Card key={field.id} className="mb-4">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">FAQ {index + 1}</CardTitle>
-                      {faqFields.length > 1 && (
-                        <Button
-                          type="button"
-                          onClick={() => removeFaq(index)}
-                          variant="destructive"
-                          size="sm"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </CardHeader>
-                    <CardContent>
-                      <FormField
-                        control={form.control}
-                        name={`faqs_data.${index}.que`}
-                        render={({ field }) => (
-                          <FormItem className="mb-4">
-                            <FormLabel>Question</FormLabel>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name={`faqs_data.${index}.ans`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Answer</FormLabel>
-                            <FormControl>
-                              <Textarea {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </CardContent>
-                  </Card>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Project Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle>Projects</CardTitle>
-                <Button
-                  type="button"
-                  onClick={() => appendProject({ title: '', objective: '' })}
-                  variant="outline"
-                  size="sm"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Project
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {projectFields.map((field, index) => (
-                  <Card key={field.id} className="mb-4">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Project {index + 1}</CardTitle>
-                      {projectFields.length > 1 && (
-                        <Button
-                          type="button"
-                          onClick={() => removeProject(index)}
-                          variant="destructive"
-                          size="sm"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </CardHeader>
-                    <CardContent>
-                      <FormField
-                        control={form.control}
-                        name={`project_data.${index}.title`}
-                        render={({ field }) => (
-                          <FormItem className="mb-4">
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                              <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name={`project_data.${index}.objective`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Objective</FormLabel>
-                            <FormControl>
-                              <Textarea {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </CardContent>
-                  </Card>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Submit Button */}
-            <Card>
-              <CardContent className="pt-6">
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Updating Course...' : 'Update Course'}
-                </Button>
-              </CardContent>
-            </Card>
-          </form>
-        </Form>
-      </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </React.Fragment>
     </>
   );
 };
