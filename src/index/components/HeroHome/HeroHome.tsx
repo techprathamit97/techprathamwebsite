@@ -15,8 +15,8 @@ const HeroHome = () => {
                 </div>
             </div>
 
-            <div className='h-full w-11/12 z-10 py-10 flex flex-col items-start justify-end'>
-                <div className='md:w-1/2 w-full lg:text-6xl md:text-5xl text-2xl font-semibold capitalize libre-baskerville-bold'>
+            <div className='h-full w-10/12 z-10 py-10 flex flex-col items-start justify-end'>
+                <div className='md:w-7/12 w-full lg:text-6xl md:text-5xl text-2xl font-semibold capitalize libre-baskerville-bold'>
                     <span className='text-orange-500'>"<span className='text-white'>Education is not</span> Luxury <span className='text-white'>its necessity.</span>"</span>
                 </div>
             </div>

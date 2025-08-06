@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button'
-import { ChevronRightIcon } from 'lucide-react';
+import { CalendarDays, ChevronRightIcon, Handshake } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
+import { FaYoutube } from 'react-icons/fa';
 
 interface Course {
   id: string;
@@ -70,11 +71,11 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
-          {selectedCourses.slice(0, 3).map((course, index) => (
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center pt-8">
+          {selectedCourses.slice(0, 4).map((course, index) => (
             <div
               key={`${course.id}-${index}`}
-              className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white hover:transform"
+              className="w-full max-w-sm h-auto flex flex-col p-2 border rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white"
             >
               <Image
                 src={course?.image}
@@ -83,24 +84,29 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
                 height={200}
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
-              <div className="flex justify-between items-start mb-3">
-                <div className="text-xl font-semibold text-gray-800 leading-tight">{course.title}</div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
-                  {course.level}
-                </span>
-              </div>
 
-              <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">
-                {course.shortDesc}
-              </div>
-
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-1">
-                  <span className="text-yellow-500">★</span>
+                  <span className="text-yellow-600 font-medium">Rating </span>
+                  <span className="text-yellow-500 text-2xl">★★★★★</span>
                   <span className="text-yellow-600 font-medium">{course.rating}</span>
                 </div>
-                <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                  {course.duration}
+              </div>
+
+              <div className="text-base font-semibold text-gray-800 leading-tight w-full">{course.title}</div>
+
+              <div className="flex flex-col gap-1 items-start my-4">                
+                <div className="text-sm text-gray-800 flex flex-row gap-1 items-center justify-start">
+                  <Handshake />
+                  <span>100% Job Assistance</span>
+                </div>
+                <div className="text-sm text-gray-800 flex flex-row gap-1 items-center justify-start">
+                  <CalendarDays />
+                  <span>{course.duration}</span>
+                </div>
+                <div className="text-sm text-gray-800 flex flex-row gap-1 items-center justify-start">
+                  <FaYoutube className='text-2xl' />
+                  <span>Live Project</span>
                 </div>
               </div>
 
