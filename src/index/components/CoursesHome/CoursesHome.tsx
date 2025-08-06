@@ -95,7 +95,7 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
 
               <div className="text-base font-semibold text-gray-800 leading-tight w-full">{course.title}</div>
 
-              <div className="flex flex-col gap-1 items-start my-4">                
+              <div className="flex flex-col gap-1 items-start my-4">
                 <div className="text-sm text-gray-800 flex flex-row gap-1 items-center justify-start">
                   <Handshake />
                   <span>100% Job Assistance</span>
@@ -111,10 +111,7 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
               </div>
 
               <Link href={`/courses/${course?.link}`}>
-                <Button
-                  variant="default"
-                  className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:bg-blue-700 transition-colors duration-200"
-                >
+                <Button variant="manual" className="w-full">
                   View More
                 </Button>
               </Link>

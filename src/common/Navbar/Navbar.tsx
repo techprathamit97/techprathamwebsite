@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
   return (
     <div className={`${isActive ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
       {/* Main Navigation Bar */}
-      <div className='bg-[#080E3A] text-white w-full h-auto flex items-center justify-center z-[100]'>
+      <div className='bg-[#1e0505] text-white w-full h-auto flex items-center justify-center z-[100]'>
         <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center font-light'>
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
             <Image src={'/navbar/techpratham.svg'} alt='Techpratham Logo' width={100} height={50} className='w-40 h-auto' />

@@ -14,12 +14,6 @@ const RecognitionHome = () => {
 
       <div className='w-10/12 h-auto flex flex-col items-center justify-center'>
 
-        <div className='flex flex-row gap-4 mb-8 text-lg'>
-          <Button variant='manual' className='text-lg font-normal'>
-            | Certifications
-          </Button>
-        </div>
-
         <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {/* Certification 1 */}
           <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
@@ -67,12 +61,6 @@ const RecognitionHome = () => {
           </div>
         </div>
 
-        <div className='mt-10'>
-          <Button variant={'manual'} className='rounded-full pl-6 capitalize'>
-            <span>Book your free consultation</span>
-            <ChevronRightIcon />
-          </Button>
-        </div>
       </div>
     </div>
   )
