@@ -178,10 +178,14 @@ const UpdateCoursePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [courseId, setCourseId] = useState<string>("");
+  const [courseUrl, setCourseUrl] = useState<string>("");
   const router = useRouter();
   const { course: courseLink } = router.query;
-  const { authenticated, isAdmin } = useContext(UserContext);
+  const { authenticated, isAdmin, setCurrentTab } = useContext(UserContext);
+
+  useEffect(() => {
+    setCurrentTab("courses");
+  }, [setCurrentTab]);
 
   const form = useForm<CourseFormData>({
     resolver: zodResolver(courseSchema),
@@ -232,7 +236,7 @@ const UpdateCoursePage = () => {
         }
 
         const courseData: Course = await response.json();
-        setCourseId(courseData._id || courseData.id);
+        setCourseUrl(courseData.link);
         setPublicId(courseData.image || "");
 
         // Reset form with fetched data
@@ -348,7 +352,7 @@ const UpdateCoursePage = () => {
     try {
       console.log('Updating form data:', data);
 
-      const response = await fetch(`/api/course/update/${courseId}`, {
+      const response = await fetch(`/api/course/update?link=${courseUrl}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

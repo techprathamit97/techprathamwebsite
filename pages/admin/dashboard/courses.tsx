@@ -7,7 +7,7 @@ import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 import { Badge } from '@/components/ui/badge';
-import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import { Pencil2Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from 'sonner';
@@ -45,7 +45,7 @@ const courses = () => {
   const deleteCourse = async (courseLink: string, courseId: any) => {
     setIsDeleting(true);
     setDeletingCourseId(courseId);
-    
+
     try {
       const res = await fetch(`/api/course/delete?link=${encodeURIComponent(courseLink)}`, {
         method: 'DELETE',
@@ -56,9 +56,9 @@ const courses = () => {
       }
 
       const result = await res.json();
-      
+
       setCourseData(prevData => prevData.filter((course: any) => course._id !== courseId));
-      
+
       console.log('Course deleted successfully:', result);
       toast.success('Course deleted successfully.')
     } catch (error) {
@@ -146,10 +146,15 @@ const courses = () => {
                         <Link href={`/courses/${course.link}`} className="w-full">
                           <Button variant="manual" className="w-full">Explore Course</Button>
                         </Link>
+                        <Link href={`/admin/dashboard/courses/update/${course.link}`} className="w-auto">
+                          <Button variant="manual" className="w-auto">
+                            <Pencil2Icon className='w-5 h-5' />
+                          </Button>
+                        </Link>
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button 
-                              variant='manual' 
+                            <Button
+                              variant='manual'
                               disabled={isDeleting && deletingCourseId === course._id}
                             >
                               {isDeleting && deletingCourseId === course._id ? (
@@ -168,7 +173,7 @@ const courses = () => {
                               and remove all its data from the servers.
                             </DialogDescription>
                             <DialogFooter>
-                              <Button 
+                              <Button
                                 variant='destructive'
                                 onClick={() => deleteCourse(course.link, course._id)}
                                 disabled={isDeleting}
