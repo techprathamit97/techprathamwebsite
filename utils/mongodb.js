@@ -1,14 +1,24 @@
 import mongoose from "mongoose";
 
-const connect = async () => {
-  if (mongoose.connections[0].readyState) return;
+let isConnected = false;
+
+export async function connectMongo() {
+  if (isConnected) {
+    return;
+  }
+
+  if (!process.env.MONGODB_URL) {
+    throw new Error("Please add your MONGODB_URL to environment variables");
+  }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {});
-    console.log("Mongo Connection successfully established.");
+    const db = await mongoose.connect(process.env.MONGODB_URL, {
+      dbName: "techpratham",
+    });
+    isConnected = true;
+    console.log(`✅ MongoDB connected to ${db.connection.host}`);
   } catch (error) {
-    throw new Error("Error connecting to Mongoose");
+    console.error("❌ MongoDB connection error:", error);
+    throw new Error("Error connecting to MongoDB");
   }
-};
-
-export default connect;
+}
