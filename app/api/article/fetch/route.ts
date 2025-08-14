@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import connectMongo from '@/utils/mongodb.js';
 import { Article } from '@/models/article.js';
+import { connectMongo } from '@/utils/mongodb';
 
 export async function GET() {
   try {

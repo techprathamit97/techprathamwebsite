@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
 import { User } from '@/models/user';
+import { connectMongo } from '@/utils/mongodb';
 
 export async function GET(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         const url = new URL(request.url);
         const email = url.searchParams.get('email');

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
+import { connectMongo } from '@/utils/mongodb';
 import Enrolled from '@/models/enrolled';
 
 export async function GET(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         // Get email from query parameters
         const { searchParams } = new URL(request.url);

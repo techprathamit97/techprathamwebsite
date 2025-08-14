@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
+import { connectMongo } from '@/utils/mongodb';
 import course from '@/models/course';
 
 export async function GET(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         const url = new URL(request.url);
         const link = url.searchParams.get('link');

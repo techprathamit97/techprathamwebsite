@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
 import { User } from '@/models/user';
 import bcrypt from 'bcryptjs';
+import { connectMongo } from '@/utils/mongodb';
 
 export const POST = async (request: any) => {
   const { email, password, name, phone } = await request.json();
 
-  await connect();
+  await connectMongo();
   console.log("connected with db");
 
   const existingUser = await User.findOne({ email });

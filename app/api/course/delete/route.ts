@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
 import course from '@/models/course';
+import { connectMongo } from '@/utils/mongodb';
 
 export async function DELETE(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         const url = new URL(request.url);
         const link = url.searchParams.get('link');
@@ -20,9 +20,9 @@ export async function DELETE(request: NextRequest) {
             return NextResponse.json({ message: 'Course not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ 
-            message: 'Course deleted successfully', 
-            deletedCourse 
+        return NextResponse.json({
+            message: 'Course deleted successfully',
+            deletedCourse
         }, { status: 200 });
     } catch (error: any) {
         console.error('Server Error:', error.message);

@@ -1,10 +1,10 @@
 import Enrolled from '@/models/enrolled';
 import { NextRequest, NextResponse } from 'next/server';
-import connect from '@/utils/mongodb';
+import { connectMongo } from '@/utils/mongodb';
 
 export async function PUT(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         const body = await request.json();
         const { email, course_link, certificate, ...otherFields } = body;
@@ -44,7 +44,7 @@ export async function PUT(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
     try {
-        await connect();
+        await connectMongo();
 
         const body = await request.json();
         const { _id, ...updateData } = body;
