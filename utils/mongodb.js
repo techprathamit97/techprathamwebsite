@@ -7,12 +7,12 @@ export async function connectMongo() {
     return;
   }
 
-  if (!process.env.NEXT_PUBLIC_MONGODB_URL) {
+  if (!process.env.NEXT_PUBLIC_MONGODB_URL || !process.env.MONGODB_URL) {
     throw new Error("Please add your MONGODB_URL to environment variables");
   }
 
   try {
-    const db = await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB_URL, {
+    const db = await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB_URL || process.env.MONGODB_URL, {
       dbName: "techpratham",
     });
     isConnected = true;

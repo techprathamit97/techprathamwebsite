@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_CODE);
-const admin = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
+const resend = new Resend(process.env.RESEND_CODE);
+const admin = process.env.ADMIN_EMAIL || "";
 
 export async function POST(request: Request) {
   try {
