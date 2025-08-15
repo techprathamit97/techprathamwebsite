@@ -13,7 +13,7 @@ export async function connectMongo() {
 
   try {
     const db = await mongoose.connect(process.env.MONGODB_URL, {
-      dbName: "techpratham",
+      dbName: "database",
     });
     isConnected = true;
     console.log(`✅ MongoDB connected to ${db.connection.host}`);
