@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { BackpackIcon, Cross2Icon, DashboardIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
@@ -34,11 +34,20 @@ interface UserContextType {
 const Navbar: React.FC = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [navOpen, setNavOpen] = useState<boolean>(false);
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategoryIdx, setSelectedCategoryIdx] = useState<number>(0);
   const { authenticated, isAdmin, loading } = useContext(UserContext) as UserContextType;
 
   const [course, setCourse] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Refs for click outside detection
+  const coursesDropdownRef = useRef<HTMLDivElement>(null);
+  const coursesButtonRef = useRef<HTMLButtonElement>(null);
+  const searchDrawerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const fetchCourseData = async (): Promise<void> => {
@@ -61,6 +70,102 @@ const Navbar: React.FC = () => {
     fetchCourseData();
   }, []);
 
+  // Prevent body scroll when drawers are open
+  useEffect(() => {
+    if (isActive || searchActive) {
+      // Prevent scrolling
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isActive, searchActive]);
+
+  // Click outside handler for courses dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      const target = event.target as Node;
+      
+      // Check if click is outside both the dropdown and the button
+      if (
+        coursesDropdownRef.current && 
+        coursesButtonRef.current && 
+        !coursesDropdownRef.current.contains(target) && 
+        !coursesButtonRef.current.contains(target)
+      ) {
+        setIsActive(false);
+      }
+    };
+
+    // Add event listener when dropdown is active
+    if (isActive) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isActive]);
+
+  // Click outside handler for search drawer
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      const target = event.target as Node;
+      
+      // Check if click is outside both the search drawer and search container
+      if (
+        searchDrawerRef.current && 
+        searchContainerRef.current && 
+        !searchDrawerRef.current.contains(target) && 
+        !searchContainerRef.current.contains(target)
+      ) {
+        setSearchActive(false);
+        setSearchQuery('');
+      }
+    };
+
+    // Add event listener when search drawer is active
+    if (searchActive) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchActive]);
+
+  // Filter courses based on search query
+  const filteredCourses = React.useMemo((): Course[] => {
+    if (!searchQuery.trim() || !course) return [];
+    
+    const query = searchQuery.toLowerCase();
+    return course.filter(c => 
+      c.title?.toLowerCase().includes(query) ||
+      c.category?.toLowerCase().includes(query) ||
+      c.shortDesc?.toLowerCase().includes(query) ||
+      c.level?.toLowerCase().includes(query)
+    );
+  }, [course, searchQuery]);
+
+  // Group filtered courses by category for search results
+  const searchResultsByCategory = React.useMemo((): CourseCategory[] => {
+    if (filteredCourses.length === 0) return [];
+
+    const categories = [...new Set(filteredCourses.map(c => c?.category).filter(Boolean))];
+
+    return categories.map(category => ({
+      name: category,
+      courses: filteredCourses.filter(c => c?.category === category)
+    }));
+  }, [filteredCourses]);
+
   const coursesByCategory = React.useMemo((): CourseCategory[] => {
     if (!course || course.length === 0) return [];
 
@@ -82,14 +187,41 @@ const Navbar: React.FC = () => {
 
   const handleCoursesToggle = (): void => {
     setIsActive(!isActive);
+    // Close search drawer if open
+    if (searchActive) {
+      setSearchActive(false);
+      setSearchQuery('');
+    }
   };
 
   const handleCourseClick = (): void => {
     setIsActive(false);
+    setSearchActive(false);
+    setSearchQuery('');
+  };
+
+  const handleSearchFocus = (): void => {
+    setSearchActive(true);
+    // Close courses dropdown if open
+    if (isActive) {
+      setIsActive(false);
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchQuery(e.target.value);
+    if (!searchActive) {
+      setSearchActive(true);
+    }
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    // You can add search submit logic here if needed
   };
 
   return (
-    <div className={`${isActive ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
+    <div className={`${(isActive || searchActive) ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
       {/* Main Navigation Bar */}
       <div className='bg-[#1e0505] text-white w-full h-auto flex items-center justify-center z-[100]'>
         <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center font-light'>
@@ -98,6 +230,7 @@ const Navbar: React.FC = () => {
           </Link>
 
           <button
+            ref={coursesButtonRef}
             onClick={handleCoursesToggle}
             className='lg:flex hidden flex-row gap-2 items-center justify-center ml-4 cursor-pointer hover:opacity-80 transition-opacity'
             aria-label='Toggle courses menu'
@@ -107,19 +240,24 @@ const Navbar: React.FC = () => {
           </button>
 
           <div className='flex flex-row gap-6 items-center justify-center'>
-            <div className='flex flex-row lg:w-96 md:w-72'>
+            <form onSubmit={handleSearchSubmit} className='flex flex-row lg:w-96 md:w-72' ref={searchContainerRef}>
               <Input
+                ref={searchInputRef}
                 className='lg:max-w-96 max-w-72 h-10 bg-white text-black rounded-r-none rounded-l-md'
                 placeholder='Search courses...'
                 aria-label='Search courses'
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
               />
               <button
+                type="submit"
                 className='p-2 bg-red-700 flex items-center justify-center rounded-r-md hover:bg-red-800 transition-colors'
                 aria-label='Search'
               >
                 <Search className='w-4 h-4' />
               </button>
-            </div>
+            </form>
 
             <button className='lg:hidden flex' onClick={handleNavToggle} aria-label='Toggle navigation menu'>
               <HamburgerMenuIcon className='w-5 h-5' />
@@ -195,7 +333,11 @@ const Navbar: React.FC = () => {
         </nav>
       </div>
 
-      <div className={`transition-all duration-300 border-b border-b-gray-200 ${!isActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}>
+      {/* Courses Dropdown */}
+      <div 
+        ref={coursesDropdownRef}
+        className={`transition-all duration-300 border-b border-b-gray-200 ${!isActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}
+      >
         <div className='md:w-10/12 w-11/12 h-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-8'>
 
           <div className='col-span-1 flex h-80 flex-col gap-2 overflow-auto'>
@@ -276,6 +418,81 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Search Drawer */}
+      <div 
+        ref={searchDrawerRef}
+        className={`transition-all duration-300 border-b border-b-gray-200 ${!searchActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto pb-4 z-10`}
+      >
+        <div className='md:w-10/12 w-11/12 h-auto py-8 max-h-96 overflow-y-auto hide-scrollbar'>
+          {/* Search Results Header */}
+          <div className='mb-6'>
+            <h3 className='font-semibold text-lg text-gray-800'>
+              {searchQuery ? `Search Results for "${searchQuery}"` : 'Start typing to search courses...'}
+            </h3>
+            {searchQuery && (
+              <p className='text-sm text-gray-600 mt-1'>
+                Found {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
+
+          {/* Search Results Content */}
+          {!searchQuery ? (
+            <div className='flex items-center justify-center h-32'>
+              <span className='text-gray-500'>Type in the search box to find courses</span>
+            </div>
+          ) : isLoading ? (
+            <div className='flex items-center justify-center h-32'>
+              <span className='text-gray-500'>Searching courses...</span>
+            </div>
+          ) : filteredCourses.length === 0 ? (
+            <div className='flex items-center justify-center h-32'>
+              <span className='text-gray-500'>No courses found matching your search</span>
+            </div>
+          ) : (
+            <div className='space-y-6'>
+              {searchResultsByCategory.map((category) => (
+                <div key={category.name}>
+                  <h4 className='font-medium text-md text-gray-700 mb-3 pb-1 border-b border-gray-200'>
+                    {category.name} ({category.courses.length})
+                  </h4>
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+                    {category.courses.map((course) => (
+                      <Link
+                        key={`search-${course.id}-${course.link}`}
+                        href={`/courses/${course.link}`}
+                        onClick={handleCourseClick}
+                        className='block p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all duration-200 group'
+                      >
+                        <div className='flex flex-col gap-2'>
+                          <div className='flex items-start justify-between'>
+                            <h5 className='font-medium text-sm text-gray-900 group-hover:text-red-700 transition-colors'>
+                              {course.title}
+                            </h5>
+                            <span className='text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap ml-2'>
+                              {course.level}
+                            </span>
+                          </div>
+                          <p className='text-xs text-gray-600 line-clamp-2'>
+                            {course.shortDesc}
+                          </p>
+                          <div className='flex items-center gap-4 text-xs text-gray-500'>
+                            <span className='flex items-center gap-1'>
+                              ⭐ {course.rating}
+                            </span>
+                            <span>📅 {course.duration}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
