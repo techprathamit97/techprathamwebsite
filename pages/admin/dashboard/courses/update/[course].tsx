@@ -66,6 +66,14 @@ interface Course extends CourseFormData {
   _id: string;
 }
 
+interface Category {
+  _id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // CurriculumTopicItem Component
 const CurriculumTopicItem = ({ form, index, canRemove, onRemove }: {
   form: any;
@@ -183,6 +191,9 @@ const UpdateCoursePage = () => {
   const { course: courseLink } = router.query;
   const { authenticated, isAdmin, setCurrentTab } = useContext(UserContext);
 
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isFetchingCategories, setIsFetchingCategories] = useState(true);
+
   useEffect(() => {
     setCurrentTab("courses");
   }, [setCurrentTab]);
@@ -283,6 +294,29 @@ const UpdateCoursePage = () => {
       setValue("image", publicId);
     }
   }, [publicId, setValue]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      setIsFetchingCategories(true);
+      const response = await fetch('/api/category/fetch');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      toast.error("Failed to fetch categories. Please try again.");
+    } finally {
+      setIsFetchingCategories(false);
+    }
+  };
 
   const getProfileImageUrl = () => {
     if (publicId) {
@@ -471,9 +505,34 @@ const UpdateCoursePage = () => {
                               render={({ field }) => (
                                 <FormItem>
                                   <FormLabel>Category *</FormLabel>
-                                  <FormControl>
-                                    <Input {...field} />
-                                  </FormControl>
+                                  <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder={
+                                          isFetchingCategories
+                                            ? "Loading categories..."
+                                            : "Select a category"
+                                        } />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      {isFetchingCategories ? (
+                                        <SelectItem value="" disabled>
+                                          Loading categories...
+                                        </SelectItem>
+                                      ) : categories.length === 0 ? (
+                                        <SelectItem value="" disabled>
+                                          No categories available
+                                        </SelectItem>
+                                      ) : (
+                                        categories.map((category) => (
+                                          <SelectItem key={category._id} value={category.name}>
+                                            {category.name}
+                                          </SelectItem>
+                                        ))
+                                      )}
+                                    </SelectContent>
+                                  </Select>
                                   <FormMessage />
                                 </FormItem>
                               )}
@@ -501,7 +560,7 @@ const UpdateCoursePage = () => {
                             )}
 
                             <CldUploadWidget
-                              uploadPreset="course_images"
+                              uploadPreset="techpratham"
                               onSuccess={(result: any) => {
                                 if (result.event === 'success' && result.info?.secure_url) {
                                   setPublicId(result.info.secure_url);

@@ -54,6 +54,14 @@ const courseSchema = z.object({
     project_data: z.array(projectSchema).optional(),
 });
 
+interface Category {
+    _id: string;
+    name: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 type CourseFormData = z.infer<typeof courseSchema>;
 
 // CurriculumTopicItem Component
@@ -170,6 +178,9 @@ const CourseTab = () => {
     const [newSkill, setNewSkill] = useState('');
     const [publicId, setPublicId] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [isFetchingCategories, setIsFetchingCategories] = useState(true);
 
     const router = useRouter();
 
@@ -299,6 +310,29 @@ const CourseTab = () => {
         }
     };
 
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            setIsFetchingCategories(true);
+            const response = await fetch('/api/category/fetch');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch categories');
+            }
+
+            const data = await response.json();
+            setCategories(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            toast.error("Failed to fetch categories. Please try again.");
+        } finally {
+            setIsFetchingCategories(false);
+        }
+    };
+
     const skills = form.watch('skills_data') || [];
 
     return (
@@ -339,9 +373,34 @@ const CourseTab = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Category *</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="e.g., Programming, Design, Marketing" {...field} />
-                                            </FormControl>
+                                            <Select onValueChange={field.onChange} value={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder={
+                                                            isFetchingCategories
+                                                                ? "Loading categories..."
+                                                                : "Select a category"
+                                                        } />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {isFetchingCategories ? (
+                                                        <SelectItem value="" disabled>
+                                                            Loading categories...
+                                                        </SelectItem>
+                                                    ) : categories.length === 0 ? (
+                                                        <SelectItem value="" disabled>
+                                                            No categories available
+                                                        </SelectItem>
+                                                    ) : (
+                                                        categories.map((category) => (
+                                                            <SelectItem key={category._id} value={category.name}>
+                                                                {category.name}
+                                                            </SelectItem>
+                                                        ))
+                                                    )}
+                                                </SelectContent>
+                                            </Select>
                                             <FormMessage />
                                         </FormItem>
                                     )}

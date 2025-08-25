@@ -57,7 +57,7 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
 
       <div className='md:w-10/12 w-11/12 flex flex-col items-center justify-center h-auto'>
         <div className='flex flex-wrap w-full justify-center gap-4 rounded-lg'>
-          {coursesByCategory.map((category, idx) => (
+          {coursesByCategory.slice(0, 10).map((category, idx) => (
             <button
               key={`${category.name}-${idx}`}
               onClick={() => handleCategorySelect(idx)}

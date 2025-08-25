@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArchiveIcon, AvatarIcon, DashboardIcon, ExitIcon, LaptopIcon } from '@radix-ui/react-icons';
+import { ArchiveIcon, AvatarIcon, DashboardIcon, ExitIcon, LaptopIcon, LightningBoltIcon } from '@radix-ui/react-icons';
 import { signOut } from 'next-auth/react';
 import { UserContext } from '@/context/userContext';
 import { BellIcon, CircleCheckBigIcon } from 'lucide-react';
@@ -36,6 +36,11 @@ const AdminSidebar = () => {
                     <Link href='/admin/dashboard/courses' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'courses' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
                         <LaptopIcon className='w-6 h-6' />
                         <div>Courses</div>
+                    </Link>
+
+                    <Link href='/admin/dashboard/category' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'category' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
+                        <LightningBoltIcon className='w-6 h-6' />
+                        <div>Category</div>
                     </Link>
 
                     <Link href='/admin/dashboard/requests' className={`text-[#606060] flex flex-row gap-3 items-center rounded-tr rounded-br justify-start text-lg py-1 px-3 cursor-pointer transition-all duration-200 ${currentTab === 'requests' && 'bg-[#600A0E] hover:bg-[#C6151D] text-white border-l-2 border-l-[#c1c1c1]'}`}>
