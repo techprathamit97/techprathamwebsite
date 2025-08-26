@@ -267,13 +267,16 @@ const CourseTab = () => {
     const courseTitle = form.watch('title');
 
     useEffect(() => {
-        const slug = courseTitle
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-');
-        form.setValue('link', `${slug}`);
+        if (courseTitle) {
+            const slug = courseTitle
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            form.setValue('link', slug);
+        }
     }, [courseTitle, form]);
 
     const onSubmit = async (data: CourseFormData) => {
@@ -385,11 +388,11 @@ const CourseTab = () => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     {isFetchingCategories ? (
-                                                        <SelectItem value="" disabled>
+                                                        <SelectItem value="loading" disabled>
                                                             Loading categories...
                                                         </SelectItem>
                                                     ) : categories.length === 0 ? (
-                                                        <SelectItem value="" disabled>
+                                                        <SelectItem value="none" disabled>
                                                             No categories available
                                                         </SelectItem>
                                                     ) : (
