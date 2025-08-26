@@ -143,10 +143,10 @@ const courses = () => {
                       </div>
 
                       <div className='w-full flex flex-row gap-2'>
-                        <Link href={`/courses/${course.link}`} className="w-full">
+                        <Link href={`/courses/${encodeURIComponent(course.link)}`} className="w-full">
                           <Button variant="manual" className="w-full">Explore Course</Button>
                         </Link>
-                        <Link href={`/admin/dashboard/courses/update/${course.link}`} className="w-auto">
+                        <Link href={`/admin/dashboard/courses/update/${encodeURIComponent(course.link)}`} className="w-auto">
                           <Button variant="manual" className="w-auto">
                             <Pencil2Icon className='w-5 h-5' />
                           </Button>

@@ -51,8 +51,8 @@ const courseSchema = z.object({
   curriculum: z.string().min(1, "Curriculum is required"),
   interview: z.string().min(1, "Interview information is required"),
   link: z.string().min(1, "Course link is required"),
-  videoLink: z.string().url("Please enter a valid URL").min(1, "Video link is required"),
-  assesment_link: z.string().url("Please enter a valid URL").min(1, "Assessment link is required"),
+  videoLink: z.string().min(1, "Video link is required"),
+  assesment_link: z.string().min(1, "Assessment link is required"),
   curriculum_data: z.array(curriculumSchema).optional(),
   skills_data: z.array(z.string()).optional(),
   faqs_data: z.array(faqSchema).optional(),
@@ -187,12 +187,15 @@ const UpdateCoursePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [courseUrl, setCourseUrl] = useState<string>("");
+
   const router = useRouter();
-  const { course: courseLink } = router.query;
+  const { course: encodedCourse } = router.query;
   const { authenticated, isAdmin, setCurrentTab } = useContext(UserContext);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [isFetchingCategories, setIsFetchingCategories] = useState(true);
+
+  const courseLink = encodedCourse ? decodeURIComponent(encodedCourse as string) : "";
 
   useEffect(() => {
     setCurrentTab("courses");
