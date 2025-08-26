@@ -4,15 +4,16 @@ import { Category } from '@/models/category';
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectMongo();
 
+        const { id } = await params;
         const body = await request.json();
 
         const updatedCategory = await Category.findByIdAndUpdate(
-            params.id,
+            id,
             body,
             { new: true }
         );

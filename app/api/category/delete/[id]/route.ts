@@ -4,12 +4,14 @@ import { Category } from '@/models/category';
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectMongo();
 
-        const deletedCategory = await Category.findByIdAndDelete(params.id);
+        const { id } = await params;
+
+        const deletedCategory = await Category.findByIdAndDelete(id);
 
         if (!deletedCategory) {
             return NextResponse.json({ message: 'Category not found' }, { status: 404 });
