@@ -12,7 +12,6 @@ import FaqSection from '@/src/courses/common/FaqSection/FaqSection';
 import TestimonialSection from '@/src/courses/common/TestimonialSection/TestimonialSection';
 import CourseCertification from '@/src/courses/common/CourseCertification/CourseCertification';
 import ProjectSection from '@/src/courses/common/ProjectSection/ProjectSection';
-import AssesmentSection from '@/src/courses/common/AssesmentSection/AssesmentSection';
 import CertificateSection from '@/src/courses/common/CertificateSection/CertificateSection';
 import OtherCourse from '@/src/courses/common/OtherCourse/OtherCourse';
 import ReachForm from '@/components/common/ReachForm/ReachForm';
