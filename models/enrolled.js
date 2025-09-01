@@ -23,7 +23,7 @@ const enrolledSchema = new mongoose.Schema(
     finalPayment: { type: Number, default: 0 },
     totalAmount: { type: Number, default: 0 },
     verifyPayment: { type: Boolean, default: false },
-    receiptNo: { type: String, default: "", unique: true },
+    receiptNo: { type: String, default: "" },
     feeType: { type: String, default: "" },
     dueDate: { type: String, default: "" },
     courseCompletion: { type: Boolean, default: false },
