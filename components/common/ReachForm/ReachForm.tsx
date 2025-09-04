@@ -40,9 +40,9 @@ const ReachForm = () => {
         <div className="w-80 fixed right-0 bottom-0 z-[100]">
             <div className='bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white w-full p-3 rounded-t-md flex flex-row items-center justify-between cursor-pointer' onClick={() => setIsOpen(!isOpen)}>
                 <div>Reach Out to Us</div>
-                <ChevronDownIcon className={`w-6 h-6 transition-transform duration-700 ease-in-out ${isOpen ? '' : 'rotate-180'}`} />
+                <ChevronDownIcon className={`w-6 h-6 transition-transform duration-500 ease-in-out ${isOpen ? '' : 'rotate-180'}`} />
             </div>
-            <div className={`bg-white text-black flex flex-col items-center justify-center gap-4 capitalize transition-all duration-700 ease-in-out overflow-hidden shadow ${
+            <div className={`bg-white text-black flex flex-col items-center justify-center gap-4 capitalize transition-all duration-500 ease-in-out overflow-hidden shadow ${
                 isOpen ? 'max-h-[600px] opacity-100 py-2 px-4 translate-y-0' : 'max-h-0 opacity-0 py-0 px-4 -translate-y-4'
             }`}>
                 <div className='flex flex-row items-center justify-start gap-2'>
@@ -54,11 +54,10 @@ const ReachForm = () => {
                         <span className='text-sm'>talk to Our Expert</span>
                     </div>
                 </div>
-                <form className='w-full flex flex-col gap-4 rounded-lg bg-white h-full' onSubmit={handleSubmit(onSubmit)}>
+                <form className='w-full flex flex-col gap-4 rounded-lg mb-3 bg-white h-full' onSubmit={handleSubmit(onSubmit)}>
                     <Input {...register('fullName')} type='text' id='fullName' name='fullName' className='w-full p-2 indent-2 outline-none' placeholder='Enter your full name' required />
                     <Input {...register('phone')} type='text' id='phone' name='phone' className='w-full p-2 indent-2 outline-none' placeholder='Enter your phone number' required />
                     <Input {...register('course')} type='text' id='course' name='course' className='w-full p-2 indent-2 outline-none' placeholder='Enter your course' required />
-                    <Textarea {...register('message')} id='message' name='message' className='w-full h-28 p-2 indent-2 outline-none' placeholder='Write your message here...' required />
                     <Button type='submit' variant={'manual'} className='h-10 text-base flex items-center justify-center' disabled={submitting}>
                         {submitting ? 'Submitting...' : 'Send'}
                     </Button>
