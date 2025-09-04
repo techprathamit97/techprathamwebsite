@@ -82,7 +82,7 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
                 alt={course.title}
                 width={400}
                 height={200}
-                className="w-full h-48 object-cover rounded-md mb-4"
+                className="w-full h-48 object-cover rounded-md mb-4 border border-[#dddedd]"
               />
 
               <div className="flex justify-between items-center mb-2">
@@ -110,7 +110,7 @@ const CoursesHome: React.FC<CoursesHomeProps> = ({ course, coursesByCategory }) 
                 </div>
               </div>
 
-              <Link href={`/courses/${course?.link}`}>
+              <Link href={`/courses/${course?.link}`} className='mt-auto'>
                 <Button variant="manual" className="w-full">
                   View More
                 </Button>

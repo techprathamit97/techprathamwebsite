@@ -14,14 +14,14 @@ const RecognitionHome = () => {
 
       <div className='w-10/12 h-auto flex flex-col items-center justify-center'>
 
-        <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           {/* Certification 1 */}
           <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
             <div className='w-full flex flex-row items-center uppercase gap-2'>
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='ISO Logo' className='w-12' width={40} height={40} />
               </div>
-              <div className='md:text-2xl text-xl font-semibold'>ISO 9001:2015</div>
+              <div className='md:text-xl text-lg font-semibold'>ISO 9001:2015</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>
@@ -36,7 +36,7 @@ const RecognitionHome = () => {
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='NASSCOM Logo' className='w-12' width={40} height={40} />
               </div>
-              <div className='md:text-2xl text-xl font-semibold'>MCA Certification</div>
+              <div className='md:text-xl text-lg font-semibold'>MCA Certification</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>
@@ -51,12 +51,35 @@ const RecognitionHome = () => {
               <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
                 <Image src='/home/recognition/company.svg' alt='MSME Logo' className='w-12' width={40} height={40} />
               </div>
-              <div className='md:text-2xl text-xl font-semibold'>MSME India</div>
+              <div className='md:text-xl text-lg font-semibold'>MSME India</div>
             </div>
             <Separator className='h-[0.5px] my-4' />
             <div className='h-auto flex flex-col gap-3'>
               <Image src='/home/recognition/msme-certification.svg' alt='MCA Certificate' width={1440} height={500} className='w-full h-full object-cover' />
               <div className='text-sm'>Officially registered under the Ministry of MSME for small-scale industry benefits.</div>
+            </div>
+          </div>
+
+          {/* Certification 4 */}
+          <div className='flex flex-col border bg-[#fff] border-[#ebebeb] p-4 rounded-md'>
+            <div className='w-full flex flex-row items-center uppercase gap-2'>
+              <div className='w-14 h-14 flex items-center justify-center border border-white shadow rounded'>
+                <Image src='/home/recognition/company.svg' alt='MSME Logo' className='w-12' width={40} height={40} />
+              </div>
+              <div className='md:text-xl text-lg font-semibold'>DPIIT Recognition</div>
+            </div>
+            <Separator className='h-[0.5px] my-4' />
+            <div className='h-auto flex flex-col gap-3'>
+              <Image
+                src='/home/recognition/dpiit-certificate.jpg'
+                alt='DPIIT Certificate'
+                width={1440}
+                height={500}
+                className='w-full h-full object-cover'
+              />
+              <div className='text-sm'>
+                Officially recognized as a startup by the Department for Promotion of Industry and Internal Trade (DPIIT), Government of India.
+              </div>
             </div>
           </div>
         </div>
