@@ -27,6 +27,7 @@ const courseSchema = new mongoose.Schema(
     duration: { type: String, required: true },
     level: { type: String, required: true },
     category: { type: String, required: true },
+    trending: { type: Boolean, default: false },
     placement_report: { type: String, required: true },
     curriculum: { type: String, required: true },
     interview: { type: String, required: true },
@@ -36,6 +37,11 @@ const courseSchema = new mongoose.Schema(
     assesment_link: { type: String, required: true },
     faqs_data: [faqSchema],
     project_data: [projectSchema],
+    metadata: {
+      title: { type: String },
+      description: { type: String },
+      keywords: { type: [String] },
+    },
   },
   {
     timestamps: true,
