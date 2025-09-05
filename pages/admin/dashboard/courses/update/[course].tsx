@@ -47,6 +47,7 @@ const courseSchema = z.object({
   duration: z.string().min(1, "Duration is required"),
   level: z.enum(["Beginner", "Intermediate", "Advanced"], { required_error: "Level is required" }),
   category: z.string().min(1, "Category is required"),
+  trending: z.boolean().optional(),
   placement_report: z.string().min(1, "Placement report is required"),
   curriculum: z.string().min(1, "Curriculum is required"),
   interview: z.string().min(1, "Interview information is required"),
@@ -57,6 +58,11 @@ const courseSchema = z.object({
   skills_data: z.array(z.string()).optional(),
   faqs_data: z.array(faqSchema).optional(),
   project_data: z.array(projectSchema).optional(),
+  metadata: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    keywords: z.array(z.string()).optional()
+  }).optional(),
 });
 
 type CourseFormData = z.infer<typeof courseSchema>;
@@ -64,6 +70,12 @@ type CourseFormData = z.infer<typeof courseSchema>;
 interface Course extends CourseFormData {
   id: string;
   _id: string;
+  trending?: boolean;
+  metadata?: {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+  };
 }
 
 interface Category {
@@ -188,6 +200,8 @@ const UpdateCoursePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [courseUrl, setCourseUrl] = useState<string>("");
 
+  const [newKeyword, setNewKeyword] = useState('');
+
   const router = useRouter();
   const { course: encodedCourse } = router.query;
   const { authenticated, isAdmin, setCurrentTab } = useContext(UserContext);
@@ -212,6 +226,7 @@ const UpdateCoursePage = () => {
       duration: '',
       level: 'Beginner',
       category: '',
+      trending: false,
       placement_report: '',
       curriculum: '',
       interview: '',
@@ -222,6 +237,11 @@ const UpdateCoursePage = () => {
       skills_data: [],
       faqs_data: [{ que: '', ans: '' }],
       project_data: [{ title: '', objective: '' }],
+      metadata: {
+        title: '',
+        description: '',
+        keywords: []
+      }
     }
   });
 
@@ -263,6 +283,7 @@ const UpdateCoursePage = () => {
           duration: courseData.duration || '',
           level: courseData.level as "Beginner" | "Intermediate" | "Advanced" || 'Beginner',
           category: courseData.category || '',
+          trending: courseData.trending ?? false,
           placement_report: courseData.placement_report || '',
           curriculum: courseData.curriculum || '',
           interview: courseData.interview || '',
@@ -279,6 +300,11 @@ const UpdateCoursePage = () => {
           project_data: courseData.project_data && courseData.project_data.length > 0
             ? courseData.project_data
             : [{ title: '', objective: '' }],
+          metadata: {
+            title: courseData.metadata?.title || '',
+            description: courseData.metadata?.description || '',
+            keywords: courseData.metadata?.keywords || []
+          }
         });
 
       } catch (err) {
@@ -371,6 +397,23 @@ const UpdateCoursePage = () => {
   };
 
   const courseTitle = form.watch('title');
+
+  const addKeyword = () => {
+    if (newKeyword.trim()) {
+      const currentKeywords = form.getValues('metadata.keywords') || [];
+      const updatedKeywords = [...currentKeywords, newKeyword.trim()];
+      form.setValue('metadata.keywords', updatedKeywords);
+      setNewKeyword('');
+    }
+  };
+
+  const removeKeyword = (index: number) => {
+    const currentKeywords = form.getValues('metadata.keywords') || [];
+    const updatedKeywords = currentKeywords.filter((_, i) => i !== index);
+    form.setValue('metadata.keywords', updatedKeywords);
+  };
+
+  const keywords = form.watch('metadata.keywords') || [];
 
   useEffect(() => {
     if (courseTitle) {
@@ -542,43 +585,78 @@ const UpdateCoursePage = () => {
                             />
                           </div>
 
-                          {/* Image Upload */}
-                          <div>
-                            {publicId ? (
-                              <CldImage
-                                width="400"
-                                height="300"
-                                src={publicId}
-                                sizes="100vw"
-                                alt="Course Image"
-                              />
-                            ) : (
-                              <Image
-                                src={getProfileImageUrl()}
-                                alt="Course Image"
-                                width={400}
-                                height={300}
-                                className="rounded-lg"
-                              />
-                            )}
+                          <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-6'>
+                            <Card>
+                              <CardHeader>
+                                <CardTitle>Course Settings</CardTitle>
+                              </CardHeader>
+                              <CardContent className='w-full'>
+                                <FormField
+                                  control={form.control}
+                                  name="trending"
+                                  render={({ field }) => (
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                      <FormControl>
+                                        <input
+                                          type="checkbox"
+                                          checked={field.value}
+                                          onChange={field.onChange}
+                                          className="mt-1"
+                                        />
+                                      </FormControl>
+                                      <div className="space-y-1 leading-none">
+                                        <FormLabel>
+                                          Mark as Trending Course
+                                        </FormLabel>
+                                        <FormDescription>
+                                          This course will be displayed in the trending section
+                                        </FormDescription>
+                                      </div>
+                                    </FormItem>
+                                  )}
+                                />
+                              </CardContent>
+                            </Card>
 
-                            <CldUploadWidget
-                              uploadPreset="techpratham"
-                              onSuccess={(result: any) => {
-                                if (result.event === 'success' && result.info?.secure_url) {
-                                  setPublicId(result.info.secure_url);
-                                }
-                              }}
-                            >
-                              {({ open }) => {
-                                return (
-                                  <Button type="button" onClick={() => open()} className='w-full max-w-80'>
-                                    <FaUpload className="mr-2" />
-                                    Upload an Image
-                                  </Button>
-                                );
-                              }}
-                            </CldUploadWidget>
+                            {/* Image Upload */}
+                            <div className='w-full h-auto'>
+                              {publicId ? (
+                                <CldImage
+                                  width="400"
+                                  height="300"
+                                  src={publicId}
+                                  sizes="100vw"
+                                  alt="Course Image"
+                                  className='rounded-lg border border-[#dddedd]'
+                                />
+                              ) : (
+                                <Image
+                                  src={getProfileImageUrl()}
+                                  alt="Course Image"
+                                  width={400}
+                                  height={300}
+                                  className="rounded-lg border border-[#dddedd]"
+                                />
+                              )}
+
+                              <CldUploadWidget
+                                uploadPreset="techpratham"
+                                onSuccess={(result: any) => {
+                                  if (result.event === 'success' && result.info?.secure_url) {
+                                    setPublicId(result.info.secure_url);
+                                  }
+                                }}
+                              >
+                                {({ open }) => {
+                                  return (
+                                    <Button type="button" onClick={() => open()} className='w-full max-w-80 mt-4'>
+                                      <FaUpload className="mr-2" />
+                                      Upload an Image
+                                    </Button>
+                                  );
+                                }}
+                              </CldUploadWidget>
+                            </div>
                           </div>
 
                           <FormField
@@ -788,6 +866,85 @@ const UpdateCoursePage = () => {
                               ))}
                             </div>
                           )}
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>SEO Metadata</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="metadata.title"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Meta Title</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="SEO optimized title" {...field} />
+                                  </FormControl>
+                                  <FormDescription>
+                                    Title tag for search engines (recommended: 50-60 characters)
+                                  </FormDescription>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="metadata.description"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Meta Description</FormLabel>
+                                  <FormControl>
+                                    <Textarea
+                                      placeholder="SEO optimized description"
+                                      rows={3}
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormDescription>
+                                    Description for search engines (recommended: 150-160 characters)
+                                  </FormDescription>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          {/* Keywords Section */}
+                          <div className="space-y-4">
+                            <FormLabel>Meta Keywords</FormLabel>
+                            <div className="flex gap-2">
+                              <Input
+                                value={newKeyword}
+                                onChange={(e) => setNewKeyword(e.target.value)}
+                                placeholder="Add a keyword"
+                                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addKeyword())}
+                              />
+                              <Button type="button" onClick={addKeyword} variant="outline">
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            {keywords.length > 0 && (
+                              <div className="flex flex-wrap gap-2">
+                                {keywords.map((keyword, index) => (
+                                  <div key={index} className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded">
+                                    <span className="text-sm">{keyword}</span>
+                                    <button
+                                      type="button"
+                                      onClick={() => removeKeyword(index)}
+                                      className="text-red-500 hover:text-red-700"
+                                    >
+                                      <Trash2 className="h-3 w-3" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </CardContent>
                       </Card>
 
