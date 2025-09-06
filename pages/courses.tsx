@@ -5,9 +5,13 @@ import type { NextPage } from 'next';
 import CoursesView from '@/src/courses/views/CoursesView';
 import { CoursesController } from '@/src/courses/controller/CoursesController';
 
-const CoursesPage: NextPage = (props) => (
+interface CoursesPageProps {
+    routeId: string;
+}
+
+const CoursesPage: NextPage<CoursesPageProps> = ({ routeId }) => (
     <div>
-        <CoursesController {...props}>
+        <CoursesController routeId={routeId}>
             <Head>
                 <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
                 <title>Courses | TechPratham - India's Leading IT Training Institute</title>
@@ -26,9 +30,23 @@ const CoursesPage: NextPage = (props) => (
                 <meta name="twitter:image" content="/navbar/techpratham.svg" />
             </Head>
 
-            <CoursesView />
+            <CoursesView routeId={routeId} />
         </CoursesController>
     </div>
 );
 
 export default CoursesPage;
+
+export async function getServerSideProps() {
+    const routeId = process.env.ROUTE_ID;
+
+    if (!routeId) {
+        throw new Error('ROUTE_ID is not configured');
+    }
+
+    return {
+        props: {
+            routeId,
+        },
+    };
+}
