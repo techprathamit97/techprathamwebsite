@@ -28,6 +28,12 @@ interface FAQ {
   ans: string;
 }
 
+interface Metadata {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+}
+
 interface Course {
   id: string;
   link: string;
@@ -46,6 +52,7 @@ interface Course {
   skills_data: string[];
   assesment_link: string;
   faqs_data: FAQ[];
+  metadata?: Metadata;
 }
 
 const CourseDataPage: React.FC = () => {
@@ -139,9 +146,9 @@ const CourseDataPage: React.FC = () => {
   }
 
   // SEO and meta data
-  const title = `${course.title} | TechPratham - India's Leading IT Training Institute`;
-  const description = course.description || course.shortDesc || "Explore a wide range of IT courses at TechPratham. Advance your career with industry-relevant training and expert-led classes.";
-  const keywords = `${course.title}, TechPratham Courses, IT Training, Programming Courses, Data Science, Cloud Computing, Best IT Institute India, Online IT Courses`;
+  const title = course.metadata?.title || `${course.title} | TechPratham - India's Leading IT Training Institute`;
+  const description = course.metadata?.description || course.description || course.shortDesc || "Explore a wide range of IT courses at TechPratham. Advance your career with industry-relevant training and expert-led classes.";
+  const keywords = course.metadata?.keywords?.join(', ') || `${course.title}, TechPratham Courses, IT Training, Programming Courses, Data Science, Cloud Computing, Best IT Institute India, Online IT Courses`;
   const url = `https://www.techpratham.com/courses/${course.link}`;
   const image = "/navbar/techpratham.svg";
 
