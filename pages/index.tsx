@@ -5,9 +5,13 @@ import IndexView from '@/src/index/views/IndexView';
 import { IndexController } from '@/src/index/controller/IndexController';
 import type { NextPage } from 'next';
 
-const IndexPage: NextPage = (props) => (
+interface IndexPageProps {
+    routeId: string;
+}
+
+const IndexPage: NextPage<IndexPageProps> = ({ routeId }) => (
     <div>
-        <IndexController {...props}>
+        <IndexController routeId={routeId}>
             <Head>
                 <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
                 <title>India's No.1 Best IT Training Institute in India | Corporate Learning</title>
@@ -26,9 +30,23 @@ const IndexPage: NextPage = (props) => (
                 <meta name="twitter:image" content="/navbar/techpratham.svg" />
             </Head>
 
-            <IndexView />
+            <IndexView routeId={routeId} />
         </IndexController>
     </div>
 );
 
 export default IndexPage;
+
+export async function getServerSideProps() {
+    const routeId = process.env.ROUTE_ID;
+
+    if (!routeId) {
+        throw new Error('ROUTE_ID is not configured');
+    }
+
+    return {
+        props: {
+            routeId,
+        },
+    };
+}

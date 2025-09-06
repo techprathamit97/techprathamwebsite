@@ -34,12 +34,11 @@ interface Course {
   description: string;
 }
 
-interface CourseCategory {
-  name: string;
-  courses: Course[];
+interface IndexViewProps {
+  routeId: string;
 }
 
-const IndexView = () => {
+const IndexView: React.FC<IndexViewProps> = ({ routeId }) => {
   const { setActiveTab } = useContext(UserContext);
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const IndexView = () => {
     const fetchCourseData = async (): Promise<void> => {
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/course/fetch`);
+        const res = await fetch(`/api/get-course/trending?id=${routeId}`);
         if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
 
         const data: Course[] = await res.json();
@@ -70,17 +69,6 @@ const IndexView = () => {
     fetchCourseData();
   }, []);
 
-  const coursesByCategory = React.useMemo((): CourseCategory[] => {
-    if (!course || course.length === 0) return [];
-
-    const categories = [...new Set(course.map(c => c?.category).filter(Boolean))];
-
-    return categories.map(category => ({
-      name: category,
-      courses: course.filter(c => c?.category === category)
-    }));
-  }, [course]);
-
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center relative'>
 
@@ -92,7 +80,7 @@ const IndexView = () => {
 
       <ClientHome />
 
-      <CoursesHome course={course} coursesByCategory={coursesByCategory} />
+      <CoursesHome courses={course} />
 
       <CareerHome />
 
