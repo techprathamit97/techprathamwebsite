@@ -23,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Trash2, Edit, Plus, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import Head from 'next/head';
 
 // Zod validation schema
 const categorySchema = z.object({
@@ -200,6 +201,12 @@ const CategoryPage = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Manage Category | Admin Dashboard</title>
+                <meta name="description" content="Explore the Manage Category section in Admin Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <AdminLoader />
             ) : (!authenticated || !isAdmin) ? (

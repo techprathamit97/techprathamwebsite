@@ -5,6 +5,7 @@ import AdminTopBar from '@/src/account/common/AdminTopBar';
 import { UserContext } from '@/context/userContext';
 import AdminLoader from '@/src/account/common/AdminLoader';
 import SignOut from '@/src/account/common/SignOut';
+import Head from 'next/head';
 
 const CreateCourse = () => {
     const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
@@ -15,6 +16,12 @@ const CreateCourse = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Create Course | Admin Dashboard</title>
+                <meta name="description" content="Create Course Section in Admin Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <AdminLoader />
             ) : (!authenticated || !isAdmin) ? (

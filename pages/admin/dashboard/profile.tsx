@@ -5,6 +5,7 @@ import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
 import { Badge } from '@/components/ui/badge';
+import Head from 'next/head';
 
 const profile = () => {
   const { userData, loading, authenticated, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
@@ -15,6 +16,12 @@ const profile = () => {
 
   return (
     <React.Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+        <title>Profile | Admin Dashboard</title>
+        <meta name="description" content="Explore the Profile section in Admin Dashboard of TechPratham." />
+      </Head>
+
       {loading ? (
         <AdminLoader />
       ) : (!authenticated || !isAdmin) ? (

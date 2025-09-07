@@ -11,6 +11,7 @@ import { Pencil2Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from 'sonner';
+import Head from 'next/head';
 
 const courses = () => {
   const { authenticated, loading, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
@@ -82,6 +83,12 @@ const courses = () => {
 
   return (
     <React.Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+        <title>Courses | Admin Dashboard</title>
+        <meta name="description" content="Course Section in Admin Dashboard of TechPratham." />
+      </Head>
+
       {loading ? (
         <AdminLoader />
       ) : (!authenticated || !isAdmin) ? (

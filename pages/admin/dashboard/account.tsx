@@ -5,6 +5,7 @@ import SignOut from '@/src/account/common/SignOut';
 import AdminLoader from '@/src/account/common/AdminLoader';
 import AdminSidebar from '@/src/account/common/AdminSidebar';
 import AdminTopBar from '@/src/account/common/AdminTopBar';
+import Head from 'next/head';
 
 const account = () => {
     const { userData, loading, authenticated, isAdmin, currentTab, setCurrentTab } = useContext(UserContext);
@@ -16,6 +17,12 @@ const account = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Account | Admin Dashboard</title>
+                <meta name="description" content="Explore the Account section in Admin Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <AdminLoader />
             ) : (!authenticated || !isAdmin) ? (
