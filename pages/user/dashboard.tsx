@@ -6,6 +6,7 @@ import SignOut from '@/src/account/common/SignOut';
 import UserLoader from '@/src/account/common/UserLoader';
 import UserTopBar from '@/src/account/common/UserTopBar';
 import UserSidebar from '@/src/account/common/UserSidebar';
+import Head from 'next/head';
 
 const UserAccount = () => {
     const { data: session, status: sessionStatus } = useSession();
@@ -17,6 +18,12 @@ const UserAccount = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Dashboard | User Dashboard</title>
+                <meta name="description" content="Explore the User Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <UserLoader />
             ) : !authenticated ? (

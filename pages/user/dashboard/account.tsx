@@ -5,6 +5,7 @@ import SignOut from '@/src/account/common/SignOut';
 import UserLoader from '@/src/account/common/UserLoader';
 import UserSidebar from '@/src/account/common/UserSidebar';
 import UserTopBar from '@/src/account/common/UserTopBar';
+import Head from 'next/head';
 
 const account = () => {
     const { userData, loading, authenticated } = useContext(UserContext);
@@ -12,6 +13,12 @@ const account = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Account | User Dashboard</title>
+                <meta name="description" content="Explore the Account section in User Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <UserLoader />
             ) : !authenticated ? (

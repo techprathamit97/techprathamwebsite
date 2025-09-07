@@ -8,6 +8,7 @@ import UserSidebar from '@/src/account/common/UserSidebar';
 import UserTopBar from '@/src/account/common/UserTopBar';
 
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import Head from 'next/head';
 
 interface Certificate {
     certificateId: string;
@@ -363,214 +364,222 @@ const CompletedCourse = () => {
     };
 
     return (
-        <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
+        <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Course Completed | User Dashboard</title>
+                <meta name="description" content="Explore the Course Completed section in User Dashboard of TechPratham." />
+            </Head>
 
-            <UserSidebar />
+            <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-            <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
+                <UserSidebar />
 
-                <UserTopBar />
+                <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
 
-                {isLoading ? (
-                    <div className="min-h-screen flex items-center justify-center bg-black">
-                        <div className="text-center">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                            <p className="text-gray-600">Loading course data...</p>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="bg-black p-6 flex flex-col overflow-y-auto">
-                        <div className='w-full h-auto flex flex-row items-center justify-between'>
-                            <h2 className="text-xl font-semibold text-white mb-4">Completed Courses</h2>
-                            <div className="flex items-center gap-2">
-                                <span className="text-green-400 text-sm">Course Completed</span>
-                                <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                    {completedCourses.length}
-                                </div>
+                    <UserTopBar />
+
+                    {isLoading ? (
+                        <div className="min-h-screen flex items-center justify-center bg-black">
+                            <div className="text-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                                <p className="text-gray-600">Loading course data...</p>
                             </div>
                         </div>
+                    ) : (
+                        <div className="bg-black p-6 flex flex-col overflow-y-auto">
+                            <div className='w-full h-auto flex flex-row items-center justify-between'>
+                                <h2 className="text-xl font-semibold text-white mb-4">Completed Courses</h2>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-green-400 text-sm">Course Completed</span>
+                                    <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                        {completedCourses.length}
+                                    </div>
+                                </div>
+                            </div>
 
-                        {completedCourses.length > 0 ? (
-                            <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full">
-                                {completedCourses.map((course, index) => (
-                                    <div
-                                        key={course._id || index}
-                                        className="w-full max-w-lg h-auto flex flex-col p-6 transition-all duration-300 bg-[#1a1a1a]"
-                                    >
-                                        {/* Course Information */}
-                                        <div className="text-xl font-semibold text-white leading-tight flex-1 pr-2">
-                                            {course.course_title}
-                                        </div>
-
-                                        <div className="my-3 flex flex-row gap-2">
-                                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                                {course.category}
-                                            </span>
-                                            <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
-                                                {course.level}
-                                            </span>
-                                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Completed
-                                            </span>
-                                        </div>
-
-                                        <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
-                                            {course.course_desc}
-                                        </div>
-
-                                        {/* Course Completion Info */}
-                                        <div className="flex justify-between items-center mb-4">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-green-500">🎓</span>
-                                                <span className="text-green-600 font-medium text-sm">Course Completed</span>
+                            {completedCourses.length > 0 ? (
+                                <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-6 w-full">
+                                    {completedCourses.map((course, index) => (
+                                        <div
+                                            key={course._id || index}
+                                            className="w-full max-w-lg h-auto flex flex-col p-6 transition-all duration-300 bg-[#1a1a1a]"
+                                        >
+                                            {/* Course Information */}
+                                            <div className="text-xl font-semibold text-white leading-tight flex-1 pr-2">
+                                                {course.course_title}
                                             </div>
-                                            <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                                                Duration: {course.duration}
+
+                                            <div className="my-3 flex flex-row gap-2">
+                                                <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    {course.category}
+                                                </span>
+                                                <span className="px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800">
+                                                    {course.level}
+                                                </span>
+                                                <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    Completed
+                                                </span>
                                             </div>
-                                        </div>
 
-                                        <div className="text-sm text-gray-600 mb-4">
-                                            <span className="font-medium">Course Price: ₹{course.totalAmount}</span>
-                                        </div>
+                                            <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed line-clamp-3">
+                                                {course.course_desc}
+                                            </div>
 
-                                        {/* Action Buttons */}
-                                        <div className="flex gap-2">
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        variant="manual"
-                                                        onClick={() => setSelectedInvoiceEnrollment(course)}
-                                                    >
-                                                        Generate Invoice
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
-                                                    <DialogHeader>
-                                                        <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
-                                                    </DialogHeader>
+                                            {/* Course Completion Info */}
+                                            <div className="flex justify-between items-center mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-green-500">🎓</span>
+                                                    <span className="text-green-600 font-medium text-sm">Course Completed</span>
+                                                </div>
+                                                <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                                                    Duration: {course.duration}
+                                                </div>
+                                            </div>
 
-                                                    {selectedInvoiceEnrollment && (
-                                                        <>
-                                                            {/* Course & Student Info Summary */}
-                                                            <div className="grid grid-cols-2 gap-4 mb-4">
-                                                                <div className="bg-gray-50 p-3 rounded-lg">
-                                                                    <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
-                                                                    <div className="space-y-1 text-sm">
-                                                                        <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
-                                                                        <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
-                                                                        <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
+                                            <div className="text-sm text-gray-600 mb-4">
+                                                <span className="font-medium">Course Price: ₹{course.totalAmount}</span>
+                                            </div>
+
+                                            {/* Action Buttons */}
+                                            <div className="flex gap-2">
+                                                <Dialog>
+                                                    <DialogTrigger asChild>
+                                                        <Button
+                                                            variant="manual"
+                                                            onClick={() => setSelectedInvoiceEnrollment(course)}
+                                                        >
+                                                            Generate Invoice
+                                                        </Button>
+                                                    </DialogTrigger>
+                                                    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+                                                        <DialogHeader>
+                                                            <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
+                                                        </DialogHeader>
+
+                                                        {selectedInvoiceEnrollment && (
+                                                            <>
+                                                                {/* Course & Student Info Summary */}
+                                                                <div className="grid grid-cols-2 gap-4 mb-4">
+                                                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                                                        <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
+                                                                        <div className="space-y-1 text-sm">
+                                                                            <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
+                                                                            <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
+                                                                            <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                                                        <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
+                                                                        <div className="space-y-1 text-sm">
+                                                                            <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
+                                                                            <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
+                                                                            <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="bg-gray-50 p-3 rounded-lg">
-                                                                    <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
-                                                                    <div className="space-y-1 text-sm">
-                                                                        <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
-                                                                        <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
-                                                                        <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
-                                                                    </div>
+
+                                                                <canvas
+                                                                    ref={invoiceCanvasRef}
+                                                                    className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
+                                                                />
+
+                                                                <div className="flex gap-2 pt-4">
+                                                                    <Button
+                                                                        type="button"
+                                                                        onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                                                        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+                                                                    >
+                                                                        Download Invoice
+                                                                    </Button>
                                                                 </div>
-                                                            </div>
+                                                            </>
+                                                        )}
+                                                    </DialogContent>
+                                                </Dialog>
+                                                <Dialog>
+                                                    <DialogTrigger asChild>
+                                                        <Button
+                                                            variant="outline"
+                                                            onClick={() => generateCertificate(course)}
+                                                            className="flex-1 border-green-600 text-white bg-green-600"
+                                                        >
+                                                            Generate Certificate
+                                                        </Button>
+                                                    </DialogTrigger>
+                                                    <DialogContent className='bg-white h-auto overflow-auto hide-scrollbar'>
+                                                        <DialogHeader>
+                                                            <DialogTitle>Certificate of Achievement</DialogTitle>
+                                                        </DialogHeader>
+                                                        <div className='w-full flex flex-col gap-4'>
+                                                            <div className='w-full h-auto flex items-center justify-center flex-col gap-4'>
+                                                                <canvas
+                                                                    ref={certificateCanvasRef}
+                                                                    className='w-full hidden max-w-3xl h-full border-2 border-gray-200 rounded-lg shadow-lg'
+                                                                />
 
-                                                            <canvas
-                                                                ref={invoiceCanvasRef}
-                                                                className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
-                                                            />
+                                                                {selectedCertificateEnrollment && (
+                                                                    <div className="text-center space-y-2">
+                                                                        <p className="text-sm text-gray-600">
+                                                                            <strong>Student:</strong> {selectedCertificateEnrollment.name}
+                                                                        </p>
+                                                                        <p className="text-sm text-gray-600">
+                                                                            <strong>Course:</strong> {selectedCertificateEnrollment.course_title}
+                                                                        </p>
+                                                                        <p className="text-sm text-gray-600">
+                                                                            <strong>Certificate ID:</strong> {selectedCertificateEnrollment?.certificate?.certificateId}
+                                                                        </p>
+                                                                        <p className="text-sm text-gray-600">
+                                                                            <strong>Completion Date:</strong> {selectedCertificateEnrollment?.certificate?.completionDate}
+                                                                        </p>
+                                                                    </div>
+                                                                )}
 
-                                                            <div className="flex gap-2 pt-4">
                                                                 <Button
-                                                                    type="button"
-                                                                    onClick={() => generateInvoice(selectedInvoiceEnrollment)}
-                                                                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+                                                                    variant='default'
+                                                                    className='mt-4 bg-green-600 hover:bg-green-700'
+                                                                    onClick={handleCertificateDownload}
                                                                 >
-                                                                    Download Invoice
+                                                                    Download Certificate
                                                                 </Button>
                                                             </div>
-                                                        </>
-                                                    )}
-                                                </DialogContent>
-                                            </Dialog>
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        variant="outline"
-                                                        onClick={() => generateCertificate(course)}
-                                                        className="flex-1 border-green-600 text-white bg-green-600"
-                                                    >
-                                                        Generate Certificate
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <DialogContent className='bg-white h-auto overflow-auto hide-scrollbar'>
-                                                    <DialogHeader>
-                                                        <DialogTitle>Certificate of Achievement</DialogTitle>
-                                                    </DialogHeader>
-                                                    <div className='w-full flex flex-col gap-4'>
-                                                        <div className='w-full h-auto flex items-center justify-center flex-col gap-4'>
-                                                            <canvas
-                                                                ref={certificateCanvasRef}
-                                                                className='w-full hidden max-w-3xl h-full border-2 border-gray-200 rounded-lg shadow-lg'
-                                                            />
-
-                                                            {selectedCertificateEnrollment && (
-                                                                <div className="text-center space-y-2">
-                                                                    <p className="text-sm text-gray-600">
-                                                                        <strong>Student:</strong> {selectedCertificateEnrollment.name}
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600">
-                                                                        <strong>Course:</strong> {selectedCertificateEnrollment.course_title}
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600">
-                                                                        <strong>Certificate ID:</strong> {selectedCertificateEnrollment?.certificate?.certificateId}
-                                                                    </p>
-                                                                    <p className="text-sm text-gray-600">
-                                                                        <strong>Completion Date:</strong> {selectedCertificateEnrollment?.certificate?.completionDate}
-                                                                    </p>
-                                                                </div>
-                                                            )}
-
-                                                            <Button
-                                                                variant='default'
-                                                                className='mt-4 bg-green-600 hover:bg-green-700'
-                                                                onClick={handleCertificateDownload}
-                                                            >
-                                                                Download Certificate
-                                                            </Button>
                                                         </div>
-                                                    </div>
-                                                </DialogContent>
-                                            </Dialog>
-                                        </div>
+                                                    </DialogContent>
+                                                </Dialog>
+                                            </div>
 
-                                        {/* Timestamp */}
-                                        <div className="text-xs text-gray-400 mt-3 text-center">
-                                            Completed on: {new Date(course.updatedAt || course.createdAt || Date.now()).toLocaleDateString('en-IN', {
-                                                day: 'numeric',
-                                                month: 'short',
-                                                year: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
-                                            })}
+                                            {/* Timestamp */}
+                                            <div className="text-xs text-gray-400 mt-3 text-center">
+                                                Completed on: {new Date(course.updatedAt || course.createdAt || Date.now()).toLocaleDateString('en-IN', {
+                                                    day: 'numeric',
+                                                    month: 'short',
+                                                    year: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                })}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center py-8">
-                                <div className="text-center">
-                                    <div className="mb-4">
-                                        <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-lg font-medium text-gray-300 mb-2">No completed courses</h3>
-                                    <p className="text-gray-400">You haven't completed any courses yet. Keep learning!</p>
+                                    ))}
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                )}
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-8">
+                                    <div className="text-center">
+                                        <div className="mb-4">
+                                            <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <h3 className="text-lg font-medium text-gray-300 mb-2">No completed courses</h3>
+                                        <p className="text-gray-400">You haven't completed any courses yet. Keep learning!</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
 
+                </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

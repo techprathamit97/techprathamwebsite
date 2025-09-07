@@ -5,6 +5,7 @@ import UserLoader from '@/src/account/common/UserLoader';
 import UserSidebar from '@/src/account/common/UserSidebar';
 import UserTopBar from '@/src/account/common/UserTopBar';
 import { Badge } from '@/components/ui/badge';
+import Head from 'next/head';
 
 const profile = () => {
   const { userData, loading, authenticated, setActiveUserTab } = useContext(UserContext);
@@ -15,6 +16,12 @@ const profile = () => {
 
   return (
     <React.Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+        <title>Profile | User Dashboard</title>
+        <meta name="description" content="Explore the Profile section in User Dashboard of TechPratham." />
+      </Head>
+
       {loading ? (
         <UserLoader />
       ) : !authenticated ? (

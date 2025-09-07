@@ -8,6 +8,7 @@ import UserSidebar from '@/src/account/common/UserSidebar';
 import UserTopBar from '@/src/account/common/UserTopBar';
 
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import Head from 'next/head';
 
 interface Certificate {
   certificateId: string;
@@ -249,219 +250,227 @@ const UserCourses = () => {
   };
 
   return (
-    <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
+    <React.Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+        <title>Your Courses | User Dashboard</title>
+        <meta name="description" content="Explore the Courses section in User Dashboard of TechPratham." />
+      </Head>
+      
+      <div className='w-full h-full md:h-screen min-h-screen flex flex-row items-start justify-start fixed'>
 
-      <UserSidebar />
+        <UserSidebar />
 
-      <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
+        <div className='bg-black flex flex-col w-full h-full md:relative fixed'>
 
-        <UserTopBar />
+          <UserTopBar />
 
-        {isLoading ? (
-          <div className="min-h-screen flex items-center justify-center bg-black">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading course data...</p>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-black p-6 flex flex-col overflow-y-auto">
-            <div className="bg-[#1a1a1a] shadow-sm p-6 mb-6">
-              <div className='w-full h-auto flex flex-row items-center justify-between'>
-                <h2 className="text-xl font-semibold text-white mb-4">Applied Courses</h2>
-                <span className="text-orange-400 text-sm">Payment Pending</span>
+          {isLoading ? (
+            <div className="min-h-screen flex items-center justify-center bg-black">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading course data...</p>
               </div>
-
-              {appliedCourses.length > 0 ? (
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center">
-                  {appliedCourses.map((course, index) => (
-                    <div
-                      key={index}
-                      className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.course_title}</div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800`}>
-                          {course.level}
-                        </span>
-                      </div>
-
-                      <div className="mb-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800`}>
-                          {course.category}
-                        </span>
-                      </div>
-
-                      <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.course_desc}</div>
-
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center gap-1">
-                          <span className="text-orange-500">⏳</span>
-                          <span className="text-orange-600 font-medium text-sm">Payment Pending</span>
-                        </div>
-                        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                          {course.duration}
-                        </div>
-                      </div>
-
-                      <div className="text-sm text-gray-600 mb-4">
-                        <span className="font-medium">Total: ₹{course.totalAmount}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8">
-                  <div className="text-center">
-                    <div className="mb-4">
-                      <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-300 mb-2">No applications found</h3>
-                    <p className="text-gray-400">You don't have any pending course applications.</p>
-                  </div>
-                </div>
-              )}
             </div>
+          ) : (
+            <div className="bg-black p-6 flex flex-col overflow-y-auto">
+              <div className="bg-[#1a1a1a] shadow-sm p-6 mb-6">
+                <div className='w-full h-auto flex flex-row items-center justify-between'>
+                  <h2 className="text-xl font-semibold text-white mb-4">Applied Courses</h2>
+                  <span className="text-orange-400 text-sm">Payment Pending</span>
+                </div>
 
-            {/* Enrolled Courses Section */}
-            <div className="bg-[#1a1a1a] shadow-sm p-6">
-              <div className='w-full h-auto flex flex-row items-center justify-between'>
-                <h2 className="text-xl font-semibold text-white mb-4">Enrolled Courses</h2>
-                <span className="text-green-400 text-sm">Payment Verified</span>
-              </div>
-
-              {enrolledCourses.length > 0 ? (
-                <div className="grid md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-start">
-                  {enrolledCourses.map((course: any, index: any) => (
-                    <div
-                      key={index}
-                      className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.course_title}</div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800`}>
-                          {course.level}
-                        </span>
-                      </div>
-
-                      <div className="mb-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800`}>
-                          {course.category}
-                        </span>
-                      </div>
-
-                      <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.course_desc}</div>
-
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center gap-1">
-                          <span className="text-green-500">✓</span>
-                          <span className="text-green-600 font-medium text-sm">
-                            {course.courseCompletion ? 'Completed' : 'In Progress'}
+                {appliedCourses.length > 0 ? (
+                  <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-center">
+                    {appliedCourses.map((course, index) => (
+                      <div
+                        key={index}
+                        className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.course_title}</div>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800`}>
+                            {course.level}
                           </span>
                         </div>
-                        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                          {course.duration}
+
+                        <div className="mb-3">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800`}>
+                            {course.category}
+                          </span>
+                        </div>
+
+                        <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.course_desc}</div>
+
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-1">
+                            <span className="text-orange-500">⏳</span>
+                            <span className="text-orange-600 font-medium text-sm">Payment Pending</span>
+                          </div>
+                          <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                            {course.duration}
+                          </div>
+                        </div>
+
+                        <div className="text-sm text-gray-600 mb-4">
+                          <span className="font-medium">Total: ₹{course.totalAmount}</span>
                         </div>
                       </div>
-
-                      <div className="text-sm text-gray-600 mb-4">
-                        <span className="font-medium">Course Price: ₹{course.totalAmount}</span>
-                      </div>
-
-                      <div className='w-full h-auto flex flex-row gap-2'>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              onClick={() => setSelectedInvoiceEnrollment(course)}
-                            >
-                              Generate Invoice
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
-                            <DialogHeader>
-                              <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
-                            </DialogHeader>
-
-                            {selectedInvoiceEnrollment && (
-                              <>
-                                {/* Course & Student Info Summary */}
-                                <div className="grid grid-cols-2 gap-4 mb-4">
-                                  <div className="bg-gray-50 p-3 rounded-lg">
-                                    <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
-                                    <div className="space-y-1 text-sm">
-                                      <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
-                                      <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
-                                      <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
-                                    </div>
-                                  </div>
-                                  <div className="bg-gray-50 p-3 rounded-lg">
-                                    <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
-                                    <div className="space-y-1 text-sm">
-                                      <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
-                                      <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
-                                      <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <canvas
-                                  ref={invoiceCanvasRef}
-                                  className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
-                                />
-
-                                <div className="flex gap-2 pt-4">
-                                  <Button
-                                    type="button"
-                                    onClick={() => generateInvoice(selectedInvoiceEnrollment)}
-                                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
-                                  >
-                                    Download Invoice
-                                  </Button>
-                                </div>
-                              </>
-                            )}
-                          </DialogContent>
-                        </Dialog>
-                        <Link href={`/courses/${course.course_link}`} className="w-full">
-                          <Button
-                            variant="default"
-                            className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
-                          >
-                            {course.courseCompletion ? 'View Certificate' : 'Continue Learning'}
-                          </Button>
-                        </Link>
-                      </div>
-
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8">
-                  <div className="text-center">
-                    <div className="mb-4">
-                      <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-300 mb-2">No enrolled courses</h3>
-                    <p className="text-gray-400 mb-6">You haven't enrolled in any courses yet. Start learning by enrolling in a course!</p>
-                    <Link href='/courses' className=''>
-                      <Button variant='default' className="bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336]">
-                        Browse Courses
-                      </Button>
-                    </Link>
+                    ))}
                   </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <div className="text-center">
+                      <div className="mb-4">
+                        <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-300 mb-2">No applications found</h3>
+                      <p className="text-gray-400">You don't have any pending course applications.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
 
+              {/* Enrolled Courses Section */}
+              <div className="bg-[#1a1a1a] shadow-sm p-6">
+                <div className='w-full h-auto flex flex-row items-center justify-between'>
+                  <h2 className="text-xl font-semibold text-white mb-4">Enrolled Courses</h2>
+                  <span className="text-green-400 text-sm">Payment Verified</span>
+                </div>
+
+                {enrolledCourses.length > 0 ? (
+                  <div className="grid md:grid-cols-2 grid-cols-1 gap-6 w-full justify-items-start">
+                    {enrolledCourses.map((course: any, index: any) => (
+                      <div
+                        key={index}
+                        className="w-full max-w-sm h-auto flex flex-col p-6 border rounded-xl shadow-md transition-all duration-300 bg-white hover:transform"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="text-xl font-semibold text-gray-800 leading-tight flex-1 pr-2">{course.course_title}</div>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800`}>
+                            {course.level}
+                          </span>
+                        </div>
+
+                        <div className="mb-3">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800`}>
+                            {course.category}
+                          </span>
+                        </div>
+
+                        <div className="text-sm text-gray-600 mb-4 flex-grow leading-relaxed">{course.course_desc}</div>
+
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-1">
+                            <span className="text-green-500">✓</span>
+                            <span className="text-green-600 font-medium text-sm">
+                              {course.courseCompletion ? 'Completed' : 'In Progress'}
+                            </span>
+                          </div>
+                          <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                            {course.duration}
+                          </div>
+                        </div>
+
+                        <div className="text-sm text-gray-600 mb-4">
+                          <span className="font-medium">Course Price: ₹{course.totalAmount}</span>
+                        </div>
+
+                        <div className='w-full h-auto flex flex-row gap-2'>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="outline"
+                                onClick={() => setSelectedInvoiceEnrollment(course)}
+                              >
+                                Generate Invoice
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+                              <DialogHeader>
+                                <DialogTitle>Generate Invoice - {selectedInvoiceEnrollment?.course_title}</DialogTitle>
+                              </DialogHeader>
+
+                              {selectedInvoiceEnrollment && (
+                                <>
+                                  {/* Course & Student Info Summary */}
+                                  <div className="grid grid-cols-2 gap-4 mb-4">
+                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                      <h4 className="font-semibold text-gray-800 mb-2">Student Info</h4>
+                                      <div className="space-y-1 text-sm">
+                                        <div><span className="font-medium">Name:</span> {selectedInvoiceEnrollment.name}</div>
+                                        <div><span className="font-medium">Email:</span> {selectedInvoiceEnrollment.email}</div>
+                                        <div><span className="font-medium">Phone:</span> {selectedInvoiceEnrollment.phone}</div>
+                                      </div>
+                                    </div>
+                                    <div className="bg-gray-50 p-3 rounded-lg">
+                                      <h4 className="font-semibold text-gray-800 mb-2">Course Info</h4>
+                                      <div className="space-y-1 text-sm">
+                                        <div><span className="font-medium">Course:</span> {selectedInvoiceEnrollment.course_title}</div>
+                                        <div><span className="font-medium">Duration:</span> {selectedInvoiceEnrollment.duration}</div>
+                                        <div><span className="font-medium">Level:</span> {selectedInvoiceEnrollment.level}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <canvas
+                                    ref={invoiceCanvasRef}
+                                    className='w-full hidden h-auto object-cover border-2 border-gray-200 rounded-lg shadow-lg'
+                                  />
+
+                                  <div className="flex gap-2 pt-4">
+                                    <Button
+                                      type="button"
+                                      onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+                                    >
+                                      Download Invoice
+                                    </Button>
+                                  </div>
+                                </>
+                              )}
+                            </DialogContent>
+                          </Dialog>
+                          <Link href={`/courses/${course.course_link}`} className="w-full">
+                            <Button
+                              variant="default"
+                              className="w-full bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336] transition-all duration-200"
+                            >
+                              {course.courseCompletion ? 'View Certificate' : 'Continue Learning'}
+                            </Button>
+                          </Link>
+                        </div>
+
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <div className="text-center">
+                      <div className="mb-4">
+                        <svg className="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-300 mb-2">No enrolled courses</h3>
+                      <p className="text-gray-400 mb-6">You haven't enrolled in any courses yet. Start learning by enrolling in a course!</p>
+                      <Link href='/courses' className=''>
+                        <Button variant='default' className="bg-gradient-to-r from-[#CD4647] to-[#7F3B40] hover:from-[#B73E3F] hover:to-[#6F3336]">
+                          Browse Courses
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 };
 
