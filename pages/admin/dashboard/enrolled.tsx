@@ -18,6 +18,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import Head from 'next/head';
 
 const verifyPaymentSchema = z.object({
     advance: z.boolean(),
@@ -232,14 +233,6 @@ const Enrolled = () => {
         }
     }, [watchAdvance, form]);
 
-    const generateInvoice = (enrollment: any) => {
-        setSelectedInvoiceEnrollment(enrollment);
-        setTimeout(() => {
-            drawInvoice(enrollment);
-        }, 100);
-        handleDownload();
-    };
-
     const drawInvoice = async (course: any) => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -403,6 +396,12 @@ const Enrolled = () => {
 
     return (
         <React.Fragment>
+            <Head>
+                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
+                <title>Enrolled Courses | Admin Dashboard</title>
+                <meta name="description" content="Enrolled Course Section in Admin Dashboard of TechPratham." />
+            </Head>
+
             {loading ? (
                 <AdminLoader />
             ) : (!authenticated || !isAdmin) ? (
@@ -767,7 +766,24 @@ const Enrolled = () => {
                                                                             <div className="flex gap-2 pt-4">
                                                                                 <Button
                                                                                     type="button"
-                                                                                    onClick={() => generateInvoice(selectedInvoiceEnrollment)}
+                                                                                    onClick={() => {
+                                                                                        const updatedEnrollment = {
+                                                                                            ...selectedInvoiceEnrollment,
+                                                                                            totalAmount: invoiceForm.watch("totalAmount"),
+                                                                                            advanceAmount: invoiceForm.watch("advanceAmount"),
+                                                                                            feeType: invoiceForm.watch("feeType"),
+                                                                                            dueDate: invoiceForm.watch("dueDate"),
+                                                                                            studentId: invoiceForm.watch("studentId"),
+                                                                                            receiptNo: invoiceForm.watch("receiptNo"),
+                                                                                        };
+
+                                                                                        setTimeout(() => {
+                                                                                            drawInvoice(updatedEnrollment);
+                                                                                            setTimeout(() => {
+                                                                                                handleDownload();
+                                                                                            }, 500);
+                                                                                        }, 100);
+                                                                                    }}
                                                                                     className="bg-blue-600 hover:bg-blue-700"
                                                                                 >
                                                                                     Download Invoice
