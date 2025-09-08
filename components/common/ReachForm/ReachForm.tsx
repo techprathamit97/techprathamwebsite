@@ -15,7 +15,7 @@ const ReachForm = () => {
     const onSubmit = async (data: any) => {
         try {
             setSubmitting(true);
-            const response = await fetch('/email/callback', {
+            const response = await fetch('/email/reach-form', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const ReachForm = () => {
                     <Button type='submit' variant={'manual'} className='h-10 text-base flex items-center justify-center' disabled={submitting}>
                         {submitting ? 'Submitting...' : 'Send'}
                     </Button>
-                    {submitSuccess && <p className="text-green-600">Form submitted successfully! We'll reach you soon!</p>}
+                    {submitSuccess && <p className="text-green-600 text-sm">Form submitted successfully! We'll reach you soon!</p>}
                 </form>
             </div>
         </div>
