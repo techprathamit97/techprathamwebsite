@@ -1,46 +1,26 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
-import { CldImage } from 'next-cloudinary';
-
-interface Article {
-    slug: string;
-    title: string;
-    image: string;
-    description: string;
-    postedBy: string;
-    content: string;
-    createdAt: string;
-}
+import { client } from "@/lib/sanity";
+import { allPostsQuery } from "@/lib/queries";
+import { Button } from '@/components/ui/button';
 
 const BlogSection: React.FC = () => {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [posts, setPosts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                setLoading(true);
-                const res = await fetch(`/api/article/fetch`);
+        setLoading(true);
 
-                if (!res.ok) {
-                    throw new Error('Failed to fetch articles');
-                }
-
-                const data = await res.json();
-                setArticles(data);
-            } catch (error: any) {
-                console.error('Error fetching articles:', error);
-                setError(error.message || 'Failed to fetch articles');
-            } finally {
-                setLoading(false);
-            }
+        const fetchPosts = async () => {
+            const data = await client.fetch(allPostsQuery);
+            setPosts(data);
+            setLoading(false);
         };
-
-        fetchArticles();
+        fetchPosts();
     }, []);
 
     const LoadingSkeleton = () => (
@@ -69,19 +49,6 @@ const BlogSection: React.FC = () => {
         </div>
     );
 
-    const ErrorState = () => (
-        <div className="w-full min-h-32 bg-white p-6 rounded cardShadow flex flex-col items-center justify-center">
-            <p className="text-red-500 text-lg mb-2">Error loading articles</p>
-            <p className="text-gray-400 text-sm">{error}</p>
-            <button
-                onClick={() => window.location.reload()}
-                className="mt-4 bg-[#1a1a1a] hover:bg-[#292929] text-white rounded-sm px-4 py-2 text-sm"
-            >
-                Retry
-            </button>
-        </div>
-    );
-
     return (
         <div className='md:w-10/12 w-full flex flex-col items-start justify-start gap-1 py-10'>
             <div className='w-full grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6'>
@@ -91,42 +58,52 @@ const BlogSection: React.FC = () => {
                         <LoadingSkeleton />
                         <LoadingSkeleton />
                     </>
-                ) : error ? (
-                    <ErrorState />
-                ) : articles?.length > 0 ? (
-                    articles.map((item: Article, index: number) => (
-                        <div key={index} className="w-full h-auto bg-white rounded border shadow">
-                            <CldImage src={item.image} alt="Profile image" width={384} height={384} className='w-full h-64 object-cover' />
-                            <div className='p-4 flex flex-col gap-2'>
-                                <div className='text-lg font-semibold'>{item.title}</div>
-                                <div className='text-sm text-gray-600'>
-                                    {new Date(item.createdAt).toLocaleString('en-US', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric'
-                                    })}
+                ) : posts?.length > 0 ? (
+                    posts.map((post) => (
+                        <article
+                            key={post._id}
+                            className="w-full max-w-3xl mb-12 border-b pb-8"
+                        >
+                            {post.coverImage && (
+                                <img
+                                    src={post.coverImage}
+                                    alt={post.title}
+                                    className="w-full h-64 object-cover rounded-lg mb-4"
+                                />
+                            )}
+                            <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+                            <p className="text-gray-600 text-sm mb-4">
+                                By {post.authorName} •{" "}
+                                {new Date(post.publishedAt).toDateString()}
+                            </p>
+
+
+
+                            {/* Categories */}
+                            {post.categories?.length > 0 && (
+                                <div className="mb-4">
+                                    {post.categories.map((cat: string, i: number) => (
+                                        <span
+                                            key={i}
+                                            className="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full mr-2"
+                                        >
+                                            {cat}
+                                        </span>
+                                    ))}
                                 </div>
-                                <Separator className='h-[0.5px] my-2' />
-                                <div className='flex flex-row justify-between items-center w-full mt-4'>
-                                    <div className='flex flex-row items-center justify-between w-full'>
-                                        <div className='text-sm font-medium capitalize text-gray-500 mb-2'>
-                                            Posted By: <br />
-                                            <span className='text-gray-900 text-base font-semibold'>
-                                                {item.postedBy}
-                                            </span>
-                                        </div>
-                                        <div className='flex flex-row w-auto'>
-                                            <Link
-                                                href={`/blogs/${item.slug}`}
-                                                className='bg-[#1a1a1a] transition-all hover:bg-[#292929] text-white rounded-sm px-3 h-8 font-normal flex items-center justify-center'
-                                            >
-                                                Details
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            )}
+
+                            <Link href={`/blogs/${post.slug}`}>
+                                <Button variant={'default'}>
+                                    Read More
+                                </Button>
+                            </Link>
+
+                            {/* Body content */}
+                            {/* <div className="prose max-w-none">
+                                <PortableText value={post.body} />
+                              </div> */}
+                        </article>
                     ))
                 ) : (
                     <EmptyState />

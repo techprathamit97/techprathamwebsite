@@ -1,87 +1,235 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Calendar, User } from 'lucide-react';
-import Link from 'next/link';
-import Navbar from '@/src/common/Navbar/Navbar';
-import Footer from '@/src/common/Footer/Footer';
-import { CldImage } from 'next-cloudinary';
+"use client";
 
-interface ArticleData {
-    slug: string;
-    title: string;
-    image: string;
-    description: string;
-    postedBy: string;
-    content: string;
-    createdAt: string;
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Link from "next/link";
+import { Calendar, User, ArrowLeft, List } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Separator } from "@/components/ui/separator";
+import Navbar from "@/src/common/Navbar/Navbar";
+import Footer from "@/src/common/Footer/Footer";
+import { client } from "@/lib/sanity";
+import { urlFor } from "@/lib/sanity";
+import { PortableText } from "@portabletext/react";
+
+// GROQ query to fetch post by slug
+const postQuery = `
+  *[_type == "post" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    "authorName": author->name,
+    mainImage{
+      asset->{
+        url
+      }
+    },
+    body
+  }
+`;
+
+interface TocItem {
+  id: string;
+  text: string;
+  level: number;
 }
 
 const ArticlePage: React.FC = () => {
     const router = useRouter();
     const { slug } = router.query;
 
-    const [articleData, setArticleData] = useState<ArticleData | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [post, setPost] = useState<any | null>(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [tocItems, setTocItems] = useState<TocItem[]>([]);
+    const [activeSection, setActiveSection] = useState<string>("");
+    const [showToc, setShowToc] = useState(false);
+
+    // Function to generate slug from text
+    const generateSlug = (text: string): string => {
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .trim();
+    };
+
+    // Extract TOC items from post body
+    const extractTocItems = (body: any[]): TocItem[] => {
+        const items: TocItem[] = [];
+        
+        body?.forEach((block) => {
+            if (block._type === 'block' && (block.style === 'h1' || block.style === 'h2' || block.style === 'h3')) {
+                const text = block.children?.map((child: any) => child.text).join('') || '';
+                if (text.trim()) {
+                    items.push({
+                        id: generateSlug(text),
+                        text: text.trim(),
+                        level: parseInt(block.style.replace('h', ''))
+                    });
+                }
+            }
+        });
+        
+        return items;
+    };
+
+    // Enhanced components with TOC support
+    const components: any = {
+        types: {
+            image: ({ value }: any) => (
+                <img
+                    src={urlFor(value).width(800).url()}
+                    alt={value.alt || "Blog image"}
+                    className="my-6 rounded-lg shadow-sm w-full"
+                />
+            ),
+        },
+        block: {
+            h1: ({ children }: any) => {
+                // Extract text content properly from children
+                const extractText = (children: any): string => {
+                    if (typeof children === 'string') return children;
+                    if (Array.isArray(children)) {
+                        return children.map(child => 
+                            typeof child === 'string' ? child : child?.props?.children || ''
+                        ).join('');
+                    }
+                    return children?.props?.children || '';
+                };
+                
+                const text = extractText(children);
+                const id = generateSlug(text);
+                
+                // Debug logging
+                console.log('H1 Component:', { text, id });
+                
+                return (
+                    <h1 id={id} className="text-3xl font-bold my-6 scroll-mt-24">
+                        {children}
+                    </h1>
+                );
+            },
+            h2: ({ children }: any) => {
+                const extractText = (children: any): string => {
+                    if (typeof children === 'string') return children;
+                    if (Array.isArray(children)) {
+                        return children.map(child => 
+                            typeof child === 'string' ? child : child?.props?.children || ''
+                        ).join('');
+                    }
+                    return children?.props?.children || '';
+                };
+                
+                const text = extractText(children);
+                const id = generateSlug(text);
+                
+                console.log('H2 Component:', { text, id });
+                
+                return (
+                    <h2 id={id} className="text-2xl font-semibold my-5 scroll-mt-24">
+                        {children}
+                    </h2>
+                );
+            },
+            h3: ({ children }: any) => {
+                const extractText = (children: any): string => {
+                    if (typeof children === 'string') return children;
+                    if (Array.isArray(children)) {
+                        return children.map(child => 
+                            typeof child === 'string' ? child : child?.props?.children || ''
+                        ).join('');
+                    }
+                    return children?.props?.children || '';
+                };
+                
+                const text = extractText(children);
+                const id = generateSlug(text);
+                
+                console.log('H3 Component:', { text, id });
+                
+                return (
+                    <h3 id={id} className="text-xl font-medium my-4 scroll-mt-24">
+                        {children}
+                    </h3>
+                );
+            },
+            normal: ({ children }: any) => <p className="leading-relaxed my-4 text-gray-700">{children}</p>,
+        },
+    };
+
+    // Intersection Observer for active section tracking
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(entry.target.id);
+                    }
+                });
+            },
+            {
+                rootMargin: "-80px 0px -80% 0px",
+            }
+        );
+
+        // Observe all heading elements
+        tocItems.forEach(({ id }) => {
+            const element = document.getElementById(id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [tocItems]);
 
     useEffect(() => {
-        if (!slug || typeof slug !== 'string') return;
+        if (!slug) return;
 
-        const fetchArticle = async () => {
+        const fetchPost = async () => {
+            setLoading(true);
             try {
-                setLoading(true);
-                setError(null);
-
-                const res = await fetch(`/api/article/slugs?slug=${slug}`);
-
-                if (!res.ok) {
-                    if (res.status === 404) {
-                        setError('Article not found');
-                    } else {
-                        throw new Error('Failed to fetch article');
-                    }
-                    return;
+                const data = await client.fetch(postQuery, { slug });
+                if (!data) {
+                    setError("Article not found");
+                } else {
+                    setPost(data);
+                    const toc = extractTocItems(data.body);
+                    setTocItems(toc);
                 }
-
-                const data: ArticleData = await res.json();
-                setArticleData(data);
-            } catch (error: any) {
-                console.error('Error fetching article:', error);
-                setError(error.message || 'Failed to fetch article');
+            } catch (err: any) {
+                console.error(err);
+                setError("Failed to fetch article");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchArticle();
+        fetchPost();
     }, [slug]);
 
+    // Smooth scroll to section
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        setShowToc(false); // Close mobile TOC after clicking
+    };
+
     const LoadingSkeleton = () => (
-        <div className="flex w-full md:flex-row flex-col gap-6 pt-10 h-auto">
-            <div className="flex flex-col md:w-10/12 w-full h-full">
-                <Skeleton className="w-3/4 h-8 mb-4" />
-                <Skeleton className="w-full h-6 mb-2" />
-                <Skeleton className="w-2/3 h-6 mb-4" />
-                <Skeleton className="w-40 h-5 mb-4" />
-                <Separator className="h-[0.5px] my-4" />
-                <div className="space-y-4">
-                    <Skeleton className="w-full h-4" />
-                    <Skeleton className="w-full h-4" />
-                    <Skeleton className="w-3/4 h-4" />
-                    <Skeleton className="w-full h-32 mt-6" />
-                    <Skeleton className="w-full h-4" />
-                    <Skeleton className="w-2/3 h-4" />
-                </div>
-                <div className="mt-8">
-                    <Skeleton className="w-32 h-6" />
-                </div>
-            </div>
-            <div className="md:w-2/12 w-full">
-                <Skeleton className="w-full h-64" />
-            </div>
+        <div className="flex flex-col w-full gap-4 pt-10">
+            <Skeleton className="w-3/4 h-8" />
+            <Skeleton className="w-full h-6" />
+            <Skeleton className="w-full h-64" />
         </div>
     );
 
@@ -89,190 +237,144 @@ const ArticlePage: React.FC = () => {
         <div className="flex flex-col items-center justify-center min-h-96 w-full">
             <div className="text-center p-8 bg-white rounded-lg shadow-sm border">
                 <div className="text-red-500 text-lg font-semibold mb-2">
-                    {error === 'Article not found' ? 'Article Not Found' : 'Error Loading Article'}
+                    {error === "Article not found" ? "Article Not Found" : "Error Loading Article"}
                 </div>
                 <p className="text-gray-600 mb-6">
-                    {error === 'Article not found'
-                        ? 'The article you are looking for does not exist or may have been removed.'
-                        : 'We encountered an error while loading this article. Please try again.'
-                    }
+                    {error === "Article not found"
+                        ? "The article you are looking for does not exist or may have been removed."
+                        : "We encountered an error while loading this article. Please try again."}
                 </p>
-                <div className="flex gap-4 justify-center">
-                    <Link
-                        href="/articles"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors flex items-center gap-2"
-                    >
-                        <ArrowLeft size={16} />
-                        Back to Articles
-                    </Link>
-                    {error !== 'Article not found' && (
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-md transition-colors"
-                        >
-                            Retry
-                        </button>
-                    )}
-                </div>
+                <Link
+                    href="/blogs"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors flex items-center gap-2"
+                >
+                    <ArrowLeft size={16} />
+                    Back to Blogs
+                </Link>
             </div>
         </div>
     );
 
-    // Generate dynamic meta tags
-    const generateMetaTags = () => {
-        if (!articleData) {
-            return {
-                title: 'Article | TechPratham',
-                description: 'Read the latest tech articles and insights on TechPratham.',
-                ogTitle: 'Article | TechPratham',
-                ogDescription: 'Stay updated with the latest technology trends and insights.',
-            };
-        }
+    const TableOfContents = () => {
+        if (tocItems.length === 0) return null;
 
-        return {
-            title: `${articleData.title} | TechPratham`,
-            description: articleData.description || 'Read the latest tech articles and insights on TechPratham.',
-            ogTitle: `${articleData.title} | TechPratham`,
-            ogDescription: articleData.description || 'Stay updated with the latest technology trends and insights.',
-        };
+        return (
+            <div className="bg-gray-50 rounded-lg p-6 border">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Table of Contents</h3>
+                    <button
+                        onClick={() => setShowToc(!showToc)}
+                        className="md:hidden p-1 text-gray-600 hover:text-gray-900"
+                    >
+                        <List size={20} />
+                    </button>
+                </div>
+                
+                <nav className={`${showToc ? 'block' : 'hidden'} md:block`}>
+                    <ul className="space-y-2">
+                        {tocItems.map(({ id, text, level }) => (
+                            <li key={id}>
+                                <button
+                                    onClick={() => scrollToSection(id)}
+                                    className={`
+                                        text-left w-full px-2 py-1 rounded text-sm transition-colors
+                                        ${level === 1 ? 'font-medium' : ''}
+                                        ${level === 2 ? 'ml-4 text-gray-700' : ''}
+                                        ${level === 3 ? 'ml-8 text-gray-600' : ''}
+                                        ${activeSection === id 
+                                            ? 'bg-blue-100 text-blue-700 font-medium' 
+                                            : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
+                                        }
+                                    `}
+                                >
+                                    {text}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+        );
     };
-
-    const metaTags = generateMetaTags();
 
     return (
         <React.Fragment>
             <Head>
-                <link rel="icon" href="/favicon.ico" type="image/ico" sizes="70x70" />
-                <title>{metaTags.title}</title>
-                <meta name="description" content={metaTags.description} />
-                <meta name="keywords" content="TechPratham, technology articles, tech insights, programming, web development, software engineering" />
-                <meta name="author" content="TechPratham" />
-
-                <meta property="og:title" content={metaTags.ogTitle} />
-                <meta property="og:description" content={metaTags.ogDescription} />
-                <meta property="og:image" content="/logo/og-techpratham.png" />
-                <meta property="og:url" content={`https://www.techpratham.com/articles/${slug}`} />
-                <meta property="og:type" content="article" />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={metaTags.ogTitle} />
-                <meta name="twitter:description" content={metaTags.ogDescription} />
-                <meta name="twitter:image" content="/logo/og-techpratham.png" />
-
-                {articleData && (
-                    <>
-                        <meta property="article:author" content={articleData.postedBy} />
-                        <meta property="article:published_time" content={articleData.createdAt} />
-                    </>
-                )}
+                <title>{post ? `${post.title} | TechPratham` : "Blog | TechPratham"}</title>
+                <meta
+                    name="description"
+                    content={post?.excerpt || "Read the latest tech articles and insights on TechPratham."}
+                />
             </Head>
 
             <Navbar />
 
             <div className="flex flex-col w-full min-h-screen items-center justify-center bg-gray-50">
-                <main className="flex md:flex-row flex-col w-11/12 max-w-7xl min-h-screen items-start justify-start gap-10 my-10 mt-24">
-
-                    {/* Back to Articles Button */}
-                    <div className="w-full md:hidden block mb-4">
-                        <Link
-                            href="/articles"
-                            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
-                        >
-                            <ArrowLeft size={16} />
-                            Back to Articles
-                        </Link>
-                    </div>
-
+                <main className="flex flex-col w-11/12 max-w-7xl min-h-screen items-start gap-10 my-10 mt-32">
                     {loading ? (
                         <LoadingSkeleton />
                     ) : error ? (
                         <ErrorState />
-                    ) : articleData ? (
-                        <div className='flex flex-col w-full h-full pt-10'>
-                            <div className="hidden md:block mb-4">
-                                <Link
-                                    href="/blogs"
-                                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
-                                >
-                                    <ArrowLeft size={16} />
-                                    Back to Blogs
-                                </Link>
-                            </div>
-                            <div className="flex w-full md:flex-row flex-col gap-6 h-full items-start justify-between">
-                                <div className="flex flex-col md:w-9/12 w-full h-full">
+                    ) : post ? (
+                        <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            {/* Main content */}
+                            <article className="lg:col-span-3 w-full flex flex-col">
+                                {/* Back button */}
+                                <div className="mb-4">
+                                    <Link
+                                        href="/blogs"
+                                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
+                                    >
+                                        <ArrowLeft size={16} />
+                                        Back to Blogs
+                                    </Link>
+                                </div>
 
-                                    <div className="bg-white rounded-lg shadow-sm border mb-6 overflow-hidden">
-                                        <CldImage src={articleData.image} alt="Profile image" width={384} height={384} className='w-full h-80 object-cover rounded-t-lg' />
+                                {/* Cover image */}
+                                {post.mainImage?.asset?.url && (
+                                    <img
+                                        src={post.mainImage.asset.url}
+                                        alt={post.title}
+                                        className="w-full h-96 object-cover rounded-lg mb-6 shadow-sm"
+                                    />
+                                )}
 
-                                        <div className="p-6 w-full h-auto flex flex-col">
-                                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                                                {articleData.title}
-                                            </h1>
+                                {/* Title */}
+                                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">{post.title}</h1>
 
-                                            {articleData.description && (
-                                                <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-                                                    {articleData.description}
-                                                </p>
-                                            )}
-
-                                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                                                <div className="flex items-center gap-2">
-                                                    <div className='w-6 h-6 bg-black text-white rounded-full grid place-content-center'>
-                                                        <Calendar size={16} className='w-4 h-4' />
-                                                    </div>
-                                                    <span>
-                                                        {new Date(articleData.createdAt).toLocaleString('en-US', {
-                                                            year: 'numeric',
-                                                            month: 'long',
-                                                            day: 'numeric'
-                                                        })}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <div className='w-6 h-6 bg-black text-white rounded-full grid place-content-center'>
-                                                        <User size={16} className='w-4 h-4' />
-                                                    </div>
-                                                    <span>By {articleData.postedBy}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                {/* Meta info */}
+                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <Calendar size={16} />
+                                        <span>{new Date(post.publishedAt).toDateString()}</span>
                                     </div>
-
-                                    <div className="bg-white rounded-lg p-6 shadow-sm border">
-                                        <div
-                                            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900"
-                                            dangerouslySetInnerHTML={{ __html: articleData.content }}
-                                        />
-                                    </div>
-
-                                    <div className="bg-white rounded-lg p-6 shadow-sm border mt-6">
-                                        <div className="flex flex-col gap-4">
-                                            <div className="flex justify-between items-center">
-                                                <div className="text-sm text-gray-600">
-                                                    <span className="font-medium">Written by:</span>
-                                                    <div className="text-gray-900 text-base font-semibold mt-1">
-                                                        {articleData.postedBy}
-                                                    </div>
-                                                </div>
-                                                <Link
-                                                    href="/blogs"
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
-                                                >
-                                                    More Articles
-                                                </Link>
-                                            </div>
-                                        </div>
+                                    <div className="flex items-center gap-2">
+                                        <User size={16} />
+                                        <span>By {post.authorName}</span>
                                     </div>
                                 </div>
 
-                                <div className="md:w-3/12 w-full h-auto border border-[#dddedd] shadow bg-white text-black rounded-lg p-4">
-                                    here advertisement and links can be placed
+                                <Separator className="my-6" />
+
+                                {/* Mobile TOC */}
+                                <div className="lg:hidden mb-6">
+                                    <TableOfContents />
                                 </div>
-                            </div>
+
+                                {/* Body */}
+                                <div className="prose max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600">
+                                    <PortableText value={post.body} components={components} />
+                                </div>
+                            </article>
+
+                            {/* Desktop TOC Sidebar */}
+                            <aside className="hidden lg:block lg:col-span-1">
+                                <div className="sticky top-24">
+                                    <TableOfContents />
+                                </div>
+                            </aside>
                         </div>
-                    ) : (
-                        <ErrorState />
-                    )}
+                    ) : null}
                 </main>
             </div>
 
