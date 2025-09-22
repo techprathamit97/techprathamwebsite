@@ -26,7 +26,7 @@ const HeaderHome = () => {
                         <h2 className='text-2xl font-semibold mb-2 bg-gradient-to-tr from-[#FC7A35] to-[#f8da52] text-transparent bg-clip-text'>
                             Our Mission
                         </h2>
-                        <div className='flex flex-row gap-1 md:text-lg text-base font-normal'>
+                        <div className='flex flex-row gap-1 md:text-lg text-base font-normal'>``
                             <Image src='/home/sign.jpeg' alt='' width={10} height={10} className='w-6 h-6' />
                             <div>1 Skill = 1 Job = <strong>1 Family</strong> = 6 Person = Happy Life</div>
                         </div>

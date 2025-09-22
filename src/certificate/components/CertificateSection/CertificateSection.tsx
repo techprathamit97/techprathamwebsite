@@ -32,7 +32,7 @@ const CertificateSection = () => {
         }
     };
 
-    {submitting && <Loader />}
+    { submitting && <Loader /> }
 
     return (
         <div
@@ -76,6 +76,7 @@ const CertificateSection = () => {
         </div>
 
     )
+
 }
 
 export default CertificateSection

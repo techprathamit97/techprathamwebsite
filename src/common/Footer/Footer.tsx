@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className='w-full h-auto flex items-center justify-center pb-8 bg-[#212529] text-white'>
+    <div className='w-full h-auto flex items-center justify-center pb-8 bg-[#f5f8fa] text-black'>
       <div className='md:w-10/12 w-11/12 flex flex-col py-10 gap-14'>
 
         <div className='w-full flex flex-col'>
@@ -35,7 +35,14 @@ const Footer = () => {
           <Link href={'/'} aria-label='Techpratham'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-56 h-auto' />
           </Link>
-          <div className='text-sm font-light'>At Tech Pratham, we are a forward thinking IT education dedicated to empowering individuals with the skills they need to thrive in the digital age. Our mission is to bridge the gap between traditional learning and the evolving demands of the tech industry by offering innovative, industry relevant training programs. What sets us apart is our commitment to creating a learning environment that is not only accessible but also engaging and impactful. With flexible schedules, expert mentorship, and real-world project experience, we ensure every student is equipped to achieve their career goals.</div>
+          <div className='text-sm font-light'>At Tech Pratham, We are a forward-thinking IT education provider dedicated
+            to empowering individuals with the skills they need to thrive in the digital
+            age. Our mission is to bridge the gap between traditional learning and the
+            evolving demands of the tech industry by offering innovative, industry-
+            relevant training programs. What sets us apart is our commitment to creating
+            a learning environment that is not only accessible but also engaging and
+            impactful. With flexible schedules, expert mentorship, and real-world project
+            experience, we ensure every student is equipped to achieve their career goals..</div>
         </div>
 
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -94,7 +101,7 @@ const Footer = () => {
               <Link href="/about-us">About Us</Link>
               <Link href="/courses">Courses</Link>
               <Link href="/contact-us">Contact Us</Link>
-              <Link href="/job-openings">Careers</Link>
+              <Link href="/job-openings">Job Openings</Link>
               <Link href="/corporate-training">Corporate Training</Link>
               <Link href="/privacy-policy">Privacy Policy</Link>
               <Link href="/terms-and-conditions">Terms & Conditions</Link>

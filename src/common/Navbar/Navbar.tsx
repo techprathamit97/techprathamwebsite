@@ -90,12 +90,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
       const target = event.target as Node;
-      
+
       // Check if click is outside both the dropdown and the button
       if (
-        coursesDropdownRef.current && 
-        coursesButtonRef.current && 
-        !coursesDropdownRef.current.contains(target) && 
+        coursesDropdownRef.current &&
+        coursesButtonRef.current &&
+        !coursesDropdownRef.current.contains(target) &&
         !coursesButtonRef.current.contains(target)
       ) {
         setIsActive(false);
@@ -117,12 +117,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
       const target = event.target as Node;
-      
+
       // Check if click is outside both the search drawer and search container
       if (
-        searchDrawerRef.current && 
-        searchContainerRef.current && 
-        !searchDrawerRef.current.contains(target) && 
+        searchDrawerRef.current &&
+        searchContainerRef.current &&
+        !searchDrawerRef.current.contains(target) &&
         !searchContainerRef.current.contains(target)
       ) {
         setSearchActive(false);
@@ -144,9 +144,9 @@ const Navbar: React.FC = () => {
   // Filter courses based on search query
   const filteredCourses = React.useMemo((): Course[] => {
     if (!searchQuery.trim() || !course) return [];
-    
+
     const query = searchQuery.toLowerCase();
-    return course.filter(c => 
+    return course.filter(c =>
       c.title?.toLowerCase().includes(query) ||
       c.category?.toLowerCase().includes(query) ||
       c.shortDesc?.toLowerCase().includes(query) ||
@@ -223,7 +223,7 @@ const Navbar: React.FC = () => {
   return (
     <div className={`${(isActive || searchActive) ? 'fixed top-0 left-0' : 'absolute'} z-50 w-full flex flex-col items-center justify-center shadowBorder`}>
       {/* Main Navigation Bar */}
-      <div className='bg-[#1e0505] text-white w-full h-auto flex items-center justify-center z-[100]'>
+      <div className='bg-[#460000] text-white w-full h-auto flex items-center justify-center z-[100]'>
         <div className='lg:w-10/12 w-11/12 lg:py-1 md:py-2 py-1 md:flex hidden flex-row gap-6 lg:justify-start justify-between items-center font-light'>
           <Link href={'/'} aria-label='Techpratham' className='md:flex hidden'>
             <Image src={'/navbar/techpratham.svg'} alt='Techpratham Logo' width={100} height={50} className='w-40 h-auto' />
@@ -287,6 +287,7 @@ const Navbar: React.FC = () => {
       <div className={`w-full h-auto py-2 lg:flex hidden items-center justify-center bg-white border-b border-b-gray-100 z-20`}>
         <nav className='lg:w-10/12 w-11/12 py-1 text-sm flex flex-row flex-wrap gap-6 items-center justify-center'>
           <Link href='/about-us' className='cursor-pointer hover:text-red-700 transition-colors'>About Us</Link>
+          <Link href='/workday-hcm' className='cursor-pointer hover:text-red-700 transition-colors'>Workday HCM</Link>
           <Link href='/job-openings' className='cursor-pointer hover:text-red-700 transition-colors'>Job Openings</Link>
           <Link href='/reviews' className='cursor-pointer hover:text-red-700 transition-colors'>Reviews</Link>
           <Link href='/blogs' className='cursor-pointer hover:text-red-700 transition-colors'>Blogs</Link>
@@ -334,7 +335,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Courses Dropdown */}
-      <div 
+      <div
         ref={coursesDropdownRef}
         className={`transition-all duration-300 border-b border-b-gray-200 ${!isActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto md:pb-0 pb-10 z-10`}
       >
@@ -422,7 +423,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Search Drawer */}
-      <div 
+      <div
         ref={searchDrawerRef}
         className={`transition-all duration-300 border-b border-b-gray-200 ${!searchActive ? '-top-80 left-0' : 'top-28 left-0'} absolute md:flex hidden w-full h-auto bg-white text-[#1a1a1a] flex-col items-center md:overflow-hidden overflow-y-auto pb-4 z-10`}
       >
