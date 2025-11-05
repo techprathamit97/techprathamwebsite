@@ -9,32 +9,71 @@ const Footer = () => {
     <div className='w-full h-auto flex items-center justify-center pb-8 bg-[#f5f8fa] text-black'>
       <div className='md:w-10/12 w-11/12 flex flex-col py-10 gap-14'>
 
-        <div className='w-full flex flex-col'>
-          <div className='text-xl font-semibold mb-1'>Follow Us!</div>
-          <Separator className='mb-4 w-80' />
-          <div className='flex flex-row gap-3'>
-            <Link href='https://www.facebook.com/profile.php?id=61573041693401' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
-              <FaFacebook className='w-6 h-6' />
+        <div className="w-full flex flex-col md:flex-row items-start justify-between">
+          {/* Left Column - Logo */}
+          <div className="flex flex-col items-start mb-6 md:mb-0">
+            <Link href="/" aria-label="Techpratham">
+              <Image
+                src="/navbar/techpratham.svg"
+                alt="TechPratham Logo"
+                width={160}
+                height={60}
+                className="w-56 h-auto"
+              />
             </Link>
-            <Link href='https://www.linkedin.com/company/techpratham/' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
-              <FaLinkedin className='w-6 h-6' />
-            </Link>
-            <Link href='https://www.youtube.com/@TechPratham_official' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
-              <FaYoutube className='w-6 h-6' />
-            </Link>
-            <Link href='https://www.instagram.com/techprathamofficial/' target="_blank" className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
-              <FaInstagram className='w-6 h-6' />
-            </Link>
-            <Link href='/' className='w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center'>
-              <FaTwitter className='w-6 h-6' />
-            </Link>
+          </div>
+
+          {/* Right Column - Follow Us Section */}
+          <div className="flex flex-col items-start">
+            <div className="text-xl font-semibold mb-1">Follow Us!</div>
+            <Separator className="mb-4 w-80" />
+            <div className="flex flex-row gap-3 flex-wrap">
+              <Link
+                href="https://www.facebook.com/profile.php?id=61573041693401"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center"
+              >
+                <FaFacebook className="w-6 h-6" />
+              </Link>
+
+              <Link
+                href="https://www.linkedin.com/company/techpratham/"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center"
+              >
+                <FaLinkedin className="w-6 h-6" />
+              </Link>
+
+              <Link
+                href="https://www.youtube.com/@TechPratham_official"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center"
+              >
+                <FaYoutube className="w-6 h-6" />
+              </Link>
+
+              <Link
+                href="https://www.instagram.com/techprathamofficial/"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center"
+              >
+                <FaInstagram className="w-6 h-6" />
+              </Link>
+
+              <Link
+                href="/"
+                className="w-10 h-10 rounded-full bg-gradient-to-tl from-[#600A0E] to-[#C6151D] text-white flex items-center justify-center"
+              >
+                <FaTwitter className="w-6 h-6" />
+              </Link>
+            </div>
           </div>
         </div>
 
         <div className='w-full flex flex-col gap-2'>
-          <Link href={'/'} aria-label='Techpratham'>
+          {/* <Link href={'/'} aria-label='Techpratham'>
             <Image src={'/navbar/techpratham.svg'} alt='' width={100} height={50} className='w-56 h-auto' />
-          </Link>
+          </Link> */}
           <div className='text-sm font-light'>At Tech Pratham, We are a forward-thinking IT education provider dedicated
             to empowering individuals with the skills they need to thrive in the digital
             age. Our mission is to bridge the gap between traditional learning and the
